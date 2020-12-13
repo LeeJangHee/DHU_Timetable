@@ -28,5 +28,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //TODO: 구아로 서비스로 시행될 예정, 학교 이메일로만 로그인 가능
+
     }
 }

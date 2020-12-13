@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DHU_Timetable">
         <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/Theme.DHU_Timetable.NoActionBar"></activity>
+        <activity
             android:name=".LoadingActivity"
             android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
@@ -18,8 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".LoginActivity"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Theme.Design.NoActionBar" />
     </application>
 
 </manifest>

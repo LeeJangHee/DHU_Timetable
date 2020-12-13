@@ -26,5 +26,7 @@ public class LoadingActivity extends AppCompatActivity {
             }
         }, LOADING_TIME);
 
+        //TODO: 로딩시 서버 전처리 필요
+
     }
 }
