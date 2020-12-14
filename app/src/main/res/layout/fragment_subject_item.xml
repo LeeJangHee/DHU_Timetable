@@ -1,18 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="72dp"
     android:orientation="horizontal"
     android:paddingHorizontal="@dimen/activity_horizontal_margin"
-    android:paddingVertical="8dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:paddingVertical="8dp">
 
     <TextView
-        android:id="@+id/subject_item"
-        android:layout_width="match_parent"
+        android:id="@+id/subject_year"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="가나다라마바사"
         android:textColor="@color/black"
-        android:textSize="30sp" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/subject_major"
+        app:layout_constraintEnd_toStartOf="@+id/subject_semester"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2020" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/subject_semester"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/subject_year"
+        app:layout_constraintEnd_toStartOf="@+id/subject_name"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/subject_year"
+        app:layout_constraintTop_toTopOf="@+id/subject_year"
+        tools:text="x학기" />
+
+    <TextView
+        android:id="@+id/subject_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/subject_year"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/subject_semester"
+        app:layout_constraintTop_toTopOf="@+id/subject_year"
+        tools:text="과목명" />
+
+    <TextView
+        android:id="@+id/subject_major"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subject_year"
+        tools:text="학과" />
+
+    <TextView
+        android:id="@+id/subject_credit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/subject_major"
+        app:layout_constraintStart_toEndOf="@+id/subject_major"
+        app:layout_constraintTop_toTopOf="@+id/subject_major"
+        tools:text="x학점" />
+
+    <TextView
+        android:id="@+id/subject_day_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/subject_major"
+        app:layout_constraintStart_toEndOf="@+id/subject_credit"
+        app:layout_constraintTop_toTopOf="@+id/subject_major"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="요일123" />
+
+    <TextView
+        android:id="@+id/subject_professor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/subject_major"
+        app:layout_constraintStart_toEndOf="@+id/subject_day_time"
+        app:layout_constraintTop_toTopOf="@+id/subject_major"
+        tools:text="교수님" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

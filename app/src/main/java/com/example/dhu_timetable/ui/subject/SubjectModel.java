@@ -1,6 +1,6 @@
 package com.example.dhu_timetable.ui.subject;
 
-public class SubjectItem {
+public class SubjectModel {
     private String text;
 
     public String getText() {

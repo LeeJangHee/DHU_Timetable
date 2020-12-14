@@ -1,69 +1,85 @@
 package com.example.dhu_timetable.ui.subject;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.Transformations;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.AutoTransition;
+import androidx.transition.TransitionManager;
 
 import com.example.dhu_timetable.R;
+import com.google.android.material.card.MaterialCardView;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.List;
 
-import java.util.ArrayList;
+public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewholder> {
 
-public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ItemViewHolder> {
+    private Context context;
+    private List<SubjectModel> subjectModels;
 
-    // 어뎁터에 들어갈 리스트
-    private final ArrayList<SubjectItem> subjectItemArrayList = new ArrayList<>();
+    public SubjectAdapter(Context context, List<SubjectModel> subjectModels) {
+        this.context = context;
+        this.subjectModels = subjectModels;
+    }
+
+    public void setSubjectList(List<SubjectModel> subjectModels) {
+        this.subjectModels = subjectModels;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
-    public SubjectAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_subject_item, parent, false);
-        return new ItemViewHolder(view);
+    public MyViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.fragment_test_item, parent, false);
+        return new MyViewholder(view);
     }
 
-    /**
-     * 아이템 재사용을 위한 함수
-     * @param holder = 뷰 어뎁터
-     * @param position = 어뎁터아이템 위치
-     */
     @Override
-    public void onBindViewHolder(@NonNull SubjectAdapter.ItemViewHolder holder, int position) {
-        holder.onBind(subjectItemArrayList.get(position));
+    public void onBindViewHolder(@NonNull MyViewholder holder, int position) {
+        holder.textView.setText(this.subjectModels.get(position).getText());
+        holder.materialCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.constraintLayout.getVisibility() == View.GONE) {
+                    TransitionManager.beginDelayedTransition(holder.materialCardView, new AutoTransition());
+                    holder.constraintLayout.setVisibility(View.VISIBLE);
+                    holder.imageView.setImageResource(R.drawable.ic_baseline_expand_less_24);
+                } else {
+                    TransitionManager.beginDelayedTransition(holder.materialCardView, new AutoTransition());
+                    holder.constraintLayout.setVisibility(View.GONE);
+                    holder.imageView.setImageResource(R.drawable.ic_baseline_expand_more_24);
+                }
+            }
+        });
     }
 
-    /**
-     * 리사이클러뷰 크기 초기화
-     * @return = 아이템의 크기
-     */
     @Override
     public int getItemCount() {
-        return subjectItemArrayList.size();
+        return this.subjectModels.size();
     }
 
-    /**
-     * 리스트에 아이템 넣기
-     * @param subjectItem = 불러올 아이템
-     */
-    public void addItem(SubjectItem subjectItem) {
-        subjectItemArrayList.add(subjectItem);
-    }
+    public class MyViewholder extends RecyclerView.ViewHolder {
 
-    public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        private final TextView test;
+        TextView textView;
+        MaterialCardView materialCardView;
+        ConstraintLayout constraintLayout;
+        ImageView imageView;
 
-        public ItemViewHolder(@NonNull View itemView) {
+        public MyViewholder(@NonNull View itemView) {
             super(itemView);
-            test = (TextView) itemView.findViewById(R.id.subject_item);
-        }
-
-        public void onBind(@NotNull SubjectItem subjectItem) {
-            test.setText(subjectItem.getText());
+            textView = (TextView) itemView.findViewById(R.id.test);
+            materialCardView = (MaterialCardView) itemView.findViewById(R.id.cardView);
+            constraintLayout = (ConstraintLayout) itemView.findViewById(R.id.expandable_view);
+            imageView = (ImageView) itemView.findViewById(R.id.image);
         }
     }
+
 
 }
