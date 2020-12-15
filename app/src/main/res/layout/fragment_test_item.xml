@@ -7,11 +7,11 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="8dp"
-    android:clickable="true"
     app:cardElevation="8dp"
     app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -28,15 +28,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="테스트" />
 
-        <ImageView
-            android:id="@+id/image"
+        <ImageButton
+            android:id="@+id/image_btn"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginHorizontal="8dp"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_baseline_expand_more_24"
             app:layout_constraintBottom_toBottomOf="@+id/test"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/test" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/expandable_view"
@@ -46,9 +48,6 @@
             android:paddingBottom="12dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/test">
 
             <TextView
@@ -59,7 +58,8 @@
                 android:text="테스트123123123"
                 app:layout_constraintBottom_toTopOf="@+id/expandable_text2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread_inside" />
 
             <TextView
                 android:id="@+id/expandable_text2"
@@ -80,7 +80,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/expandable_text2" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </com.google.android.material.card.MaterialCardView>

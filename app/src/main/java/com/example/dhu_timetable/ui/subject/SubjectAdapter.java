@@ -4,12 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.Transformations;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
@@ -44,17 +43,18 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
     @Override
     public void onBindViewHolder(@NonNull MyViewholder holder, int position) {
         holder.textView.setText(this.subjectModels.get(position).getText());
-        holder.materialCardView.setOnClickListener(new View.OnClickListener() {
+        holder.imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AutoTransition transition = new AutoTransition();
+
                 if (holder.constraintLayout.getVisibility() == View.GONE) {
-                    TransitionManager.beginDelayedTransition(holder.materialCardView, new AutoTransition());
+                    TransitionManager.beginDelayedTransition(holder.materialCardView, transition);
+                    holder.imageBtn.setImageResource(R.drawable.ic_baseline_expand_less_24);
                     holder.constraintLayout.setVisibility(View.VISIBLE);
-                    holder.imageView.setImageResource(R.drawable.ic_baseline_expand_less_24);
                 } else {
-                    TransitionManager.beginDelayedTransition(holder.materialCardView, new AutoTransition());
+                    holder.imageBtn.setImageResource(R.drawable.ic_baseline_expand_more_24);
                     holder.constraintLayout.setVisibility(View.GONE);
-                    holder.imageView.setImageResource(R.drawable.ic_baseline_expand_more_24);
                 }
             }
         });
@@ -70,14 +70,14 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
         TextView textView;
         MaterialCardView materialCardView;
         ConstraintLayout constraintLayout;
-        ImageView imageView;
+        ImageButton imageBtn;
 
         public MyViewholder(@NonNull View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.test);
             materialCardView = (MaterialCardView) itemView.findViewById(R.id.cardView);
             constraintLayout = (ConstraintLayout) itemView.findViewById(R.id.expandable_view);
-            imageView = (ImageView) itemView.findViewById(R.id.image);
+            imageBtn = (ImageButton) itemView.findViewById(R.id.image_btn);
         }
     }
 
