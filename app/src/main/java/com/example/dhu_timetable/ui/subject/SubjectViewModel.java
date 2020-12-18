@@ -18,6 +18,9 @@ public class SubjectViewModel extends ViewModel {
     private MutableLiveData<List<SubjectModel>> subjectList = new MutableLiveData<>();
     private MutableLiveData<MaterialCardView> cardview = new MutableLiveData<>();
 
+    /**
+     * 라이브 데이터 초기화 부분
+     */
     public SubjectViewModel() {
         List<SubjectModel> models = new ArrayList<>();
         for (int i = 0; i < 30; i++) {

@@ -36,7 +36,7 @@ public class SectionsPagerAdapter extends FragmentStateAdapter {
             case 0:
                 return new SubjectFragment();
             default:
-                return PlaceholderFragment.newInstance(position + 1);
+                return new TimetableFragment();
         }
 
     }

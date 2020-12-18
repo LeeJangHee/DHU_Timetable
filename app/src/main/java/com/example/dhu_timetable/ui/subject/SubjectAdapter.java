@@ -43,11 +43,11 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
     @Override
     public void onBindViewHolder(@NonNull MyViewholder holder, int position) {
         holder.textView.setText(this.subjectModels.get(position).getText());
+        // 카드뷰 클릭시 이벤트 발생
         holder.imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 AutoTransition transition = new AutoTransition();
-
                 if (holder.constraintLayout.getVisibility() == View.GONE) {
                     TransitionManager.beginDelayedTransition(holder.materialCardView, transition);
                     holder.imageBtn.setImageResource(R.drawable.ic_baseline_expand_less_24);
@@ -72,6 +72,10 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
         ConstraintLayout constraintLayout;
         ImageButton imageBtn;
 
+        /**
+         * 리사이클러뷰 아이템 뷰 부분
+         * @param itemView = 각각의 리사이클러 아이템 뷰
+         */
         public MyViewholder(@NonNull View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.test);

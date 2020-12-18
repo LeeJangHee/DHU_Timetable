@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.dhu_timetable"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -43,6 +43,9 @@ dependencies {
 
     // RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    // Timetabale
+    implementation 'com.github.tlaabs:TimetableView:1.0.3-fx1'
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

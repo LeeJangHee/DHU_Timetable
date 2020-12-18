@@ -3,4 +3,12 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="tab_text_1">개설과목</string>
     <string name="tab_text_2">시간표</string>
+    <string-array name="header_title">
+        <item></item>
+        <item>월</item>
+        <item>화</item>
+        <item>수</item>
+        <item>목</item>
+        <item>금</item>
+    </string-array>
 </resources>
