@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.dhu_timetable.ui.subject.SubjectFragment;
+import com.example.dhu_timetable.ui.timetable.TimetableFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, tabTitle.size());
 
+        // 뷰 스와이프 기능
         ViewPager2 viewPager2 = findViewById(R.id.view_pager);
         viewPager2.setAdapter(sectionsPagerAdapter);
 
@@ -37,7 +38,5 @@ public class MainActivity extends AppCompatActivity {
                         tab.setText(getResources().getString(tabTitle.get(position)));
                     }
                 }).attach();
-
-        //TODO: List = Expend and Collapse Design
     }
 }

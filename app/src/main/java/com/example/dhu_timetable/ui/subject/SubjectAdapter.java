@@ -47,6 +47,8 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
         holder.imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO: 리사이클러뷰 아이템 -> 시간표로 저장
+                // 과목명, 시작시간, 끝시간, 강의실, 교수님
                 AutoTransition transition = new AutoTransition();
                 if (holder.constraintLayout.getVisibility() == View.GONE) {
                     TransitionManager.beginDelayedTransition(holder.materialCardView, transition);

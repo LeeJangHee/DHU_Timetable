@@ -1,4 +1,4 @@
-package com.example.dhu_timetable.ui.main;
+package com.example.dhu_timetable.ui.timetable;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,7 +31,7 @@ public class TimetableFragment extends Fragment {
         timetable.setOnStickerSelectEventListener(new TimetableView.OnStickerSelectedListener() {
             @Override
             public void OnStickerSelected(int idx, ArrayList<Schedule> schedules) {
-
+                // TODO: 수강 취소 이벤트
             }
         });
 
