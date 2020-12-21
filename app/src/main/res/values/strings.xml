@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DHU_Timetable</string>
+    <string name="app_name">기린바구니</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="tab_text_1">개설과목</string>
     <string name="tab_text_2">시간표</string>
