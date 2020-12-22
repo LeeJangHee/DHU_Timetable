@@ -13,12 +13,13 @@ import com.google.android.material.button.MaterialButton;
 public class LoginActivity extends AppCompatActivity {
 
 
-    private Button btn_login;
+//    private Button btn_login;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+/*
 
         btn_login = (Button) findViewById(R.id.login);
 
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+*/
 
         //TODO: 구아로 서비스로 시행될 예정, 학교 이메일로만 로그인 가능
 
