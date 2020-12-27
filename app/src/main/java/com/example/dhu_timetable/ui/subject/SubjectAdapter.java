@@ -23,9 +23,8 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
     private Context context;
     private List<SubjectModel> subjectModels;
 
-    public SubjectAdapter(Context context, List<SubjectModel> subjectModels) {
+    public SubjectAdapter(Context context) {
         this.context = context;
-        this.subjectModels = subjectModels;
     }
 
     public void setSubjectList(List<SubjectModel> subjectModels) {
@@ -36,27 +35,40 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
     @NonNull
     @Override
     public MyViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.fragment_test_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.fragment_subject_item, parent, false);
         return new MyViewholder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewholder holder, int position) {
-        holder.textView.setText(this.subjectModels.get(position).getText());
+        // 데이터 모델 초기화
+        // 기본데이터 : 년도, 학기, 과목명, 학과, 학점, 요일, 시간, 교수
+        holder.subject_year.setText(this.subjectModels.get(position).getYear()+"");
+        holder.subject_semester.setText(this.subjectModels.get(position).getSemester() / 10+"학기");
+        holder.subject_name.setText(this.subjectModels.get(position).getSubjectName()+"");
+        holder.subject_major.setText(this.subjectModels.get(position).getMajorName()+"");
+        holder.subject_score.setText(this.subjectModels.get(position).getScore()+"학점");
+        holder.subject_day_time.setText(this.subjectModels.get(position).getPublishDay()+"");
+        holder.subject_professor.setText(this.subjectModels.get(position).getProfessor()+"");
+
+        // 확장데이터 : 강의실, 학년, 사이버강의
+
+
         // 카드뷰 클릭시 이벤트 발생
         holder.imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: 리사이클러뷰 아이템 -> 시간표로 저장
-                // 과목명, 시작시간, 끝시간, 강의실, 교수님
                 AutoTransition transition = new AutoTransition();
                 if (holder.constraintLayout.getVisibility() == View.GONE) {
                     TransitionManager.beginDelayedTransition(holder.materialCardView, transition);
                     holder.imageBtn.setImageResource(R.drawable.ic_baseline_expand_less_24);
                     holder.constraintLayout.setVisibility(View.VISIBLE);
+                    holder.subject_name.setSelected(true);
                 } else {
                     holder.imageBtn.setImageResource(R.drawable.ic_baseline_expand_more_24);
                     holder.constraintLayout.setVisibility(View.GONE);
+                    holder.subject_name.setSelected(false);
                 }
             }
         });
@@ -64,12 +76,20 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
 
     @Override
     public int getItemCount() {
-        return this.subjectModels.size();
+        if (this.subjectModels != null)
+            return this.subjectModels.size();
+        return 0;
     }
 
     public class MyViewholder extends RecyclerView.ViewHolder {
 
-        TextView textView;
+        TextView subject_year;
+        TextView subject_semester;
+        TextView subject_name;
+        TextView subject_major;
+        TextView subject_score;
+        TextView subject_day_time;
+        TextView subject_professor;
         MaterialCardView materialCardView;
         ConstraintLayout constraintLayout;
         ImageButton imageBtn;
@@ -80,10 +100,17 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
          */
         public MyViewholder(@NonNull View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.test);
+            subject_year = (TextView) itemView.findViewById(R.id.subject_year);
+            subject_semester = (TextView) itemView.findViewById(R.id.subject_semester);
+            subject_name = (TextView) itemView.findViewById(R.id.subject_name);
+            subject_major = (TextView) itemView.findViewById(R.id.subject_major);
+            subject_score = (TextView) itemView.findViewById(R.id.subject_score);
+            subject_day_time = (TextView) itemView.findViewById(R.id.subject_day_time);
+            subject_professor = (TextView) itemView.findViewById(R.id.subject_professor);
             materialCardView = (MaterialCardView) itemView.findViewById(R.id.cardView);
             constraintLayout = (ConstraintLayout) itemView.findViewById(R.id.expandable_view);
             imageBtn = (ImageButton) itemView.findViewById(R.id.image_btn);
+
         }
     }
 
