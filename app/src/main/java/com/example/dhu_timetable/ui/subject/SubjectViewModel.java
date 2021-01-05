@@ -17,14 +17,18 @@ public class SubjectViewModel extends ViewModel {
     private MutableLiveData<List<SubjectModel>> subjectData;
     private SubjectRepo subjectRepo;
 
-    /**
-     * 라이브 데이터 초기화 부분
-     */
-    public void init() {
+    public SubjectViewModel() {
         if (subjectData != null) {
             return;
         }
         subjectRepo = SubjectRepo.getInstance();
+    }
+
+
+    /**
+     * 라이브 데이터 초기화 부분
+     */
+    public void init() {
         subjectData = subjectRepo.getData();
         Log.d(TAG, "init: "+subjectData.getValue());
     }

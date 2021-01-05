@@ -43,15 +43,17 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
     public void onBindViewHolder(@NonNull MyViewholder holder, int position) {
         // 데이터 모델 초기화
         // 기본데이터 : 년도, 학기, 과목명, 학과, 학점, 요일, 시간, 교수
-        holder.subject_year.setText(this.subjectModels.get(position).getYear()+"");
-        holder.subject_semester.setText(this.subjectModels.get(position).getSemester() / 10+"학기");
-        holder.subject_name.setText(this.subjectModels.get(position).getSubjectName()+"");
-        holder.subject_major.setText(this.subjectModels.get(position).getMajorName()+"");
-        holder.subject_score.setText(this.subjectModels.get(position).getScore()+"학점");
-        holder.subject_day_time.setText(this.subjectModels.get(position).getPublishDay()+"");
-        holder.subject_professor.setText(this.subjectModels.get(position).getProfessor()+"");
+        SubjectModel models = this.subjectModels.get(position);
+        holder.subject_year.setText(models.getYear() + "");
+        holder.subject_semester.setText(models.getSemester() / 10 + "학기");
+        holder.subject_name.setText(models.getSubjectName() + "");
+        holder.subject_major.setText(models.getMajorName() + "");
+        holder.subject_score.setText(models.getScore() + "학점");
+        holder.subject_day_time.setText(models.getPublishDay() + "");
+        holder.subject_professor.setText(models.getProfessor() + "");
 
-        // 확장데이터 : 강의실, 학년, 사이버강의
+        // 확장데이터 : 강의실, 학년, 사이버강의, 이수구분
+        holder.expandable_classroom.setText("강의실: " + models.getClassroom());
 
 
         // 카드뷰 클릭시 이벤트 발생
@@ -90,12 +92,14 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
         TextView subject_score;
         TextView subject_day_time;
         TextView subject_professor;
+        TextView expandable_classroom;
         MaterialCardView materialCardView;
         ConstraintLayout constraintLayout;
         ImageButton imageBtn;
 
         /**
          * 리사이클러뷰 아이템 뷰 부분
+         *
          * @param itemView = 각각의 리사이클러 아이템 뷰
          */
         public MyViewholder(@NonNull View itemView) {
@@ -107,6 +111,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
             subject_score = (TextView) itemView.findViewById(R.id.subject_score);
             subject_day_time = (TextView) itemView.findViewById(R.id.subject_day_time);
             subject_professor = (TextView) itemView.findViewById(R.id.subject_professor);
+            expandable_classroom = (TextView) itemView.findViewById(R.id.expandable_classroom);
             materialCardView = (MaterialCardView) itemView.findViewById(R.id.cardView);
             constraintLayout = (ConstraintLayout) itemView.findViewById(R.id.expandable_view);
             imageBtn = (ImageButton) itemView.findViewById(R.id.image_btn);
