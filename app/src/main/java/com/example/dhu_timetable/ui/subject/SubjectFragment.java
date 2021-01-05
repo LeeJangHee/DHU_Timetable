@@ -42,14 +42,13 @@ public class SubjectFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(SubjectViewModel.class);
+        viewModel.init();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_subject_list, container, false);
-
-        viewModel.init();
 
         // 리사이클러뷰
         RecyclerView recyclerView = view.findViewById(R.id.subject_recyclerview);
