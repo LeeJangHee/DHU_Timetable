@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="major_name">
+        <item></item>
+        <item>IoT소프트웨어전공</item>
+        <item>IT의료데이터과학전공</item>
+        <item>간호학과</item>
+        <item>건축디자인학부</item>
+        <item>건축학전공</item>
+        <item>경찰행정학과</item>
+        <item>교양교육과정</item>
+        <item>글로벌비즈니스전공</item>
+        <item>기타(평교·교직·기타)과정</item>
+        <item>노인복지학전공</item>
+        <item>다문화복지한국어학과</item>
+        <item>메디푸드HMR산업학과</item>
+        <item>물류통상전공</item>
+        <item>물리치료학과</item>
+        <item>미술치료학과</item>
+        <item>미술치료학전공</item>
+        <item>바이오산업융합학부</item>
+        <item>반려동물보건학과</item>
+        <item>방재안전관리전공</item>
+        <item>보건관리전공</item>
+        <item>보건학부</item>
+        <item>뷰티케어산업학과</item>
+        <item>뷰티케어학과</item>
+        <item>산림비즈니스학과</item>
+        <item>산업디자인공학전공</item>
+        <item>산업안전보건전공</item>
+        <item>산업품질공학전공</item>
+        <item>상담심리학과</item>
+        <item>상담심리학전공</item>
+        <item>세무금융전공</item>
+        <item>소방방재안전학부</item>
+        <item>소방방재환경전공</item>
+        <item>스마트IT전공</item>
+        <item>스마트빅데이터전공</item>
+        <item>스마트시티건축학전공</item>
+        <item>스마트영상애니메이션전공</item>
+        <item>시니어스포츠학전공</item>
+        <item>식품생명공학전공</item>
+        <item>식품영양학전공</item>
+        <item>식품조리학전공</item>
+        <item>실내디자인전공</item>
+        <item>실버스포츠학전공</item>
+        <item>아동복지학과</item>
+        <item>아동복지학전공</item>
+        <item>아로마약리학전공</item>
+        <item>약선전공</item>
+        <item>의료경영학과</item>
+        <item>의료공학전공</item>
+        <item>의료서비스경영학전공</item>
+        <item>임상병리학과</item>
+        <item>재활의료공학전공</item>
+        <item>제약공학과</item>
+        <item>중등특수교육과</item>
+        <item>청소년교육상담학과</item>
+        <item>청소년교육상담학전공</item>
+        <item>평생교육융합학과</item>
+        <item>한방스포츠의학전공</item>
+        <item>한약개발학전공</item>
+        <item>한의예과</item>
+        <item>한의학과</item>
+        <item>항공서비스학전공</item>
+        <item>향산업전공</item>
+        <item>호텔관광학전공</item>
+        <item>호텔외식조리전공</item>
+        <item>화장품·제약자율전공</item>
+        <item>화장품공학부</item>
+        <item>화장품공학전공</item>
+        <item>화장품소재공학전공</item>
+        <item>화장품약리학전공</item>
+    </string-array>
+
+
+    <string-array name="day">
+        <item></item>
+        <item>월요일</item>
+        <item>화요일</item>
+        <item>수요일</item>
+        <item>목요일</item>
+        <item>금요일</item>
+    </string-array>
+</resources>
