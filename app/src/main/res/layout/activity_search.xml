@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <EditText
+        android:id="@+id/edit_subject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/search_text_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_major"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/search_text_2"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/edit_subject"
+        app:layout_constraintTop_toBottomOf="@+id/edit_subject" />
+
+    <Spinner
+        android:id="@+id/spinner_major"
+        android:entries="@array/major_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/edit_subject"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView_major"
+        app:layout_constraintTop_toBottomOf="@+id/edit_subject" />
+
+    <TextView
+        android:id="@+id/textView_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/search_text_3"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/textView_major"
+        app:layout_constraintTop_toBottomOf="@+id/textView_major" />
+
+    <Spinner
+        android:id="@+id/spinner_day"
+        android:entries="@array/day"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_major"
+        app:layout_constraintStart_toEndOf="@+id/textView_day"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_major" />
+
+    <CheckBox
+        android:id="@+id/checkBox_cyber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/search_text_7"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_day"
+        app:layout_constraintStart_toStartOf="@+id/textView_day"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_day" />
+
+    <Button
+        android:id="@+id/button_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/search_text_4"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_cyber" />
+
+    <Button
+        android:id="@+id/button_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/search_text_5"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_confirm"
+        app:layout_constraintStart_toStartOf="@+id/textView_day"
+        app:layout_constraintTop_toBottomOf="@+id/button_reset" />
+
+    <Button
+        android:id="@+id/button_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/search_text_6"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_day"
+        app:layout_constraintStart_toEndOf="@+id/button_cancel"
+        app:layout_constraintTop_toBottomOf="@+id/button_reset" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
