@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.airbnb.lottie.LottieAnimationView;
 
 public class LoadingActivity extends AppCompatActivity {
-    // 로딩 시간 4초
-    private final int LOADING_TIME = 4000;
+    // 로딩 시간 3초
+    private final int LOADING_TIME = 3000;
 
 
     @Override
