@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">기린바구니</string>
     <string name="title_activity_main">MainActivity</string>
+
+
     <string name="tab_text_1">개설과목</string>
     <string name="tab_text_2">시간표</string>
     <string name="search_text_1">강의명</string>
@@ -11,6 +13,7 @@
     <string name="search_text_6">확인</string>
     <string name="search_text_7">사이버 강의 여부</string>
 
+
     <string-array name="header_title">
         <item></item>
         <item>월</item>
@@ -19,6 +22,10 @@
         <item>목</item>
         <item>금</item>
     </string-array>
+
+
+    <string name="btn_subject_item_text">담기</string>
+
 
 
 </resources>
