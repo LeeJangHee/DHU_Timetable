@@ -30,6 +30,7 @@
             android:name=".LoginActivity"
             android:theme="@style/Theme.Design.NoActionBar" >
         </activity>
+        <activity android:name=".ui.search.SearchActivity" />
     </application>
 
 </manifest>
