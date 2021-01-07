@@ -11,7 +11,6 @@
     <string name="search_text_6">확인</string>
     <string name="search_text_7">사이버 강의 여부</string>
 
-    <string name="btn_subject_item_text">담기</string>
     <string-array name="header_title">
         <item></item>
         <item>월</item>
@@ -21,5 +20,6 @@
         <item>금</item>
     </string-array>
 
+    <string name="btn_subject_item_text">담기</string>
 
 </resources>
