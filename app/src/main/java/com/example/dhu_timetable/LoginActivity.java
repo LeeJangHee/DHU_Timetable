@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -26,9 +28,11 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "janghee";
+    private static final int RC_SIGN_IN = 9001;             // 구글 로그인 결과 코드
+    private static final String DHU_EMAIL = "dhu.ac.kr";    // 한의대 이메일
+
     private SignInButton signInButton;              // 구글 로그인 버튼
     private FirebaseAuth auth;                      // 파이어베이스 인증 객체
-    private static final int RC_SIGN_IN = 9001;     // 구글 로그인 결과 코드
 
     private GoogleSignInClient googleSignInClient;
 
@@ -37,7 +41,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // 사용자가 현재 로그인되어 있는지 확인
         FirebaseUser currentUser = auth.getCurrentUser();
-        // UI Update ...
+        // 현재 로그인 되어 있다면
+        if (currentUser != null) {
+            if (currentUser.getEmail().contains(DHU_EMAIL)) {
+                googleSignIn();
+            } else {
+                googleSignOut();
+            }
+        }
     }
 
     @Override
@@ -77,7 +88,27 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
+     * 구글 로그아웃 & 인증 제거
+     */
+    private void googleSignOut() {
+        // Firebase sign out
+        auth.signOut();
+
+        // Google sign out
+        googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+            }
+        });
+        // Google revoke access
+//        googleSignInClient.revokeAccess();
+        Log.d(TAG, "googleSignOut: ");
+    }
+
+    /**
      * startActivityForResult(...) 실행시 발생되는 함수
+     *
      * @param requestCode = 요청받은 코드번호
      * @param resultCode  = ??
      * @param data        = 인텐트 데이터
@@ -92,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 // 구글 로그인 성공 --> 파이어베이스로 인증
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getEmail());
                 firebaseAuthWithGoogle(account.getIdToken());
 
             } catch (ApiException e) {
@@ -118,15 +149,33 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = auth.getCurrentUser();
+                            // 이메일 분리
+                            if (user.getEmail().contains(DHU_EMAIL)) {
+                                // 한의대 이메일 = true
+                                Toast.makeText(LoginActivity.this, "로그인 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                nextActivity();
+
+                            } else {
+                                // 한의대 이메일 = false
+                                Toast.makeText(LoginActivity.this, "한의대 이메일로 로그인 해주세요.", Toast.LENGTH_SHORT).show();
+                                googleSignOut();
+                            }
+
                         } else {
                             // Sign in fails
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                         }
-
-                        // ...
-
                     }
                 });
+    }
+
+    /**
+     * 로그인 성공 --> 다음 액티비티
+     */
+    private void nextActivity() {
+        Intent it = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(it);
+        finish();
     }
 
 }
