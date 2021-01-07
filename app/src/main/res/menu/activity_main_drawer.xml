@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_notice"
+            android:icon="@drawable/ic_baseline_notifications_24"
+            android:title="공지사항" />
+        <item
+            android:id="@+id/nav_bugreport"
+            android:icon="@drawable/ic_baseline_bug_report_24"
+            android:title="버그리포트" />
+        <item
+            android:id="@+id/nav_license"
+            android:icon="@drawable/ic_baseline_source_24"
+            android:title="오픈소스 라이센스" />
+    </group>
+</menu>
