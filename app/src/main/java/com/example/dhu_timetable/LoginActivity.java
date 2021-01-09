@@ -25,6 +25,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "janghee";
@@ -103,7 +106,6 @@ public class LoginActivity extends AppCompatActivity {
         });
         // Google revoke access
 //        googleSignInClient.revokeAccess();
-        Log.d(TAG, "googleSignOut: ");
     }
 
     /**
@@ -173,9 +175,25 @@ public class LoginActivity extends AppCompatActivity {
      * 로그인 성공 --> 다음 액티비티
      */
     private void nextActivity() {
+        String[] date = currentDate();
         Intent it = new Intent(LoginActivity.this, MainActivity.class);
+        it.putExtra("YEAR", date[0]);
+        it.putExtra("MONTH", date[1]);
         startActivity(it);
         finish();
+    }
+
+    /**
+     * 현재 날짜 정보 저장 --> 초기 리스트 불러올때 사용
+     * @return = {year, month}
+     */
+    private String[] currentDate() {
+        Calendar date = Calendar.getInstance();
+
+        String year = String.valueOf(date.get(date.YEAR));
+        String month = String.valueOf(date.get(date.MONTH) + 1);
+        String[] dateArray = {year, month};
+        return dateArray;
     }
 
 }

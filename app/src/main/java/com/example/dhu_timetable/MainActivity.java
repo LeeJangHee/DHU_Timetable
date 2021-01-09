@@ -29,12 +29,20 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView nav_view;
     private DrawerLayout drawerLayout;
 
+    private String currentYear;
+    private String currentMonth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, tabTitle.size());
+        // 현재 시간 정보 받아오기
+        Intent it = getIntent();
+        currentYear = it.getStringExtra("YEAR");
+        currentMonth = it.getStringExtra("MONTH");
+
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, tabTitle.size(), currentYear, currentMonth);
         toolbar = (MaterialToolbar)findViewById(R.id.toolbar);
         nav_view = (NavigationView)findViewById(R.id.nav_view);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

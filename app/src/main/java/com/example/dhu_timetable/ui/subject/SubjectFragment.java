@@ -23,17 +23,20 @@ import java.util.List;
  */
 public class SubjectFragment extends Fragment {
 
-    private static final String ARG_SECTION_NUMBER = "section_number";
+    private static final String NOW_YEAR = "YEAR";
+    private static final String NOW_MONTH = "MONTH";
 
     private List<SubjectModel> subjectList = new ArrayList<>();
     private SubjectAdapter adapter;
     private SubjectViewModel viewModel;
 
     // 필요하면 사용하기 위한 newInstance
-    public static SubjectFragment newInstance(int index) {
+    public static SubjectFragment newInstance(String year, String month) {
         SubjectFragment fragment = new SubjectFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(ARG_SECTION_NUMBER, index);
+        bundle.putString(NOW_YEAR, year);
+        bundle.putString(NOW_MONTH, month);
+
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -42,7 +45,10 @@ public class SubjectFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(SubjectViewModel.class);
-        viewModel.init();
+        viewModel.init();   // 테스트 용
+        // 실제 사용
+//        viewModel.init(getArguments().getString(NOW_YEAR),
+//                getArguments().getString(NOW_MONTH));
     }
 
     @Nullable

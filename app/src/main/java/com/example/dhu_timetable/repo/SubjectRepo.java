@@ -26,7 +26,7 @@ public class SubjectRepo {
     }
 
     private APIService service;
-    String TAG = "TAG";
+    String TAG = "janghee";
 
     public SubjectRepo() {
         service = RetrofitConnect.getRetrofitClient().create(APIService.class);
@@ -35,7 +35,7 @@ public class SubjectRepo {
 
     public MutableLiveData<List<SubjectModel>> getData() {
         MutableLiveData<List<SubjectModel>> subjectData = new MutableLiveData<>();
-        service.getSubject().enqueue(new Callback<List<SubjectModel>>() {
+        service.test().enqueue(new Callback<List<SubjectModel>>() {
             @Override
             public void onResponse(Call<List<SubjectModel>> call, Response<List<SubjectModel>> response) {
                 if (response.isSuccessful()) {
@@ -50,6 +50,26 @@ public class SubjectRepo {
             }
         });
 
+        return subjectData;
+    }
+
+    public MutableLiveData<List<SubjectModel>> getDataDef(String year, String semester) {
+        MutableLiveData<List<SubjectModel>> subjectData = new MutableLiveData<>();
+        service.getSubject(year, semester).enqueue(new Callback<List<SubjectModel>>() {
+            @Override
+            public void onResponse(Call<List<SubjectModel>> call, Response<List<SubjectModel>> response) {
+                if (response.isSuccessful()) {
+                    subjectData.setValue(response.body());
+                    Log.d(TAG, "Repo onResponse: "+subjectData.getValue());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SubjectModel>> call, Throwable t) {
+                Log.d(TAG, "Repo onFailure: "+t.getMessage());
+            }
+        });
+        
         return subjectData;
     }
 

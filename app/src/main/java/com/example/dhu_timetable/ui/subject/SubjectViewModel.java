@@ -33,6 +33,19 @@ public class SubjectViewModel extends ViewModel {
         Log.d(TAG, "init: "+subjectData.getValue());
     }
 
+    public void init(String year, String month) {
+        String semester = "";
+        // 학기 정하기
+        if (Integer.parseInt(month) > 0 && Integer.parseInt(month) <= 6) {
+            semester = "10";    // 1학기
+        } else if (Integer.parseInt(month) > 6 && Integer.parseInt(month) <= 12) {
+            semester = "20";    // 2학기
+        }
+
+        subjectData = subjectRepo.getDataDef(year, semester);
+        Log.d(TAG, "init: "+subjectData.getValue());
+    }
+
     public MutableLiveData<List<SubjectModel>> getSubjectData() {
         return subjectData;
     }
