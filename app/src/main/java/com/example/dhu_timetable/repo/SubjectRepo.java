@@ -25,7 +25,7 @@ public class SubjectRepo {
         return instance;
     }
 
-    private APIService service;
+    private final APIService service;
     String TAG = "janghee";
 
     public SubjectRepo() {
@@ -40,13 +40,13 @@ public class SubjectRepo {
             public void onResponse(Call<List<SubjectModel>> call, Response<List<SubjectModel>> response) {
                 if (response.isSuccessful()) {
                     subjectData.setValue(response.body());
-                    Log.d(TAG, "Repo onResponse: "+subjectData.getValue());
+                    Log.d(TAG, "Repo onResponse: 과목성공");
                 }
             }
 
             @Override
             public void onFailure(Call<List<SubjectModel>> call, Throwable t) {
-                Log.d(TAG, "Repo onFailure: "+t.getMessage());
+                Log.w(TAG, "Repo onFailure: "+t.getMessage(), t);
             }
         });
 
@@ -60,13 +60,13 @@ public class SubjectRepo {
             public void onResponse(Call<List<SubjectModel>> call, Response<List<SubjectModel>> response) {
                 if (response.isSuccessful()) {
                     subjectData.setValue(response.body());
-                    Log.d(TAG, "Repo onResponse: "+subjectData.getValue());
+                    Log.d(TAG, "Repo onResponse: 과목 성공");
                 }
             }
 
             @Override
             public void onFailure(Call<List<SubjectModel>> call, Throwable t) {
-                Log.d(TAG, "Repo onFailure: "+t.getMessage());
+                Log.w(TAG, "Repo onFailure: "+t.getMessage(), t);
             }
         });
         

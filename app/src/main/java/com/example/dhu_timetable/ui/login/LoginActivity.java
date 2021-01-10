@@ -1,4 +1,4 @@
-package com.example.dhu_timetable;
+package com.example.dhu_timetable.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.auth.api.Auth;
+import com.example.dhu_timetable.R;
+import com.example.dhu_timetable.repo.UsersRepo;
+import com.example.dhu_timetable.ui.main.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -25,7 +27,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class LoginActivity extends AppCompatActivity {
@@ -101,11 +102,11 @@ public class LoginActivity extends AppCompatActivity {
         googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-
+                Toast.makeText(LoginActivity.this, "한의대 이메일로 로그인 해주세요.", Toast.LENGTH_SHORT).show();
             }
         });
         // Google revoke access
-//        googleSignInClient.revokeAccess();
+        googleSignInClient.revokeAccess();
     }
 
     /**
@@ -155,11 +156,10 @@ public class LoginActivity extends AppCompatActivity {
                             if (user.getEmail().contains(DHU_EMAIL)) {
                                 // 한의대 이메일 = true
                                 Toast.makeText(LoginActivity.this, "로그인 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                                nextActivity();
+                                nextActivity(user.getEmail(), user.getDisplayName(), String.valueOf(user.getPhotoUrl()));
 
                             } else {
                                 // 한의대 이메일 = false
-                                Toast.makeText(LoginActivity.this, "한의대 이메일로 로그인 해주세요.", Toast.LENGTH_SHORT).show();
                                 googleSignOut();
                             }
 
@@ -173,9 +173,16 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * 로그인 성공 --> 다음 액티비티
+     * 유저 정보 서버 저장
+     *
+     * @param email   = 유저 이메일
+     * @param name    = 유저 이름
+     * @param profile = 유저 프로필
      */
-    private void nextActivity() {
+    private void nextActivity(String email, String name, String profile) {
         String[] date = currentDate();
+        UsersRepo usersRepo = UsersRepo.getInstance();
+        usersRepo.setUser(email, name, profile);
         Intent it = new Intent(LoginActivity.this, MainActivity.class);
         it.putExtra("YEAR", date[0]);
         it.putExtra("MONTH", date[1]);
@@ -185,6 +192,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * 현재 날짜 정보 저장 --> 초기 리스트 불러올때 사용
+     *
      * @return = {year, month}
      */
     private String[] currentDate() {

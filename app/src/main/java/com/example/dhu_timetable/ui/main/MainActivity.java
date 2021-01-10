@@ -1,4 +1,4 @@
-package com.example.dhu_timetable;
+package com.example.dhu_timetable.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.dhu_timetable.ui.main.SectionsPagerAdapter;
+import com.example.dhu_timetable.R;
 import com.example.dhu_timetable.ui.search.SearchActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;

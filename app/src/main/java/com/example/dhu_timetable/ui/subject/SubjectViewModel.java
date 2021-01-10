@@ -13,7 +13,7 @@ import java.util.List;
  * 수강정보 비지니스 로직 구현
  */
 public class SubjectViewModel extends ViewModel {
-    private static final String TAG = "TAG";
+    private static final String TAG = "janghee";
     private MutableLiveData<List<SubjectModel>> subjectData;
     private SubjectRepo subjectRepo;
 

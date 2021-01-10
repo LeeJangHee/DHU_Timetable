@@ -1,4 +1,4 @@
-package com.example.dhu_timetable;
+package com.example.dhu_timetable.ui.loading;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.dhu_timetable.ui.login.LoginActivity;
+import com.example.dhu_timetable.R;
 
 public class LoadingActivity extends AppCompatActivity {
     // 로딩 시간 3초

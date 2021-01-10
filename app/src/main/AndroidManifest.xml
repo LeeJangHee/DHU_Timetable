@@ -13,12 +13,12 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.DHU_Timetable">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.DHU_Timetable.NoActionBar">
         </activity>
         <activity
-            android:name=".LoadingActivity"
+            android:name=".ui.loading.LoadingActivity"
             android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:theme="@style/Theme.Design.NoActionBar" >
         </activity>
         <activity android:name=".ui.search.SearchActivity" />
