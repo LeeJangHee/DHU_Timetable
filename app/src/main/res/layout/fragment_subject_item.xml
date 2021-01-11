@@ -134,29 +134,39 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:text="강의실"
-                app:layout_constraintBottom_toTopOf="@+id/expandable_text2"
+                app:layout_constraintBottom_toTopOf="@+id/expandable_level"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/expandable_text2"
+                android:id="@+id/expandable_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="테스트123123123"
-                app:layout_constraintBottom_toTopOf="@+id/expandable_text3"
+                android:text="학년"
+                app:layout_constraintBottom_toTopOf="@+id/expandable_finish_check"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/expandable_classroom" />
 
             <TextView
-                android:id="@+id/expandable_text3"
+                android:id="@+id/expandable_finish_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="테스트123123123"
+                android:text="이수구분"
+                app:layout_constraintBottom_toTopOf="@+id/expandable_cyber"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/expandable_level" />
+
+            <TextView
+                android:id="@+id/expandable_cyber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:text="사이버"
                 app:layout_constraintBottom_toTopOf="@+id/btn_ok"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expandable_text2" />
+                app:layout_constraintTop_toBottomOf="@+id/expandable_finish_check" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_ok"
@@ -167,7 +177,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expandable_text3" />
+                app:layout_constraintTop_toBottomOf="@+id/expandable_cyber" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

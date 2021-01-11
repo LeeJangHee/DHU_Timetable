@@ -53,7 +53,19 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
         holder.subject_professor.setText(models.getProfessor() + "");
 
         // 확장데이터 : 강의실, 학년, 사이버강의, 이수구분
-        holder.expandable_classroom.setText("강의실: " + models.getClassroom());
+        if (models.getClassroom().isEmpty()) {
+            holder.expandable_classroom.setText("강의실 준비중 입니다.");
+        } else{
+            holder.expandable_classroom.setText("강의실: " + models.getClassroom());
+        }
+        holder.expandable_level.setText("학년: "+models.getLevel());
+        holder.expandable_finish_check.setText("이수구분: "+models.getFinishCheck());
+        if (models.getCyberCheck().equals("Y")) {
+            holder.expandable_cyber.setText("사이버 강의: YES");
+            holder.expandable_classroom.setVisibility(View.GONE);
+        } else {
+            holder.expandable_cyber.setVisibility(View.GONE);
+        }
 
 
         // 카드뷰 클릭시 이벤트 발생
@@ -85,17 +97,20 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
 
     public class MyViewholder extends RecyclerView.ViewHolder {
 
-        TextView subject_year;
-        TextView subject_semester;
-        TextView subject_name;
-        TextView subject_major;
-        TextView subject_score;
-        TextView subject_day_time;
-        TextView subject_professor;
-        TextView expandable_classroom;
-        MaterialCardView materialCardView;
-        ConstraintLayout constraintLayout;
-        ImageButton imageBtn;
+        private final TextView subject_year;
+        private final TextView subject_semester;
+        private final TextView subject_name;
+        private final TextView subject_major;
+        private final TextView subject_score;
+        private final TextView subject_day_time;
+        private final TextView subject_professor;
+        private final TextView expandable_classroom;
+        private final TextView expandable_level;
+        private final TextView expandable_finish_check;
+        private final TextView expandable_cyber;
+        private final MaterialCardView materialCardView;
+        private final ConstraintLayout constraintLayout;
+        private final ImageButton imageBtn;
 
         /**
          * 리사이클러뷰 아이템 뷰 부분
@@ -112,6 +127,9 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
             subject_day_time = (TextView) itemView.findViewById(R.id.subject_day_time);
             subject_professor = (TextView) itemView.findViewById(R.id.subject_professor);
             expandable_classroom = (TextView) itemView.findViewById(R.id.expandable_classroom);
+            expandable_level = (TextView) itemView.findViewById(R.id.expandable_level);
+            expandable_finish_check = (TextView) itemView.findViewById(R.id.expandable_finish_check);
+            expandable_cyber = (TextView) itemView.findViewById(R.id.expandable_cyber);
             materialCardView = (MaterialCardView) itemView.findViewById(R.id.cardView);
             constraintLayout = (ConstraintLayout) itemView.findViewById(R.id.expandable_view);
             imageBtn = (ImageButton) itemView.findViewById(R.id.image_btn);
