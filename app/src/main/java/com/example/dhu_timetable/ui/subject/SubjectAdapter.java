@@ -4,8 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -14,6 +16,7 @@ import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 
 import com.example.dhu_timetable.R;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
@@ -50,16 +53,20 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
         holder.subject_major.setText(models.getMajorName() + "");
         holder.subject_score.setText(models.getScore() + "학점");
         holder.subject_day_time.setText(models.getPublishDay() + "");
-        holder.subject_professor.setText(models.getProfessor() + "");
+        if (models.getProfessor().isEmpty()){
+            holder.subject_professor.setText("미정");
+        } else {
+            holder.subject_professor.setText(models.getProfessor() + "");
+        }
 
         // 확장데이터 : 강의실, 학년, 사이버강의, 이수구분
         if (models.getClassroom().isEmpty()) {
             holder.expandable_classroom.setText("강의실 준비중 입니다.");
-        } else{
+        } else {
             holder.expandable_classroom.setText("강의실: " + models.getClassroom());
         }
-        holder.expandable_level.setText("학년: "+models.getLevel());
-        holder.expandable_finish_check.setText("이수구분: "+models.getFinishCheck());
+        holder.expandable_level.setText("학년: " + models.getLevel() + " 학년");
+        holder.expandable_finish_check.setText("이수구분: " + models.getFinishCheck());
         if (models.getCyberCheck().equals("Y")) {
             holder.expandable_cyber.setText("사이버 강의: YES");
             holder.expandable_classroom.setVisibility(View.GONE);
@@ -67,12 +74,10 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
             holder.expandable_cyber.setVisibility(View.GONE);
         }
 
-
         // 카드뷰 클릭시 이벤트 발생
         holder.imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 리사이클러뷰 아이템 -> 시간표로 저장
                 AutoTransition transition = new AutoTransition();
                 if (holder.constraintLayout.getVisibility() == View.GONE) {
                     TransitionManager.beginDelayedTransition(holder.materialCardView, transition);
@@ -84,6 +89,19 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
                     holder.constraintLayout.setVisibility(View.GONE);
                     holder.subject_name.setSelected(false);
                 }
+            }
+        });
+
+        // 담기 버튼 클릭
+        holder.btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 과목 데이터 -> 시간표로 저장
+                Toast.makeText(context, models.getSubjectCode(), Toast.LENGTH_SHORT).show();
+                // 시간 데이터 예외가 많음
+                // 여러가지 요일, 시간 존재
+                // 쿼터 시간 존재
+                //[75분용시간표현] A교시:09:00~10:15, B교시:10:30~11:45, C교시:14:00~15:15  D교시: 15:30~16:45
             }
         });
     }
@@ -111,6 +129,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
         private final MaterialCardView materialCardView;
         private final ConstraintLayout constraintLayout;
         private final ImageButton imageBtn;
+        private final MaterialButton btn_ok;
 
         /**
          * 리사이클러뷰 아이템 뷰 부분
@@ -133,6 +152,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
             materialCardView = (MaterialCardView) itemView.findViewById(R.id.cardView);
             constraintLayout = (ConstraintLayout) itemView.findViewById(R.id.expandable_view);
             imageBtn = (ImageButton) itemView.findViewById(R.id.image_btn);
+            btn_ok = (MaterialButton) itemView.findViewById(R.id.subject_item_btn_ok);
 
         }
     }
