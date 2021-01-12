@@ -1,4 +1,31 @@
 package com.example.dhu_timetable.ui.navitem;
 
-public class NavigationViewModel {
+import android.util.Log;
+
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
+import com.example.dhu_timetable.repo.UsersRepo;
+import com.example.dhu_timetable.ui.login.LoginModel;
+
+public class NavigationViewModel extends ViewModel {
+    MutableLiveData<LoginModel> test;
+    UsersRepo usersRepo;
+    String TAG = "janghee";
+
+    public NavigationViewModel() {
+        if (test != null) {
+            return;
+        }
+        usersRepo = UsersRepo.getInstance();
+    }
+
+    public void init(String email) {
+        test = usersRepo.getUser(email);
+        Log.d(TAG, "init: ");
+    }
+
+    public MutableLiveData<LoginModel> getTest() {
+        return test;
+    }
 }

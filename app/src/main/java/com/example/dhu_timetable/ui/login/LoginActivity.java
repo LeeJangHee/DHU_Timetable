@@ -186,6 +186,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent it = new Intent(LoginActivity.this, MainActivity.class);
         it.putExtra("YEAR", date[0]);
         it.putExtra("MONTH", date[1]);
+        it.putExtra("email", email);
         startActivity(it);
         finish();
     }

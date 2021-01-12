@@ -62,7 +62,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/expandable_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/subject_year"
@@ -74,7 +73,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="4dp"
             android:textColor="@color/black"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/subject_major"
             app:layout_constraintStart_toEndOf="@+id/subject_major"
             app:layout_constraintTop_toTopOf="@+id/subject_major"
@@ -86,7 +84,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="4dp"
             android:textColor="@color/black"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/subject_major"
             app:layout_constraintStart_toEndOf="@+id/subject_score"
             app:layout_constraintTop_toTopOf="@+id/subject_major"
@@ -98,7 +95,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="4dp"
             android:textColor="@color/black"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/subject_major"
             app:layout_constraintStart_toEndOf="@+id/subject_day_time"
             app:layout_constraintTop_toTopOf="@+id/subject_major"
@@ -106,8 +102,8 @@
 
         <ImageButton
             android:id="@+id/image_btn"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginHorizontal="8dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_baseline_expand_more_24"
@@ -134,32 +130,42 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:text="강의실"
-                app:layout_constraintBottom_toTopOf="@+id/expandable_text2"
+                app:layout_constraintBottom_toTopOf="@+id/expandable_level"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/expandable_text2"
+                android:id="@+id/expandable_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="테스트123123123"
-                app:layout_constraintBottom_toTopOf="@+id/expandable_text3"
+                android:text="학년"
+                app:layout_constraintBottom_toTopOf="@+id/expandable_finish_check"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/expandable_classroom" />
 
             <TextView
-                android:id="@+id/expandable_text3"
+                android:id="@+id/expandable_finish_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
-                android:text="테스트123123123"
-                app:layout_constraintBottom_toTopOf="@+id/btn_ok"
+                android:text="이수구분"
+                app:layout_constraintBottom_toTopOf="@+id/expandable_cyber"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expandable_text2" />
+                app:layout_constraintTop_toBottomOf="@+id/expandable_level" />
+
+            <TextView
+                android:id="@+id/expandable_cyber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:text="사이버"
+                app:layout_constraintBottom_toTopOf="@+id/subject_item_btn_ok"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/expandable_finish_check" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_ok"
+                android:id="@+id/subject_item_btn_ok"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_subject_item_text"
@@ -167,7 +173,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expandable_text3" />
+                app:layout_constraintTop_toBottomOf="@+id/expandable_cyber" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
