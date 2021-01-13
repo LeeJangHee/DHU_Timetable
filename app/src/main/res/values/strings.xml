@@ -26,7 +26,9 @@
 
 
     <string name="btn_subject_item_text">담기</string>
-
+    <string name="nav_header_email">EMail</string>
+    <string name="nav_header_name">NAME</string>
+    <string name="nav_header_profile">image_profile</string>
 
 
 </resources>

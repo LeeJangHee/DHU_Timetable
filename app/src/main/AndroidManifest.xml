@@ -31,6 +31,9 @@
             android:theme="@style/Theme.Design.NoActionBar" >
         </activity>
         <activity android:name=".ui.search.SearchActivity" />
+        <activity android:name=".ui.navitem.notice.NoticeActivity" />
+        <activity android:name=".ui.navitem.BugreportActivity" />
+        <activity android:name=".ui.navitem.LicenseActivity" />
     </application>
 
 </manifest>

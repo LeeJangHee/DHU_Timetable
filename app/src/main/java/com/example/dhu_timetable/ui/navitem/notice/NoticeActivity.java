@@ -1,4 +1,4 @@
-package com.example.dhu_timetable.ui.search;
+package com.example.dhu_timetable.ui.navitem.notice;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -10,11 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dhu_timetable.R;
 
-public class SearchActivity extends AppCompatActivity {
+public class NoticeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_notice);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -29,4 +29,6 @@ public class SearchActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
