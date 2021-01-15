@@ -31,4 +31,12 @@ public interface APIService {
     Call<LoginModel> checkUser(@Field("email") String email,
                                @Field("name") String name,
                                @Field("profile") String profile);
+
+    @GET("search{year}{semester}{name}{level}{major}{cyber}.php")
+    Call<List<SubjectModel>> getSearch(@Path("year") String year,
+                                       @Path("semester") String semester,
+                                       @Path("name") String name,
+                                       @Path("level") String level,
+                                       @Path("major") String major,
+                                       @Path("cyber") String cyber);
 }

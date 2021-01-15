@@ -1,8 +1,10 @@
 package com.example.dhu_timetable.ui.main;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -57,10 +59,13 @@ public class MainActivity extends AppCompatActivity {
     // onBackPressed
     private BackPressedForFinish backPressedForFinish;
 
+    public static Context mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mContext = this;
 
         // 현재 시간 정보 받아오기
         Intent it = getIntent();
@@ -89,11 +94,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).attach();
 
+        // 상단 바 검색버튼 클릭 이벤트
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId() == R.id.item_search){
                     Intent it = new Intent(MainActivity.this, SearchActivity.class);
+                    it.putExtra("email", email);
                     startActivity(it);
                 }
 
@@ -101,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // 상단 바 네비게이션 버튼 클릭 이벤트
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // 뒤로가기 버튼 종료 함수
     public class BackPressedForFinish {
         private long backKeyPressedTime = 0;    // '뒤로' 버튼을 클릭했을 때의 시간
         private long TIME_INTERVAL = 2000;      // 첫번째 버튼 클릭과 두번째 버튼 클릭 사이의 종료를 위한 시간차를 정의
@@ -181,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
                 showMessage();
             }else{
                 // 마지막 '뒤로'버튼 클릭시간이 이전 '뒤로'버튼 클릭시간과의 차이가 TIME_INTERVAL(2초)보다 작을때
-
                 // Toast가 아직 노출중이라면 취소한다.
                 toast.cancel();
 
@@ -196,7 +204,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    // 뒤로가기 버튼 이벤트
+    // 네비게이션뷰가 열려 있을 시 네비게이션만 닫게하고 안열려 있을 시에는 앱종료 함수 실행
     @Override
     public void onBackPressed() {
         if(drawerLayout.isOpen()){
@@ -208,4 +217,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    // Search 데이터
+    private String subjectname;
+    private String major;
+    private String day;
+    private String cyber;
+
+    public void Search_Confirm(){
+        Intent it = getIntent();
+        subjectname = it.getStringExtra("subjectname");
+        major = it.getStringExtra("major");
+        day = it.getStringExtra("day");
+        cyber = it.getStringExtra("cyber");
+
+        Log.v("Search_Confirm :", "인텐트 데이터 : " + subjectname + major + day + cyber);
+    }
+
 }
