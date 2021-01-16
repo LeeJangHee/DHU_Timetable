@@ -12,6 +12,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIService {
 
@@ -32,11 +33,11 @@ public interface APIService {
                                @Field("name") String name,
                                @Field("profile") String profile);
 
-    @GET("search{year}{semester}{name}{level}{major}{cyber}.php")
-    Call<List<SubjectModel>> getSearch(@Path("year") String year,
-                                       @Path("semester") String semester,
-                                       @Path("name") String name,
-                                       @Path("level") String level,
-                                       @Path("major") String major,
-                                       @Path("cyber") String cyber);
+    @GET("search.php")
+    Call<List<SubjectModel>> getSearch(@Query("year") String year,
+                                       @Query("semester") String semester,
+                                       @Query("name") String name,
+                                       @Query("level") String level,
+                                       @Query("major") String major,
+                                       @Query("cyber") String cyber);
 }

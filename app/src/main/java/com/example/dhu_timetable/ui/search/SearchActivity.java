@@ -83,22 +83,38 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         switch(v.getId()){
             case R.id.button_confirm :
                 subjectname = String.valueOf(et_subjectname.getText());
+                if(subjectname.isEmpty())
+                    subjectname = "%";
+                else
+                    subjectname = "%" + subjectname + "%";
+
                 major = String.valueOf(spn_major.getSelectedItem());
+                if(major.isEmpty())
+                    major = "%";
+                else
+                    major = "%" + major + "%";
+
                 day = String.valueOf(spn_day.getSelectedItem());
-                day = day.substring(0, 1);
+                if(day.length() > 1)
+                    day = day.substring(0, 1);
+                else if(day.isEmpty())
+                    day = "%";
+
                 if(cb_cyber.isChecked())
                     cyber = "Y";
                 else
-                    cyber = "";
+                    cyber = "%";
+
+                String level = "3";
 
                 Log.d("button_confirm : ", subjectname + major + day + cyber);
 
-                it = new Intent(SearchActivity.this, MainActivity.class);
+                it = new Intent();
                 it.putExtra("subjectname", subjectname);
                 it.putExtra("major", major);
                 it.putExtra("day", day);
                 it.putExtra("cyber", cyber);
-                ((MainActivity)MainActivity.mContext).Search_Confirm();
+                setResult(RESULT_OK, it);
                 finish();
                 break;
 

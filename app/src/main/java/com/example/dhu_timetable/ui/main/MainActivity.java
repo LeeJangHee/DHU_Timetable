@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -59,13 +60,12 @@ public class MainActivity extends AppCompatActivity {
     // onBackPressed
     private BackPressedForFinish backPressedForFinish;
 
-    public static Context mContext;
+    private final int REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mContext = this;
 
         // 현재 시간 정보 받아오기
         Intent it = getIntent();
@@ -224,14 +224,35 @@ public class MainActivity extends AppCompatActivity {
     private String day;
     private String cyber;
 
-    public void Search_Confirm(){
-        Intent it = getIntent();
-        subjectname = it.getStringExtra("subjectname");
-        major = it.getStringExtra("major");
-        day = it.getStringExtra("day");
-        cyber = it.getStringExtra("cyber");
 
-        Log.v("Search_Confirm :", "인텐트 데이터 : " + subjectname + major + day + cyber);
+
+    private String year = "";
+    private String semester = "";
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("onActivityResult", "onActivityResult");
+        if(requestCode == REQUEST_CODE){
+            if(resultCode != RESULT_OK)
+                return;
+
+            email = data.getExtras().getString("email");
+            subjectname = data.getExtras().getString("subjectname");
+            major = data.getExtras().getString("major");
+            day = data.getExtras().getString("day");
+            cyber = data.getExtras().getString("cyber");
+
+            Log.v("Search_Confirm :", "인텐트 데이터 : " + subjectname + major + day + cyber);
+            Toast.makeText(this.getApplicationContext(),"인텐트 데이터 : " + subjectname + major + day + cyber, Toast.LENGTH_LONG).show();
+
+            String level = "3";
+
+
+
+        }
     }
+
+}
 
 }
