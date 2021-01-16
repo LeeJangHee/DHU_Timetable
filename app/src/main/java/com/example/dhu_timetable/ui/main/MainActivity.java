@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         currentMonth = it.getStringExtra("MONTH");
         email = it.getStringExtra("email");
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, tabTitle.size(), currentYear, currentMonth);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, tabTitle.size(), currentYear, currentMonth, email);
         toolbar = (MaterialToolbar)findViewById(R.id.toolbar);
 
         // BackPressedForFinish 객체 생성

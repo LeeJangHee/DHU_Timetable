@@ -32,19 +32,21 @@ public class SubjectFragment extends Fragment {
 
     private static final String NOW_YEAR = "YEAR";
     private static final String NOW_MONTH = "MONTH";
+    private static final String NOW_USER = "USER";
     private static final int REQUEST_CODE = 100;
 
     private List<SubjectModel> subjectList = new ArrayList<>();
     private SubjectAdapter adapter;
     private SubjectViewModel viewModel;
-
+    private String user;
 
     // 필요하면 사용하기 위한 newInstance
-    public static SubjectFragment newInstance(String year, String month) {
+    public static SubjectFragment newInstance(String year, String month, String user) {
         SubjectFragment fragment = new SubjectFragment();
         Bundle bundle = new Bundle();
         bundle.putString(NOW_YEAR, year);
         bundle.putString(NOW_MONTH, month);
+        bundle.putString(NOW_USER, user);
 
         fragment.setArguments(bundle);
         return fragment;
@@ -68,6 +70,7 @@ public class SubjectFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        user = getArguments().getString(NOW_USER);
         viewModel = new ViewModelProvider(this).get(SubjectViewModel.class);
         viewModel.init();   // 테스트 용
         // 실제 사용
@@ -84,9 +87,8 @@ public class SubjectFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.subject_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new SubjectAdapter(getContext());
+        adapter = new SubjectAdapter(getContext(), user);
         recyclerView.setAdapter(adapter);
-
 
         // 뷰모델 + 라이브데이터
         viewModel.getSubjectData().observe(getViewLifecycleOwner(), new Observer<List<SubjectModel>>() {
@@ -100,7 +102,6 @@ public class SubjectFragment extends Fragment {
         });
 
         return view;
-
     }
 
 

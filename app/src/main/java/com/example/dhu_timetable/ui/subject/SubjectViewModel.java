@@ -18,6 +18,7 @@ public class SubjectViewModel extends ViewModel {
     private static final String TAG = "janghee";
     private MutableLiveData<List<SubjectModel>> subjectData;
     private SubjectRepo subjectRepo;
+    private LiveData<String> email;
     private SearchRepo searchRepo;
 
     public SubjectViewModel() {
@@ -60,5 +61,4 @@ public class SubjectViewModel extends ViewModel {
     public LiveData<List<SubjectModel>> getSubjectData() {
         return subjectData;
     }
-
 }

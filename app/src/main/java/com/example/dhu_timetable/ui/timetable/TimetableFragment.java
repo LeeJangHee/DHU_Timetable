@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.dhu_timetable.R;
+import com.example.dhu_timetable.ui.subject.SubjectFragment;
 import com.github.tlaabs.timetableview.Schedule;
 import com.github.tlaabs.timetableview.TimetableView;
 
@@ -21,6 +22,14 @@ import java.util.ArrayList;
 public class TimetableFragment extends Fragment {
 
     private TimetableView timetable;
+
+    public static TimetableFragment newInstance() {
+        TimetableFragment fragment = new TimetableFragment();
+        Bundle bundle = new Bundle();
+
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Nullable
     @Override
