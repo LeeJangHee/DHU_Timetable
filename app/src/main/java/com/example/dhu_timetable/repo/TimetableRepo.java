@@ -40,8 +40,9 @@ public class TimetableRepo {
      * @param subjectName : 과목명
      * @param workDay : 요일 & 시간 ( DB column = workDay )
      */
-    public void setTimetable(String email, String subjectName, String workDay) {
-        service.setTimetable(email, subjectName, workDay).enqueue(new Callback<TimetableModel>() {
+    public void setTimetable(String email, String subjectName, String workDay, String cyber, String quarter) {
+        service.setTimetable(email, subjectName, workDay, cyber, quarter)
+                .enqueue(new Callback<TimetableModel>() {
             @Override
             public void onResponse(Call<TimetableModel> call, Response<TimetableModel> response) {
                 Log.d(TAG, "onResponse: " + response.isSuccessful());

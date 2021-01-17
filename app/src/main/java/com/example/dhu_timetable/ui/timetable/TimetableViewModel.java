@@ -22,8 +22,11 @@ public class TimetableViewModel extends ViewModel {
         timetableData = timetableRepo.getTimetableData(email);
     }
 
-    public void init(String email, String subjectName, String workDay) {
-        timetableRepo.setTimetable(email, subjectName, workDay);
+    public void init(String email, String subjectName, String workDay, String cyber, String quarter) {
+        timetableRepo.setTimetable(email, subjectName, workDay, cyber, quarter);
     }
-    
+
+    public MutableLiveData<List<TimetableModel>> getTimetableData() {
+        return timetableData;
+    }
 }

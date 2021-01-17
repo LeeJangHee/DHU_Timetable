@@ -19,6 +19,28 @@ public class TimetableModel {
     @SerializedName("workDay")
     @Expose
     private String workDay;
+    @SerializedName("quarterCheck")
+    @Expose
+    private String quarterCheck;
+    @SerializedName("cyberCheck")
+    @Expose
+    private String cyberCheck;
+
+    public String getQuarterCheck() {
+        return quarterCheck;
+    }
+
+    public void setQuarterCheck(String quarterCheck) {
+        this.quarterCheck = quarterCheck;
+    }
+
+    public String getCyberCheck() {
+        return cyberCheck;
+    }
+
+    public void setCyberCheck(String cyberCheck) {
+        this.cyberCheck = cyberCheck;
+    }
 
     public String getSuccess() {
         return success;

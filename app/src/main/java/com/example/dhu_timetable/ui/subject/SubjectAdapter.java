@@ -32,10 +32,12 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
     private List<SubjectModel> subjectModels;
     private List<TimetableModel> timetableModels;
     private boolean[] isTime = new boolean[2000];
+    private TimetableRepo timetableRepo;
 
     public SubjectAdapter(Context context, String user) {
         this.context = context;
         this.user = user;
+        timetableRepo = TimetableRepo.getInstance();
         getMyTimetableData(this.user);
     }
 
@@ -106,16 +108,23 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
         holder.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "담기버튼: " + isTime[position]);
                 // TODO: 과목 데이터 -> 시간표로 저장
                 // 시간 데이터 예외가 많음
                 // 여러가지 요일, 시간 존재
-                //[75분용시간표현] A교시:09:00~10:15, B교시:10:30~11:45, C교시:14:00~15:15  D교시: 15:30~16:45
+                // [75분용시간표현] A교시:09:00~10:15, B교시:10:30~11:45, C교시:14:00~15:15  D교시: 15:30~16:45
                 if (isTime[position]) {
                     // 시간표 넣기 가능
                     Toast.makeText(context, "시간표 성공", Toast.LENGTH_SHORT).show();
                     // insert into timetable
-
+                    timetableRepo.setTimetable(
+                            user,
+                            models.subjectName,
+                            models.workDay,
+                            models.cyberCheck,
+                            models.quarterCheck
+                    );
+                    getMyTimetableData(user);
+                    isTime[position] = timeCheck(models.getWorkDay());
                 } else {
                     // 불가능
                     Toast.makeText(context, "원하는 시간에 강의가 있습니다.", Toast.LENGTH_SHORT).show();
@@ -130,7 +139,6 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
      * @param email : 현재 사용자
      */
     private void getMyTimetableData(String email) {
-        TimetableRepo timetableRepo = TimetableRepo.getInstance();
         timetableModels = timetableRepo.getCheckData(email);
     }
 

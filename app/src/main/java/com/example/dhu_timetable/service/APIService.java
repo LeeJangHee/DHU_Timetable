@@ -38,7 +38,9 @@ public interface APIService {
     @POST("insert_timetable.php")
     Call<TimetableModel> setTimetable(@Field("email") String email,
                                       @Field("subjectName") String subjectName,
-                                      @Field("workDay") String workDay);
+                                      @Field("workDay") String workDay,
+                                      @Field("cyberCheck") String cyberCheck,
+                                      @Field("quarterCheck") String quarterCheck);
 
     @FormUrlEncoded
     @POST("timetable.php")

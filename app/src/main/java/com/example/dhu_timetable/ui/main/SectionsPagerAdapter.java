@@ -47,7 +47,7 @@ public class SectionsPagerAdapter extends FragmentStateAdapter {
             case 0:
                 return SubjectFragment.newInstance(year, month, currentUser);
             default:
-                return new TimetableFragment();
+                return TimetableFragment.newInstance(currentUser);
         }
 
     }
