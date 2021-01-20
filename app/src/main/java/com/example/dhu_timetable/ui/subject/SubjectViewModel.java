@@ -35,7 +35,7 @@ public class SubjectViewModel extends ViewModel {
      */
     public void init() {
         subjectData = subjectRepo.getData();
-        Log.d(TAG, "init: "+subjectData.getValue());
+        Log.d(TAG, "subjcetVM init: "+subjectData.getValue());
     }
 
     public void init(String year, String month) {

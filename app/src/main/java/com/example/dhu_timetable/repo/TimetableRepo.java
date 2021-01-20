@@ -60,14 +60,14 @@ public class TimetableRepo {
      * @param email = 이메일에 있는 유저의 값
      * @return : 라이브데이터 리턴
      */
-    public MutableLiveData<List<TimetableModel>> getTimetableData(String email) {
-        MutableLiveData<List<TimetableModel>> timetableData = new MutableLiveData<>();
+    public List<TimetableModel> getTimetableData(String email) {
+        List<TimetableModel> timetableData = new ArrayList<>();
         service.checkTimetable(email).enqueue(new Callback<List<TimetableModel>>() {
             @Override
             public void onResponse(Call<List<TimetableModel>> call, Response<List<TimetableModel>> response) {
                 if (response.isSuccessful()) {
-                    timetableData.setValue(response.body());
-                    Log.d(TAG, "timetable onResponse:\n"+timetableData.getValue());
+                    timetableData.addAll(response.body());
+                    Log.d(TAG, "timetable onResponse: "+timetableData.size());
                 }
             }
 

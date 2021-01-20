@@ -29,6 +29,9 @@ import com.example.dhu_timetable.ui.navitem.LicenseActivity;
 import com.example.dhu_timetable.ui.navitem.NavigationViewModel;
 import com.example.dhu_timetable.ui.navitem.notice.NoticeActivity;
 import com.example.dhu_timetable.ui.search.SearchActivity;
+import com.example.dhu_timetable.ui.subject.SubjectViewModel;
+import com.example.dhu_timetable.ui.timetable.TimetableModel;
+import com.example.dhu_timetable.ui.timetable.TimetableViewModel;
 import com.example.dhu_timetable.ui.subject.SubjectFragment;
 import com.example.dhu_timetable.ui.subject.SubjectViewModel;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -67,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
 
     private final int REQUEST_CODE = 100;
 
+    private static TimetableViewModel timetableViewModel;
+    private SubjectViewModel subjectViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
         currentYear = it.getStringExtra("YEAR");
         currentMonth = it.getStringExtra("MONTH");
         email = it.getStringExtra("email");
+
+        subjectViewModel = new ViewModelProvider(this).get(SubjectViewModel.class);
+        timetableViewModel = new ViewModelProvider(this).get(TimetableViewModel.class);
+        timetableViewModel.init(email);
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, tabTitle.size(), currentYear, currentMonth, email);
         toolbar = (MaterialToolbar)findViewById(R.id.toolbar);
@@ -260,4 +270,3 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-
