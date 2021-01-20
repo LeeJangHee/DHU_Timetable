@@ -7,7 +7,7 @@
     <string name="tab_text_2">시간표</string>
     <string name="search_text_1">강의명</string>
     <string name="search_text_2">학과</string>
-    <string name="search_text_3">요일</string>
+    <string name="search_text_3">학년</string>
     <string name="search_text_4">초기화</string>
     <string name="search_text_5">취소</string>
     <string name="search_text_6">확인</string>
@@ -27,6 +27,12 @@
 
     <string name="btn_subject_item_text">담기</string>
 
+    <string name="nav_header_email">EMail</string>
+    <string name="nav_header_name">NAME</string>
+    <string name="nav_header_profile">image_profile</string>
+
+    <string name="bugreport_1">버그리포트</string>
+    <string name="bugreport_2">문의하기</string>
 
 
 </resources>
