@@ -1,21 +1,26 @@
 package com.example.dhu_timetable.ui.subject;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 
 import com.example.dhu_timetable.R;
+import com.example.dhu_timetable.repo.TimetableRepo;
+import com.example.dhu_timetable.ui.main.MainActivity;
+import com.example.dhu_timetable.ui.timetable.TimetableModel;
+import com.example.dhu_timetable.ui.timetable.TimetableViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
@@ -23,11 +28,19 @@ import java.util.List;
 
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewholder> {
 
+    private static final String TAG = "janghee";
     private Context context;
+    private String user;
     private List<SubjectModel> subjectModels;
+    private List<TimetableModel> timetableModels;
+    private boolean[] isTime = new boolean[2000];
+    private TimetableRepo timetableRepo;
 
-    public SubjectAdapter(Context context) {
+    public SubjectAdapter(Context context, String user) {
         this.context = context;
+        this.user = user;
+        timetableRepo = TimetableRepo.getInstance();
+        getMyTimetableData(user);
     }
 
     public void setSubjectList(List<SubjectModel> subjectModels) {
@@ -53,7 +66,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
         holder.subject_major.setText(models.getMajorName() + "");
         holder.subject_score.setText(models.getScore() + "학점");
         holder.subject_day_time.setText(models.getPublishDay() + "");
-        if (models.getProfessor().isEmpty()){
+        if (models.getProfessor().isEmpty()) {
             holder.subject_professor.setText("미정");
         } else {
             holder.subject_professor.setText(models.getProfessor() + "");
@@ -84,6 +97,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
                     holder.imageBtn.setImageResource(R.drawable.ic_baseline_expand_less_24);
                     holder.constraintLayout.setVisibility(View.VISIBLE);
                     holder.subject_name.setSelected(true);
+                    isTime[position] = timeCheck(models.getWorkDay());
                 } else {
                     holder.imageBtn.setImageResource(R.drawable.ic_baseline_expand_more_24);
                     holder.constraintLayout.setVisibility(View.GONE);
@@ -97,19 +111,67 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
             @Override
             public void onClick(View v) {
                 // TODO: 과목 데이터 -> 시간표로 저장
-                Toast.makeText(context, models.getSubjectCode(), Toast.LENGTH_SHORT).show();
                 // 시간 데이터 예외가 많음
                 // 여러가지 요일, 시간 존재
-                // 쿼터 시간 존재
-                //[75분용시간표현] A교시:09:00~10:15, B교시:10:30~11:45, C교시:14:00~15:15  D교시: 15:30~16:45
+                // [75분용시간표현] A교시:09:00~10:15, B교시:10:30~11:45, C교시:14:00~15:15  D교시: 15:30~16:45
+                TimetableModel timetableModel = new TimetableModel();
+                if (isTime[position]) {
+                    // 시간표 넣기 가능
+                    Toast.makeText(context, "시간표 성공", Toast.LENGTH_SHORT).show();
+                    // insert into timetable
+                    timetableRepo.setTimetable(
+                            user,
+                            models.subjectName,
+                            models.workDay,
+                            models.cyberCheck,
+                            models.quarterCheck
+                    );
+                    timeCheck(models.workDay);
+                    Log.d(TAG, "담기 후: "+isTime[position]);
+                } else {
+                    // 불가능
+                    Toast.makeText(context, "원하는 시간에 강의가 있습니다.", Toast.LENGTH_SHORT).show();
+                }
+                isTime[position] = timeCheck(models.getWorkDay());
             }
         });
     }
 
+    /**
+     * 자신의 시간표 정보 조회
+     * @param email : 현재 사용자
+     */
+    private void getMyTimetableData(String email) {
+        timetableModels = timetableRepo.getTimetableData(email);
+//        MainActivity.timetableViewModel.init(email);
+        TimetableViewModel.setTimetableData(timetableModels);
+    }
+
+    /**
+     * 나의 강의 시간표에 겹치는 시간이 있는지 확인
+     * @param workDay : 넣고 싶은 강의의 시간
+     * @return 넣을수 있는지 없는지 반환
+     */
+    private boolean timeCheck(String workDay) {
+        for (TimetableModel t : timetableModels) {
+            for (int i = 0; i < t.getWorkDay().length(); i += 3) {
+                if (workDay.contains(t.getWorkDay().substring(i, i + 3))) {
+                    // 있음
+                    Log.d(TAG, "timeCheck: false");
+                    return false;
+                }
+            }
+        }
+        Log.d(TAG, "timeCheck: true");
+        return true;
+    }
+
     @Override
     public int getItemCount() {
-        if (this.subjectModels != null)
+        if (this.subjectModels != null) {
+
             return this.subjectModels.size();
+        }
         return 0;
     }
 

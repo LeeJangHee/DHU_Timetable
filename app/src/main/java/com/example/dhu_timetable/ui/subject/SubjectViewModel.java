@@ -18,6 +18,7 @@ public class SubjectViewModel extends ViewModel {
     private static final String TAG = "janghee";
     private MutableLiveData<List<SubjectModel>> subjectData;
     private SubjectRepo subjectRepo;
+    private LiveData<String> email;
     private SearchRepo searchRepo;
 
     public SubjectViewModel() {
@@ -34,7 +35,7 @@ public class SubjectViewModel extends ViewModel {
      */
     public void init() {
         subjectData = subjectRepo.getData();
-        Log.d(TAG, "init: "+subjectData.getValue());
+        Log.d(TAG, "subjcetVM init: "+subjectData.getValue());
     }
 
     public void init(String year, String month) {
@@ -60,5 +61,4 @@ public class SubjectViewModel extends ViewModel {
     public LiveData<List<SubjectModel>> getSubjectData() {
         return subjectData;
     }
-
 }

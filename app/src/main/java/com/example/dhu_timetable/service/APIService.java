@@ -3,6 +3,7 @@ package com.example.dhu_timetable.service;
 import com.example.dhu_timetable.ui.login.LoginModel;
 import com.example.dhu_timetable.ui.navitem.NavigationModel;
 import com.example.dhu_timetable.ui.subject.SubjectModel;
+import com.example.dhu_timetable.ui.timetable.TimetableModel;
 
 import java.util.List;
 
@@ -32,6 +33,18 @@ public interface APIService {
     Call<LoginModel> checkUser(@Field("email") String email,
                                @Field("name") String name,
                                @Field("profile") String profile);
+
+    @FormUrlEncoded
+    @POST("insert_timetable.php")
+    Call<TimetableModel> setTimetable(@Field("email") String email,
+                                      @Field("subjectName") String subjectName,
+                                      @Field("workDay") String workDay,
+                                      @Field("cyberCheck") String cyberCheck,
+                                      @Field("quarterCheck") String quarterCheck);
+
+    @FormUrlEncoded
+    @POST("timetable.php")
+    Call<List<TimetableModel>> checkTimetable(@Field("email") String email);
 
     @GET("search.php")
     Call<List<SubjectModel>> getSearch(@Query("year") String year,

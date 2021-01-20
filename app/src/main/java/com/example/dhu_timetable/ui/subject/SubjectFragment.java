@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dhu_timetable.R;
+import com.example.dhu_timetable.ui.timetable.TimetableModel;
+import com.example.dhu_timetable.ui.timetable.TimetableViewModel;
 import com.example.dhu_timetable.ui.search.SearchViewModel;
 
 import java.util.ArrayList;
@@ -32,19 +34,25 @@ public class SubjectFragment extends Fragment {
 
     private static final String NOW_YEAR = "YEAR";
     private static final String NOW_MONTH = "MONTH";
+    private static final String NOW_USER = "USER";
     private static final int REQUEST_CODE = 100;
 
     private List<SubjectModel> subjectList = new ArrayList<>();
     private SubjectAdapter adapter;
-    private SubjectViewModel viewModel;
+    private SubjectViewModel subjectViewModel;
+    private String user;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
 
+    private TimetableViewModel timetableViewModel;
 
     // 필요하면 사용하기 위한 newInstance
-    public static SubjectFragment newInstance(String year, String month) {
+    public static SubjectFragment newInstance(String year, String month, String user) {
         SubjectFragment fragment = new SubjectFragment();
         Bundle bundle = new Bundle();
         bundle.putString(NOW_YEAR, year);
         bundle.putString(NOW_MONTH, month);
+        bundle.putString(NOW_USER, user);
 
         fragment.setArguments(bundle);
         return fragment;
@@ -68,8 +76,8 @@ public class SubjectFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(SubjectViewModel.class);
-        viewModel.init();   // 테스트 용
+        user = getArguments().getString(NOW_USER);
+//        viewModel.init();   // 테스트 용
         // 실제 사용
 //        viewModel.init(getArguments().getString(NOW_YEAR),
 //                getArguments().getString(NOW_MONTH));
@@ -81,15 +89,22 @@ public class SubjectFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_subject_list, container, false);
 
         // 리사이클러뷰
-        RecyclerView recyclerView = view.findViewById(R.id.subject_recyclerview);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView = view.findViewById(R.id.subject_recyclerview);
+        layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new SubjectAdapter(getContext());
+        adapter = new SubjectAdapter(getContext(), user);
         recyclerView.setAdapter(adapter);
 
+        return view;
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        subjectViewModel = new ViewModelProvider(requireActivity()).get(SubjectViewModel.class);
+        subjectViewModel.init();
         // 뷰모델 + 라이브데이터
-        viewModel.getSubjectData().observe(getViewLifecycleOwner(), new Observer<List<SubjectModel>>() {
+        subjectViewModel.getSubjectData().observe(getViewLifecycleOwner(), new Observer<List<SubjectModel>>() {
             @Override
             public void onChanged(List<SubjectModel> subjectModels) {
                 if (subjectList != null) {
@@ -99,8 +114,7 @@ public class SubjectFragment extends Fragment {
             }
         });
 
-        return view;
-
+        timetableViewModel = new ViewModelProvider(requireActivity()).get(TimetableViewModel.class);
     }
 
 

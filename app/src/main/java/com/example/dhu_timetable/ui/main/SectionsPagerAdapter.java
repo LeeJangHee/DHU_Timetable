@@ -19,17 +19,19 @@ public class SectionsPagerAdapter extends FragmentStateAdapter {
     private static int TAB_ITEM_COUNT;
     private String year;    // 현재 년도
     private String month;   // 현재 월
+    private String currentUser; // 현재 유저
 
     /**
      * 페이지 어뎁터 불러올 때
      * @param fa = 불러올 프레그먼트
      * @param size = 탭 개수
      */
-    public SectionsPagerAdapter(FragmentActivity fa, int size, String year, String month) {
+    public SectionsPagerAdapter(FragmentActivity fa, int size, String year, String month, String currentUser) {
         super(fa);
         TAB_ITEM_COUNT = size;
         this.year = year;
         this.month = month;
+        this.currentUser = currentUser;
         Log.d(TAG, "SectionsPagerAdapter: "+this.year+", "+this.month);
     }
 
@@ -43,9 +45,9 @@ public class SectionsPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return SubjectFragment.newInstance(year, month);
+                return SubjectFragment.newInstance(year, month, currentUser);
             default:
-                return new TimetableFragment();
+                return TimetableFragment.newInstance(currentUser);
         }
 
     }
