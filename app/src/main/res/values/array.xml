@@ -74,12 +74,11 @@
     </string-array>
 
 
-    <string-array name="day">
+    <string-array name="level">
         <item></item>
-        <item>월요일</item>
-        <item>화요일</item>
-        <item>수요일</item>
-        <item>목요일</item>
-        <item>금요일</item>
+        <item>1학년</item>
+        <item>2학년</item>
+        <item>3학년</item>
+        <item>4학년</item>
     </string-array>
 </resources>

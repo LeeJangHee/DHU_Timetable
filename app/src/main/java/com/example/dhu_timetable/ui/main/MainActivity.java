@@ -1,7 +1,6 @@
 package com.example.dhu_timetable.ui.main;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +15,8 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
@@ -28,6 +29,8 @@ import com.example.dhu_timetable.ui.navitem.LicenseActivity;
 import com.example.dhu_timetable.ui.navitem.NavigationViewModel;
 import com.example.dhu_timetable.ui.navitem.notice.NoticeActivity;
 import com.example.dhu_timetable.ui.search.SearchActivity;
+import com.example.dhu_timetable.ui.subject.SubjectFragment;
+import com.example.dhu_timetable.ui.subject.SubjectViewModel;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -56,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_email;
     private TextView tv_name;
     private CircleImageView ig_profile;
+
+    private SubjectViewModel viewModel;
 
     // onBackPressed
     private BackPressedForFinish backPressedForFinish;
@@ -99,9 +104,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId() == R.id.item_search){
-                    Intent it = new Intent(MainActivity.this, SearchActivity.class);
+                    Intent it = new Intent(getApplicationContext(), SearchActivity.class);
                     it.putExtra("email", email);
-                    startActivity(it);
+                    startActivityForResult(it, REQUEST_CODE);
+
                 }
 
                 return false;
@@ -214,14 +220,12 @@ public class MainActivity extends AppCompatActivity {
         else{
             backPressedForFinish.onBackPressed();
         }
-
-
     }
 
     // Search 데이터
     private String subjectname;
     private String major;
-    private String day;
+    private String level;
     private String cyber;
 
 
@@ -232,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         Log.d("onActivityResult", "onActivityResult");
         if(requestCode == REQUEST_CODE){
             if(resultCode != RESULT_OK)
@@ -240,19 +245,19 @@ public class MainActivity extends AppCompatActivity {
             email = data.getExtras().getString("email");
             subjectname = data.getExtras().getString("subjectname");
             major = data.getExtras().getString("major");
-            day = data.getExtras().getString("day");
+            level = data.getExtras().getString("level");
             cyber = data.getExtras().getString("cyber");
+            Log.v("Search_Confirm :", "인텐트 데이터 : " + subjectname + major + level + cyber);
+//            Toast.makeText(this.getApplicationContext(),"인텐트 데이터 : " + subjectname + major + level + cyber, Toast.LENGTH_LONG).show();
 
-            Log.v("Search_Confirm :", "인텐트 데이터 : " + subjectname + major + day + cyber);
-            Toast.makeText(this.getApplicationContext(),"인텐트 데이터 : " + subjectname + major + day + cyber, Toast.LENGTH_LONG).show();
-
-            String level = "3";
-
+            viewModel = new ViewModelProvider(this).get(SubjectViewModel.class);
+            viewModel.searchinit("","",subjectname, level, major, cyber);
 
 
         }
+
+
     }
 
 }
 
-}

@@ -2,9 +2,11 @@ package com.example.dhu_timetable.ui.subject;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.dhu_timetable.repo.SearchRepo;
 import com.example.dhu_timetable.repo.SubjectRepo;
 
 import java.util.List;
@@ -16,12 +18,14 @@ public class SubjectViewModel extends ViewModel {
     private static final String TAG = "janghee";
     private MutableLiveData<List<SubjectModel>> subjectData;
     private SubjectRepo subjectRepo;
+    private SearchRepo searchRepo;
 
     public SubjectViewModel() {
         if (subjectData != null) {
             return;
         }
         subjectRepo = SubjectRepo.getInstance();
+        searchRepo = SearchRepo.getInstance();
     }
 
 
@@ -46,7 +50,15 @@ public class SubjectViewModel extends ViewModel {
         Log.d(TAG, "init: "+subjectData.getValue());
     }
 
-    public MutableLiveData<List<SubjectModel>> getSubjectData() {
+    // 검색 데이터 불러오기
+    public void searchinit(String year, String semester, String name, String level, String major, String cyber) {
+        searchRepo.getSearchData("","",name, level, major, cyber);
+        subjectData = searchRepo.getSearchData("","",name,level,major,cyber);
+        Log.d(TAG, "searchinit: " + subjectData.getValue());
+    }
+
+    public LiveData<List<SubjectModel>> getSubjectData() {
         return subjectData;
     }
+
 }

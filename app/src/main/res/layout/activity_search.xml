@@ -51,8 +51,8 @@
         app:layout_constraintTop_toBottomOf="@+id/textView_major" />
 
     <Spinner
-        android:id="@+id/spinner_day"
-        android:entries="@array/day"
+        android:id="@+id/spinner_level"
+        android:entries="@array/level"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -68,9 +68,9 @@
         android:layout_marginTop="16dp"
         android:text="@string/search_text_7"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/spinner_day"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_level"
         app:layout_constraintStart_toStartOf="@+id/textView_day"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_day" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_level" />
 
     <Button
         android:id="@+id/button_reset"
@@ -104,7 +104,7 @@
         android:text="@string/search_text_6"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/spinner_day"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_level"
         app:layout_constraintStart_toEndOf="@+id/button_cancel"
         app:layout_constraintTop_toBottomOf="@+id/button_reset" />
 

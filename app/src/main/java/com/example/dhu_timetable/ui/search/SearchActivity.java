@@ -17,14 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dhu_timetable.R;
 import com.example.dhu_timetable.ui.main.MainActivity;
-import com.example.dhu_timetable.ui.navitem.notice.NoticeActivity;
+import com.example.dhu_timetable.ui.subject.SubjectFragment;
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener{
 
     private String email;
     private String subjectname;
     private String major;
-    private String day;
+    private String level;
     private String cyber;
 
     private EditText et_subjectname;
@@ -34,7 +34,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private Button btn_cancel;
 
     private Spinner spn_major;
-    private Spinner spn_day;
+    private Spinner spn_level;
 
     private CheckBox cb_cyber;
 
@@ -54,7 +54,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         et_subjectname = findViewById(R.id.edit_subject);
 
         spn_major = findViewById(R.id.spinner_major);
-        spn_day = findViewById(R.id.spinner_day);
+        spn_level = findViewById(R.id.spinner_level);
         cb_cyber = findViewById(R.id.checkBox_cyber);
 
         btn_confirm.setOnClickListener(this);
@@ -81,7 +81,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         Intent it;
         switch(v.getId()){
-            case R.id.button_confirm :
+            case R.id.button_confirm : // 검색 데이터 변환 -> MainActivity로 전송
                 subjectname = String.valueOf(et_subjectname.getText());
                 if(subjectname.isEmpty())
                     subjectname = "%";
@@ -94,25 +94,26 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 else
                     major = "%" + major + "%";
 
-                day = String.valueOf(spn_day.getSelectedItem());
-                if(day.length() > 1)
-                    day = day.substring(0, 1);
-                else if(day.isEmpty())
-                    day = "%";
+                level = String.valueOf(spn_level.getSelectedItem());
+                if(level.length() > 1)
+                    level = level.substring(0, 1);
+                else if(level.isEmpty())
+                    level = "%";
 
                 if(cb_cyber.isChecked())
                     cyber = "Y";
                 else
                     cyber = "%";
 
-                String level = "3";
+                Log.d("button_confirm : ", subjectname + major + level + cyber);
 
-                Log.d("button_confirm : ", subjectname + major + day + cyber);
+                // SubjectFragment로 데이터 바로 전송 --> 현재 미사용
+                SubjectFragment.searchInstance("","",subjectname, level, major, cyber);
 
                 it = new Intent();
                 it.putExtra("subjectname", subjectname);
                 it.putExtra("major", major);
-                it.putExtra("day", day);
+                it.putExtra("level", level);
                 it.putExtra("cyber", cyber);
                 setResult(RESULT_OK, it);
                 finish();
