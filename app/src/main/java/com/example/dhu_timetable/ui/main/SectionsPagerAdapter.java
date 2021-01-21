@@ -15,24 +15,24 @@ import com.example.dhu_timetable.ui.timetable.TimetableFragment;
  * one of the sections/tabs/pages.
  */
 public class SectionsPagerAdapter extends FragmentStateAdapter {
-    private static final String TAG = "janghee";
     private static int TAB_ITEM_COUNT;
     private String year;    // 현재 년도
     private String month;   // 현재 월
     private String currentUser; // 현재 유저
+    private OnUpdateListener onUpdateListener;
 
     /**
      * 페이지 어뎁터 불러올 때
      * @param fa = 불러올 프레그먼트
      * @param size = 탭 개수
      */
-    public SectionsPagerAdapter(FragmentActivity fa, int size, String year, String month, String currentUser) {
+    public SectionsPagerAdapter(FragmentActivity fa, int size, String year, String month, String currentUser, OnUpdateListener onUpdateListener) {
         super(fa);
         TAB_ITEM_COUNT = size;
         this.year = year;
         this.month = month;
         this.currentUser = currentUser;
-        Log.d(TAG, "SectionsPagerAdapter: "+this.year+", "+this.month);
+        this.onUpdateListener = onUpdateListener;
     }
 
     /**
@@ -47,6 +47,7 @@ public class SectionsPagerAdapter extends FragmentStateAdapter {
             case 0:
                 return SubjectFragment.newInstance(year, month, currentUser);
             default:
+                onUpdateListener.OnUpdateTimetable(currentUser);
                 return TimetableFragment.newInstance(currentUser);
         }
 

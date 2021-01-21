@@ -37,7 +37,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnUpdateListener{
     @StringRes
     private List<Integer> tabTitle = Arrays.asList(R.string.tab_text_1, R.string.tab_text_2);
 
@@ -74,12 +74,20 @@ public class MainActivity extends AppCompatActivity {
         currentMonth = it.getStringExtra("MONTH");
         email = it.getStringExtra("email");
 
+        // 1~6 = 1학기 / 6~12 = 2학기
+        String semester;
+        if (0< Integer.parseInt(currentMonth) && Integer.parseInt(currentMonth) <= 6) {
+            semester = "10";
+        } else {
+            semester = "20";
+        }
+
         // 라이브데이터 초기화
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         searchTimetableApi(email);
-        searchSubjectApi("", "", "%", "%", "%", "%");
+        searchSubjectApi("2020", "20", "%", "%", "%", "%");
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, tabTitle.size(), currentYear, currentMonth, email);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, tabTitle.size(), currentYear, currentMonth, email, this);
         toolbar = (MaterialToolbar) findViewById(R.id.toolbar);
 
         // BackPressedForFinish 객체 생성
@@ -171,6 +179,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void OnUpdateTimetable(String email) {
+        mainActivityViewModel.nextInsertTimetable(email);
+    }
+
     // 뒤로가기 버튼 종료 함수
     public class BackPressedForFinish {
         private long backKeyPressedTime = 0;    // '뒤로' 버튼을 클릭했을 때의 시간
@@ -247,8 +260,8 @@ public class MainActivity extends AppCompatActivity {
             cyber = data.getExtras().getString("cyber");
             Log.v("Search_Confirm :", "인텐트 데이터 : " + subjectname + major + level + cyber);
 
-            // 뷰모델과 연결 - 검색된 데이터로 라이브데이터 업데이트
-            mainActivityViewModel.setSubjectData(year, semester, subjectname, level, major, cyber);
+            // 뷰모델과 연결 - 검색된 데이터로 라이브데이터 업데이트 - TEST 객체 (year, semester)
+            mainActivityViewModel.setSubjectData("2020", "20", subjectname, level, major, cyber);
         }
     }
 

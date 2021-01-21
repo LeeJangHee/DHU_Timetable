@@ -62,7 +62,7 @@ public class TimetableApiClient {
                 // 타임아웃
                 mHandler.cancel(true);
             }
-        }, 5, TimeUnit.SECONDS);
+        }, 3, TimeUnit.SECONDS);
 
     }
 
@@ -133,7 +133,7 @@ public class TimetableApiClient {
                 // 타임아웃
                 mHandler.cancel(true);
             }
-        }, 6, TimeUnit.SECONDS);
+        }, 3, TimeUnit.SECONDS);
 
 
     }

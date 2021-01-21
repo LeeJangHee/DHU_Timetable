@@ -40,7 +40,6 @@ public class TimetableFragment extends Fragment {
     // (index * 2 - 1, index * 2)
     int[] quarterMinute = {0, 0, 15, 30, 45, 0, 15, 30, 45};
     private Schedule schedule;
-//    private TimetableViewModel timetableViewModel;
     private MainActivityViewModel mainActivityViewModel;
 
     public static TimetableFragment newInstance(String user) {
@@ -69,11 +68,14 @@ public class TimetableFragment extends Fragment {
                 new Observer<List<TimetableModel>>() {
                     @Override
                     public void onChanged(List<TimetableModel> timetableModels) {
+                        // 새로 초기화 후
+                        timetable.removeAll();
 
                         if (timetableModels.size() > 0) {
                             setTimetable(timetableModels);
                         }
 
+                        // 업데이트
                         if (!schedules.isEmpty()) {
                             for (int i = 0; i < schedules.size(); i++) {
                                 ArrayList<Schedule> aSchedule = new ArrayList<>();
