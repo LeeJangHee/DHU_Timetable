@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_timetable_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
+        android:name="androidx.multidex.MultiDexApplication"
         android:theme="@style/Theme.DHU_Timetable">
         <activity
             android:name=".ui.main.MainActivity"

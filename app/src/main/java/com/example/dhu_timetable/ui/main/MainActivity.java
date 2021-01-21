@@ -15,8 +15,6 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
@@ -29,11 +27,6 @@ import com.example.dhu_timetable.ui.navitem.LicenseActivity;
 import com.example.dhu_timetable.ui.navitem.NavigationViewModel;
 import com.example.dhu_timetable.ui.navitem.notice.NoticeActivity;
 import com.example.dhu_timetable.ui.search.SearchActivity;
-import com.example.dhu_timetable.ui.subject.SubjectViewModel;
-import com.example.dhu_timetable.ui.timetable.TimetableModel;
-import com.example.dhu_timetable.ui.timetable.TimetableViewModel;
-import com.example.dhu_timetable.ui.subject.SubjectFragment;
-import com.example.dhu_timetable.ui.subject.SubjectViewModel;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -46,7 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
     @StringRes
-    private List<Integer> tabTitle = Arrays.asList(R.string.tab_text_1, R.string. tab_text_2);
+    private List<Integer> tabTitle = Arrays.asList(R.string.tab_text_1, R.string.tab_text_2);
 
     // Intent Data
     private String currentYear;
@@ -63,15 +56,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_name;
     private CircleImageView ig_profile;
 
-    private SubjectViewModel viewModel;
-
     // onBackPressed
     private BackPressedForFinish backPressedForFinish;
 
     private final int REQUEST_CODE = 100;
 
-    private static TimetableViewModel timetableViewModel;
-    private SubjectViewModel subjectViewModel;
+    private MainActivityViewModel mainActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +74,13 @@ public class MainActivity extends AppCompatActivity {
         currentMonth = it.getStringExtra("MONTH");
         email = it.getStringExtra("email");
 
-        subjectViewModel = new ViewModelProvider(this).get(SubjectViewModel.class);
-        timetableViewModel = new ViewModelProvider(this).get(TimetableViewModel.class);
-        timetableViewModel.init(email);
+        // 라이브데이터 초기화
+        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        searchTimetableApi(email);
+        searchSubjectApi("", "", "%", "%", "%", "%");
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, tabTitle.size(), currentYear, currentMonth, email);
-        toolbar = (MaterialToolbar)findViewById(R.id.toolbar);
+        toolbar = (MaterialToolbar) findViewById(R.id.toolbar);
 
         // BackPressedForFinish 객체 생성
         backPressedForFinish = new BackPressedForFinish(this);
@@ -113,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if(item.getItemId() == R.id.item_search){
+                if (item.getItemId() == R.id.item_search) {
                     Intent it = new Intent(getApplicationContext(), SearchActivity.class);
                     it.putExtra("email", email);
                     startActivityForResult(it, REQUEST_CODE);
@@ -134,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         // navigation view --> header view
         // 아이템 설정
-        nav_view = (NavigationView)findViewById(R.id.nav_view);
+        nav_view = (NavigationView) findViewById(R.id.nav_view);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         View header = nav_view.getHeaderView(0);
@@ -160,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Intent it;
-                switch(item.getItemId()){
-                    case R.id.nav_notice :
+                switch (item.getItemId()) {
+                    case R.id.nav_notice:
                         it = new Intent(MainActivity.this, NoticeActivity.class);
                         startActivity(it);
                         break;
@@ -204,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // 종료 안내문구를 노출한다.
                 showMessage();
-            }else{
+            } else {
                 // 마지막 '뒤로'버튼 클릭시간이 이전 '뒤로'버튼 클릭시간과의 차이가 TIME_INTERVAL(2초)보다 작을때
                 // Toast가 아직 노출중이라면 취소한다.
                 toast.cancel();
@@ -224,10 +215,9 @@ public class MainActivity extends AppCompatActivity {
     // 네비게이션뷰가 열려 있을 시 네비게이션만 닫게하고 안열려 있을 시에는 앱종료 함수 실행
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isOpen()){
+        if (drawerLayout.isOpen()) {
             drawerLayout.close();
-        }
-        else{
+        } else {
             backPressedForFinish.onBackPressed();
         }
     }
@@ -238,8 +228,6 @@ public class MainActivity extends AppCompatActivity {
     private String level;
     private String cyber;
 
-
-
     private String year = "";
     private String semester = "";
 
@@ -248,8 +236,8 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         Log.d("onActivityResult", "onActivityResult");
-        if(requestCode == REQUEST_CODE){
-            if(resultCode != RESULT_OK)
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode != RESULT_OK)
                 return;
 
             email = data.getExtras().getString("email");
@@ -258,15 +246,19 @@ public class MainActivity extends AppCompatActivity {
             level = data.getExtras().getString("level");
             cyber = data.getExtras().getString("cyber");
             Log.v("Search_Confirm :", "인텐트 데이터 : " + subjectname + major + level + cyber);
-//            Toast.makeText(this.getApplicationContext(),"인텐트 데이터 : " + subjectname + major + level + cyber, Toast.LENGTH_LONG).show();
 
-            viewModel = new ViewModelProvider(this).get(SubjectViewModel.class);
-            viewModel.searchinit("","",subjectname, level, major, cyber);
-
-
+            // 뷰모델과 연결 - 검색된 데이터로 라이브데이터 업데이트
+            mainActivityViewModel.setSubjectData(year, semester, subjectname, level, major, cyber);
         }
+    }
 
+    // 4- Calling method in Fragment
+    private void searchTimetableApi(String email) {
+        mainActivityViewModel.setTimetable(email);
+    }
 
+    private void searchSubjectApi(String year, String semester, String subjectname, String major, String level, String cyber) {
+        mainActivityViewModel.setSubjectData(year, semester, subjectname, major, level, cyber);
     }
 
 }

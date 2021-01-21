@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
@@ -19,8 +18,8 @@ import androidx.transition.TransitionManager;
 import com.example.dhu_timetable.R;
 import com.example.dhu_timetable.repo.TimetableRepo;
 import com.example.dhu_timetable.ui.main.MainActivity;
+import com.example.dhu_timetable.ui.main.MainActivityViewModel;
 import com.example.dhu_timetable.ui.timetable.TimetableModel;
-import com.example.dhu_timetable.ui.timetable.TimetableViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
@@ -34,13 +33,13 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
     private List<SubjectModel> subjectModels;
     private List<TimetableModel> timetableModels;
     private boolean[] isTime = new boolean[2000];
-    private TimetableRepo timetableRepo;
+    private MainActivityViewModel mainActivityViewModel;
 
-    public SubjectAdapter(Context context, String user) {
+    public SubjectAdapter(Context context, String user, MainActivityViewModel mainActivityViewModel) {
         this.context = context;
         this.user = user;
-        timetableRepo = TimetableRepo.getInstance();
-        getMyTimetableData(user);
+        this.mainActivityViewModel = mainActivityViewModel;
+//        getMyTimetableData();
     }
 
     public void setSubjectList(List<SubjectModel> subjectModels) {
@@ -114,18 +113,19 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
                 // 시간 데이터 예외가 많음
                 // 여러가지 요일, 시간 존재
                 // [75분용시간표현] A교시:09:00~10:15, B교시:10:30~11:45, C교시:14:00~15:15  D교시: 15:30~16:45
-                TimetableModel timetableModel = new TimetableModel();
                 if (isTime[position]) {
                     // 시간표 넣기 가능
                     Toast.makeText(context, "시간표 성공", Toast.LENGTH_SHORT).show();
                     // insert into timetable
-                    timetableRepo.setTimetable(
+
+                    mainActivityViewModel.insertTimetable(
                             user,
                             models.subjectName,
                             models.workDay,
                             models.cyberCheck,
                             models.quarterCheck
                     );
+                    mainActivityViewModel.setTimetable(user);
                     timeCheck(models.workDay);
                     Log.d(TAG, "담기 후: "+isTime[position]);
                 } else {
@@ -139,12 +139,9 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
 
     /**
      * 자신의 시간표 정보 조회
-     * @param email : 현재 사용자
      */
-    private void getMyTimetableData(String email) {
-        timetableModels = timetableRepo.getTimetableData(email);
-//        MainActivity.timetableViewModel.init(email);
-        TimetableViewModel.setTimetableData(timetableModels);
+    private void getMyTimetableData() {
+        timetableModels = mainActivityViewModel.getTimetableList();
     }
 
     /**
@@ -153,6 +150,8 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewho
      * @return 넣을수 있는지 없는지 반환
      */
     private boolean timeCheck(String workDay) {
+        // TODO: 뷰모델을 가져올 수 없음 NullPointerException = 수정 필요
+        timetableModels = mainActivityViewModel.getTimetableList();
         for (TimetableModel t : timetableModels) {
             for (int i = 0; i < t.getWorkDay().length(); i += 3) {
                 if (workDay.contains(t.getWorkDay().substring(i, i + 3))) {

@@ -1,7 +1,6 @@
 package com.example.dhu_timetable.ui.timetable;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +9,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.dhu_timetable.R;
-import com.example.dhu_timetable.ui.main.MainActivity;
+import com.example.dhu_timetable.ui.main.MainActivityViewModel;
 import com.github.tlaabs.timetableview.Schedule;
 import com.github.tlaabs.timetableview.Time;
 import com.github.tlaabs.timetableview.TimetableView;
@@ -43,7 +40,8 @@ public class TimetableFragment extends Fragment {
     // (index * 2 - 1, index * 2)
     int[] quarterMinute = {0, 0, 15, 30, 45, 0, 15, 30, 45};
     private Schedule schedule;
-    private TimetableViewModel timetableViewModel;
+//    private TimetableViewModel timetableViewModel;
+    private MainActivityViewModel mainActivityViewModel;
 
     public static TimetableFragment newInstance(String user) {
         TimetableFragment fragment = new TimetableFragment();
@@ -64,9 +62,10 @@ public class TimetableFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        timetableViewModel = new ViewModelProvider(requireActivity()).get(TimetableViewModel.class);
+        mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
+        // 레트로핏 --> 라이브데이터 가져오기
 
-        timetableViewModel.getTimetableData().observe(getViewLifecycleOwner(),
+        mainActivityViewModel.getTimetable().observe(requireActivity(),
                 new Observer<List<TimetableModel>>() {
                     @Override
                     public void onChanged(List<TimetableModel> timetableModels) {
@@ -188,9 +187,5 @@ public class TimetableFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-//        MainActivity.timetableViewModel.getTimetableData().removeObserver(observer);
-    }
+
 }
