@@ -37,6 +37,7 @@ public class BugreportActivity extends AppCompatActivity {
         // 상단 바 뒤로가기 버튼 생성
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("기린바구니 버그리포트");
     }
 
     // 상단 바 뒤로가기 버튼 이벤트

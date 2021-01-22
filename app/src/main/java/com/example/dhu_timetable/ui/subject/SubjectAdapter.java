@@ -16,8 +16,6 @@ import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 
 import com.example.dhu_timetable.R;
-import com.example.dhu_timetable.repo.TimetableRepo;
-import com.example.dhu_timetable.ui.main.MainActivity;
 import com.example.dhu_timetable.ui.main.MainActivityViewModel;
 import com.example.dhu_timetable.ui.timetable.TimetableModel;
 import com.google.android.material.button.MaterialButton;
