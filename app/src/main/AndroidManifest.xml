@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.dhu_timetable">
+    package="com.dhu.dhu_timetable">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -17,12 +17,12 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-9700414008733720~8736405806"/>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.dhu.dhu_timetable.ui.main.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.DHU_Timetable.NoActionBar">
         </activity>
         <activity
-            android:name=".ui.loading.LoadingActivity"
+            android:name="com.dhu.dhu_timetable.ui.loading.LoadingActivity"
             android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,13 +31,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name="com.dhu.dhu_timetable.ui.login.LoginActivity"
             android:theme="@style/Theme.Design.NoActionBar" >
         </activity>
-        <activity android:name=".ui.search.SearchActivity" />
-        <activity android:name=".ui.navitem.notice.NoticeActivity" />
-        <activity android:name=".ui.navitem.BugreportActivity" />
-        <activity android:name=".ui.navitem.LicenseActivity" />
+        <activity android:name="com.dhu.dhu_timetable.ui.search.SearchActivity" />
+        <activity android:name="com.dhu.dhu_timetable.ui.navitem.notice.NoticeActivity" />
+        <activity android:name="com.dhu.dhu_timetable.ui.navitem.BugreportActivity" />
+        <activity android:name="com.dhu.dhu_timetable.ui.navitem.LicenseActivity" />
     </application>
 
 </manifest>
