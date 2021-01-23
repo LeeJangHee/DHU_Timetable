@@ -1,4 +1,4 @@
-package com.example.dhu_timetable;
+package com.dhu.dhu_timetable;
 
 import org.junit.Test;
 

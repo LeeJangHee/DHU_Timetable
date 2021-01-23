@@ -6,7 +6,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.dhu_timetable"
+        applicationId "com.dhu.dhu_timetable"
         minSdkVersion 19
         targetSdkVersion 30
         multiDexEnabled true
