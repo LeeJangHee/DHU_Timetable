@@ -1,13 +1,11 @@
 package com.example.dhu_timetable.ui.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.dhu_timetable.R;
 import com.example.dhu_timetable.ui.login.LoginModel;
 import com.example.dhu_timetable.ui.navitem.BugreportActivity;
@@ -37,7 +36,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnUpdateListener {
     @StringRes
     private List<Integer> tabTitle = Arrays.asList(R.string.tab_text_1, R.string.tab_text_2);
 
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private String currentYear;
     private String currentMonth;
     private String email;
+    private String semester;
 
     // Navigation Data
     private MaterialToolbar toolbar;
@@ -73,13 +73,21 @@ public class MainActivity extends AppCompatActivity {
         currentYear = it.getStringExtra("YEAR");
         currentMonth = it.getStringExtra("MONTH");
         email = it.getStringExtra("email");
+        Log.d("janghee", "onCreate: "+email);
+
+        // 1~6 = 1학기 / 6~12 = 2학기
+        if (0 < Integer.parseInt(currentMonth) && Integer.parseInt(currentMonth) <= 6) {
+            semester = "10";
+        } else {
+            semester = "20";
+        }
 
         // 라이브데이터 초기화
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         searchTimetableApi(email);
-        searchSubjectApi("", "", "%", "%", "%", "%");
+        searchSubjectApi(currentYear, semester, "%", "%", "%", "%");
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, tabTitle.size(), currentYear, currentMonth, email);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, tabTitle.size(), currentYear, currentMonth, email, this);
         toolbar = (MaterialToolbar) findViewById(R.id.toolbar);
 
         // BackPressedForFinish 객체 생성
@@ -97,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                         // 탭 제목 설정
                         tab.setText(getResources().getString(tabTitle.get(position)));
+
                     }
                 }).attach();
 
@@ -142,7 +151,13 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(LoginModel loginModel) {
                 tv_name.setText(loginModel.getName());
                 tv_email.setText(loginModel.getEmail());
-                Glide.with(MainActivity.this).load(loginModel.getProfile()).circleCrop().into(ig_profile);
+                Glide.with(MainActivity.this)
+                        .load(loginModel.getProfile())
+                        .error(R.drawable.app_icon)
+                        .circleCrop()
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .into(ig_profile);
             }
         });
 
@@ -171,44 +186,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // 뒤로가기 버튼 종료 함수
-    public class BackPressedForFinish {
-        private long backKeyPressedTime = 0;    // '뒤로' 버튼을 클릭했을 때의 시간
-        private long TIME_INTERVAL = 2000;      // 첫번째 버튼 클릭과 두번째 버튼 클릭 사이의 종료를 위한 시간차를 정의
-        private Toast toast;                    // 종료 안내 문구 Toast
-        private Activity activity;              // 종료할 액티비티의 Activity 객체
-
-        public BackPressedForFinish(Activity _activity) {
-            this.activity = _activity;
-        }
-
-        // 종료할 액티비티에서 호출할 함수
-        public void onBackPressed() {
-
-            // '뒤로' 버튼 클릭 시간과 현재 시간을 비교 게산한다.
-
-            // 마지막 '뒤로'버튼 클릭 시간이 이전 '뒤로'버튼 클릭시간과의 차이가 TIME_INTERVAL(여기서는 2초)보다 클 때 true
-            if (System.currentTimeMillis() > backKeyPressedTime + TIME_INTERVAL) {
-
-                // 현재 시간을 backKeyPressedTime에 저장한다.
-                backKeyPressedTime = System.currentTimeMillis();
-
-                // 종료 안내문구를 노출한다.
-                showMessage();
-            } else {
-                // 마지막 '뒤로'버튼 클릭시간이 이전 '뒤로'버튼 클릭시간과의 차이가 TIME_INTERVAL(2초)보다 작을때
-                // Toast가 아직 노출중이라면 취소한다.
-                toast.cancel();
-
-                // 앱을 종료한다.
-                activity.finish();
-            }
-        }
-
-        public void showMessage() {
-            toast = Toast.makeText(activity, "'뒤로' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
-            toast.show();
-        }
+    @Override
+    public void OnUpdateTimetable(String email) {
+        mainActivityViewModel.nextInsertTimetable(email);
     }
 
     // 뒤로가기 버튼 이벤트
@@ -228,9 +208,6 @@ public class MainActivity extends AppCompatActivity {
     private String level;
     private String cyber;
 
-    private String year = "";
-    private String semester = "";
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -247,8 +224,8 @@ public class MainActivity extends AppCompatActivity {
             cyber = data.getExtras().getString("cyber");
             Log.v("Search_Confirm :", "인텐트 데이터 : " + subjectname + major + level + cyber);
 
-            // 뷰모델과 연결 - 검색된 데이터로 라이브데이터 업데이트
-            mainActivityViewModel.setSubjectData(year, semester, subjectname, level, major, cyber);
+            // 뷰모델과 연결 - 검색된 데이터로 라이브데이터 업데이트 - TEST 객체 (year, semester)
+            mainActivityViewModel.setSubjectData(currentYear, semester, subjectname, level, major, cyber);
         }
     }
 

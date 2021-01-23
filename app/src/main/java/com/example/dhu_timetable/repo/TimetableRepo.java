@@ -42,34 +42,19 @@ public class TimetableRepo {
     // 3- Calling the method in repository
     public void setTimetableApi(String email) {
         mTimetableApiClient.getTimetableData(email);
+
     }
 
     public void insertTimetableApi(String email, String subjectName, String workDay, String cyber, String quarter) {
         mTimetableApiClient.setTimetableData(email, subjectName, workDay, cyber, quarter);
     }
 
+    public void nextInsertTimetableApi(String email) {
+        setTimetableApi(email);
+    }
 
-
-
-    /**
-     * 서버에 원하는 값을 넣기
-     * @param email : 유저
-     * @param subjectName : 과목명
-     * @param workDay : 요일 & 시간 ( DB column = workDay )
-     */
-    public void setTimetable(String email, String subjectName, String workDay, String cyber, String quarter) {
-        service.setTimetable(email, subjectName, workDay, cyber, quarter)
-                .enqueue(new Callback<TimetableModel>() {
-            @Override
-            public void onResponse(Call<TimetableModel> call, Response<TimetableModel> response) {
-                Log.d(TAG, "onResponse: " + response.isSuccessful());
-            }
-
-            @Override
-            public void onFailure(Call<TimetableModel> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getCause());
-            }
-        });
+    public void deleteTimetableApi(String email, int id) {
+        mTimetableApiClient.deleteTimetableData(email, id);
     }
 
 }

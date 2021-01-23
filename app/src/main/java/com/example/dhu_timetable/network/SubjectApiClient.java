@@ -61,7 +61,7 @@ public class SubjectApiClient {
             public void run() {
                 mHandler.cancel(true);
             }
-        },5, TimeUnit.SECONDS);
+        },3, TimeUnit.SECONDS);
     }
 
     // 레트로핏 백그라운드 부분

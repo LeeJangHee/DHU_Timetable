@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.DHU_Timetable" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">#3FBA44</item>
+        <item name="colorPrimaryVariant">#1E9F44</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -22,4 +22,8 @@
     <style name="Theme.DHU_Timetable.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.DHU_Timetable.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

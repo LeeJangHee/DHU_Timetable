@@ -9,12 +9,13 @@ import com.example.dhu_timetable.repo.TimetableRepo;
 import com.example.dhu_timetable.ui.subject.SubjectModel;
 import com.example.dhu_timetable.ui.timetable.TimetableModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivityViewModel extends ViewModel {
-    private MutableLiveData<List<TimetableModel>> timetaleModels;
-    private MutableLiveData<List<SubjectModel>> subjectModels;
-    private List<TimetableModel> timetableList;
+    private MutableLiveData<List<TimetableModel>> timetaleModels = new MutableLiveData<>();
+    private MutableLiveData<List<SubjectModel>> subjectModels = new MutableLiveData<>();
+    private List<TimetableModel> timetableList = new ArrayList<>();
     private TimetableRepo timetableRepo;
     private SubjectRepo subjectRepo;
 
@@ -38,6 +39,18 @@ public class MainActivityViewModel extends ViewModel {
     public void insertTimetable(String email, String subjectName, String workDay, String cyber, String quarter) {
         timetableRepo.insertTimetableApi(email, subjectName, workDay, cyber, quarter);
     }
+
+    public List<TimetableModel> getTimetableList() {
+        return timetableRepo.getTimetable().getValue();
+    }
+
+    public void nextInsertTimetable(String email) {
+        timetableRepo.nextInsertTimetableApi(email);
+    }
+
+    public void deleteTimetable(String email, int id) {
+        TimetableRepo.getInstance().deleteTimetableApi(email, id);
+    }
     // }
 
     // 강의표 라이브 데이터 {
@@ -47,10 +60,6 @@ public class MainActivityViewModel extends ViewModel {
 
     public void setSubjectData(String year, String semester, String name, String level, String major, String cyber) {
         subjectRepo.setSubjectData(year, semester, name, level, major, cyber);
-    }
-
-    public List<TimetableModel> getTimetableList() {
-        return timetableRepo.getTimetable().getValue();
     }
     // }
 }

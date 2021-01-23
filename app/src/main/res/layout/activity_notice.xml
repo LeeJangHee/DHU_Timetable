@@ -6,13 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/cardview_shadow_start_color">
+    android:background="#33C6C6C6">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notice_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#33C6C6C6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

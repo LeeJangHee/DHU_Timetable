@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dhu_timetable.R;
 import com.example.dhu_timetable.repo.UsersRepo;
+import com.example.dhu_timetable.ui.main.BackPressedForFinish;
 import com.example.dhu_timetable.ui.main.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -78,9 +79,6 @@ public class LoginActivity extends AppCompatActivity {
                 googleSignIn();
             }
         });
-
-        // TODO: 구아로 서비스로 시행될 예정, 학교 이메일로만 로그인 가능,
-        // 인증된 사용자를 서버에 저장 --> 유저 데이터 관리
     }
 
     /**
@@ -205,4 +203,9 @@ public class LoginActivity extends AppCompatActivity {
         return dateArray;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        new BackPressedForFinish(this).onBackPressed();
+    }
 }
