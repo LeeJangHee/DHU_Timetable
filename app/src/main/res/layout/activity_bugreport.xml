@@ -5,36 +5,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
+    <ImageView
+        android:id="@+id/iv_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bugreport_1"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/app_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="32sp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/layout_mail"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:background="#2F9D27">
+        android:layout_marginHorizontal="32dp"
+        android:background="#EAEAEA"
+        android:paddingVertical="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/iv_main"
+        app:layout_constraintStart_toStartOf="@+id/iv_main"
+        app:layout_constraintTop_toBottomOf="@+id/iv_main">
 
         <ImageView
-            android:layout_width="32dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_baseline_mail_24"/>
+            android:layout_gravity="start"
+            android:layout_marginHorizontal="8dp"
+            android:src="@drawable/ic_baseline_mail_24" />
 
         <TextView
-            android:id="@+id/btn_send"
+            android:id="@+id/tv_send1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="start"
             android:text="@string/bugreport_2"
-            android:textSize="32sp"/>
+            android:textSize="16sp" />
+
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_kakao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:background="#EAEAEA"
+        android:paddingVertical="12dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/layout_mail"
+        app:layout_constraintStart_toStartOf="@+id/layout_mail"
+        app:layout_constraintTop_toBottomOf="@+id/layout_mail">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_marginHorizontal="8dp"
+            android:src="@drawable/ic_kakaotalk_icon" />
+
+        <TextView
+            android:id="@+id/tv_send2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/bugreport_3"
+            android:textSize="16sp" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

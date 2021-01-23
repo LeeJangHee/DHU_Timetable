@@ -124,10 +124,10 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.button_reset:
-                it = new Intent(SearchActivity.this, MainActivity.class);
-                it.putExtra("email",email);
-                startActivity(it);
-                finish();
+                et_subjectname.setText("");
+                spn_major.setSelection(0);
+                spn_level.setSelection(0);
+                cb_cyber.setChecked(false);
                 break;
 
 

@@ -92,6 +92,21 @@
             android:layout_marginLeft="16dp"
             android:text="@string/Firebase_license"/>
 
+        -- baemin font
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="4dp"
+            android:text="@string/baeminfont_license_title"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="@string/baeminfont_license"/>
+
 
     </LinearLayout>
 
