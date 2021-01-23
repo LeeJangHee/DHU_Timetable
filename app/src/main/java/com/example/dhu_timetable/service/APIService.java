@@ -2,6 +2,7 @@ package com.example.dhu_timetable.service;
 
 import com.example.dhu_timetable.ui.login.LoginModel;
 import com.example.dhu_timetable.ui.navitem.NavigationModel;
+import com.example.dhu_timetable.ui.navitem.notice.NoticeModel;
 import com.example.dhu_timetable.ui.subject.SubjectModel;
 import com.example.dhu_timetable.ui.timetable.TimetableModel;
 
@@ -53,4 +54,7 @@ public interface APIService {
                                        @Query("level") String level,
                                        @Query("major") String major,
                                        @Query("cyber") String cyber);
+
+    @GET("notice.php")
+    Call<List<NoticeModel>> getNotice();
 }
