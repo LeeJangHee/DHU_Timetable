@@ -13,6 +13,9 @@
         android:usesCleartextTraffic="true"
         android:name="androidx.multidex.MultiDexApplication"
         android:theme="@style/Theme.DHU_Timetable">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-9700414008733720~8736405806"/>
         <activity
             android:name=".ui.main.MainActivity"
             android:label="@string/title_activity_main"

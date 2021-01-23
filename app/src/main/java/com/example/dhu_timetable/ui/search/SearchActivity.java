@@ -18,6 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.dhu_timetable.R;
 import com.example.dhu_timetable.ui.main.MainActivity;
 import com.example.dhu_timetable.ui.subject.SubjectFragment;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -37,11 +42,22 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private Spinner spn_level;
 
     private CheckBox cb_cyber;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        mAdView = findViewById(R.id.search_adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         // 로그인 정보 유지를 위한 Intent
         Intent it = getIntent();

@@ -91,7 +91,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/search_text_5"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/search_adView"
         app:layout_constraintEnd_toStartOf="@+id/button_confirm"
         app:layout_constraintStart_toStartOf="@+id/textView_day"
         app:layout_constraintTop_toBottomOf="@+id/button_reset" />
@@ -103,10 +103,20 @@
         android:layout_marginTop="32dp"
         android:text="@string/search_text_6"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/search_adView"
         app:layout_constraintEnd_toEndOf="@+id/spinner_level"
         app:layout_constraintStart_toEndOf="@+id/button_cancel"
         app:layout_constraintTop_toBottomOf="@+id/button_reset" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/search_adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
