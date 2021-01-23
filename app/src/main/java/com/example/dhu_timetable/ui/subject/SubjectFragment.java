@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dhu_timetable.R;
-import com.example.dhu_timetable.network.SubjectApiClient;
 import com.example.dhu_timetable.ui.main.MainActivityViewModel;
 import com.example.dhu_timetable.ui.timetable.TimetableModel;
 
@@ -33,9 +31,7 @@ public class SubjectFragment extends Fragment implements OnSubjectListener {
     private static final String NOW_YEAR = "YEAR";
     private static final String NOW_MONTH = "MONTH";
     private static final String NOW_USER = "USER";
-    private static final int REQUEST_CODE = 100;
 
-    private List<SubjectModel> subjectList = new ArrayList<>();
     private List<TimetableModel> timetableList = new ArrayList<>();
     private String user;
     private RecyclerView recyclerView;
@@ -124,7 +120,7 @@ public class SubjectFragment extends Fragment implements OnSubjectListener {
     public boolean onTimeCheck(String workDay) {
         // TODO: 뷰모델을 가져올 수 없음 NullPointerException = 수정 필요
         try {
-            timetableList = mainActivityViewModel.getTimetableList();
+            timetableList = mainActivityViewModel.getTimetable().getValue();
             for (TimetableModel t : timetableList) {
                 for (int i = 0; i < t.getWorkDay().length(); i += 3) {
                     if (workDay.contains(t.getWorkDay().substring(i, i + 3))) {

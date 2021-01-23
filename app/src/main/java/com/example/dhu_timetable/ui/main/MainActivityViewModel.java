@@ -47,6 +47,10 @@ public class MainActivityViewModel extends ViewModel {
     public void nextInsertTimetable(String email) {
         timetableRepo.nextInsertTimetableApi(email);
     }
+
+    public void deleteTimetable(String email, int id) {
+        TimetableRepo.getInstance().deleteTimetableApi(email, id);
+    }
     // }
 
     // 강의표 라이브 데이터 {

@@ -53,4 +53,8 @@ public class TimetableRepo {
         setTimetableApi(email);
     }
 
+    public void deleteTimetableApi(String email, int id) {
+        mTimetableApiClient.deleteTimetableData(email, id);
+    }
+
 }

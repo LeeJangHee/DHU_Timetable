@@ -24,6 +24,7 @@ public class TimetableApiClient {
     private MutableLiveData<TimetableModel> setTimetable;
     private RetrieveTimetableRunnable retrieveTimetableRunnable;
     private SetTimetableRunnable setTimetableRunnable;
+    private DeleteTimetableRunnable deleteTimetableRunnable;
 
     private static TimetableApiClient instance;
 
@@ -91,7 +92,7 @@ public class TimetableApiClient {
                     mTimetableModels.postValue(timetableModels);
                 } else {
                     String error = response.errorBody().string();
-                    Log.v("janghee", "getTimetable background error: "+error);
+                    Log.v("janghee", "getTimetable background error: " + error);
                     mTimetableModels.postValue(null);
                 }
 
@@ -160,7 +161,7 @@ public class TimetableApiClient {
         public void run() {
             try {
                 Response<TimetableModel> response = setMyTimetable(
-                        email,subjectName,workDay,cyber,quarter).execute();
+                        email, subjectName, workDay, cyber, quarter).execute();
 
                 if (cancelRequest) {
                     return;
@@ -171,7 +172,7 @@ public class TimetableApiClient {
 
                 } else {
                     String error = response.errorBody().string();
-                    Log.v("janghee", "setTimetable background error: "+error);
+                    Log.v("janghee", "setTimetable background error: " + error);
 
                 }
 
@@ -189,6 +190,75 @@ public class TimetableApiClient {
 
         private void cancelRequest() {
             Log.v("janghee", "Cancelling Request SetMyTimetable");
+            cancelRequest = true;
+        }
+    }
+
+    // 시간표 데이터 삭제하기 = delete from
+    public void deleteTimetableData(String email, int id) {
+        if (deleteTimetableRunnable != null) {
+            deleteTimetableRunnable = null;
+        }
+
+        deleteTimetableRunnable = new TimetableApiClient.DeleteTimetableRunnable(email, id);
+        final Future mHandler = AppExecutors.getInstance()
+                .networkIO()
+                .submit(deleteTimetableRunnable);
+
+        AppExecutors.getInstance().networkIO().schedule(new Runnable() {
+            @Override
+            public void run() {
+                // 타임아웃
+                mHandler.cancel(true);
+            }
+        }, 3, TimeUnit.SECONDS);
+    }
+
+    // 시간표 데이터 삭제 백그라운드 레트로핏 부분
+    private class DeleteTimetableRunnable implements Runnable {
+
+        private String email;
+        private int id;
+        boolean cancelRequest;
+
+        public DeleteTimetableRunnable(String email, int id) {
+            this.email = email;
+            this.id = id;
+            cancelRequest = false;
+        }
+
+        @Override
+        public void run() {
+            try {
+                Response<TimetableModel> response = deleteTimetable(email, id).execute();
+
+                if (cancelRequest) {
+                    return;
+                }
+
+                if (response.code() == 200) {
+                    Log.v("janghee", "deleteTimetable background OK");
+                } else {
+                    String error = response.errorBody().string();
+                    Log.v("janghee", "deleteTimetable background error: " + error);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+        // 레트로핏 검색
+        private Call<TimetableModel> deleteTimetable(String email, int id) {
+            return RetrofitConnect.getRetrofitClient()
+                    .create(APIService.class)
+                    .deleteTimetable(email, id);
+        }
+
+        private void cancelRequest() {
+            Log.v("janghee", "Cancelling Request deleteTimetable");
             cancelRequest = true;
         }
     }

@@ -1,7 +1,9 @@
 package com.example.dhu_timetable.ui.timetable;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,19 +21,18 @@ import com.github.tlaabs.timetableview.Time;
 import com.github.tlaabs.timetableview.TimetableView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * 시간표 오픈소스
  */
 public class TimetableFragment extends Fragment {
 
-    private String TAG = "janghee";
-
     private TimetableView timetable;
     private ArrayList<Schedule> schedules = new ArrayList<>();
-    private Vector<ArrayList<Schedule>> cyberTimetable;
+    private ArrayList<String> scheduleID = new ArrayList<>();
+    private HashMap<Schedule, String> mGetID = new HashMap<>();
 
     private String user;
 
@@ -50,11 +51,18 @@ public class TimetableFragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        user = getArguments().getString("user");
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_timetable, container, false);
         timetable = (TimetableView) view.findViewById(R.id.timetable);
+
         return view;
     }
 
@@ -63,37 +71,44 @@ public class TimetableFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         // 레트로핏 --> 라이브데이터 가져오기
-
-        mainActivityViewModel.getTimetable().observe(requireActivity(),
+        mainActivityViewModel.getTimetable().observe(getViewLifecycleOwner(),
                 new Observer<List<TimetableModel>>() {
                     @Override
                     public void onChanged(List<TimetableModel> timetableModels) {
                         // 새로 초기화 후
                         timetable.removeAll();
-
-                        if (timetableModels.size() > 0) {
-                            setTimetable(timetableModels);
-                        }
-
+                        schedules.clear();
+                        scheduleID.clear();
+                        mGetID.clear();
+                        setTimetable(timetableModels);
                         // 업데이트
                         if (!schedules.isEmpty()) {
                             for (int i = 0; i < schedules.size(); i++) {
                                 ArrayList<Schedule> aSchedule = new ArrayList<>();
                                 aSchedule.add(schedules.get(i));
                                 timetable.add(aSchedule);
+                                mGetID.put(schedules.get(i), scheduleID.get(i));
                             }
                         }
-
-                        Log.d(TAG, "Timetable VM onChanged: " + timetableModels.size());
                     }
                 });
-
 
         timetable.setOnStickerSelectEventListener(new TimetableView.OnStickerSelectedListener() {
             @Override
             public void OnStickerSelected(int idx, ArrayList<Schedule> schedules) {
-                // TODO: 수강 취소 이벤트
-                Log.d(TAG, "수강 취소 이벤트");
+                // 삭제서버 연결
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                Dialog dialog = builder.setMessage("삭제하시겠습니까?")
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mainActivityViewModel.deleteTimetable(user, Integer.parseInt(mGetID.get(schedules.get(0))));
+                                timetable.remove(idx);
+                            }
+                        })
+                        .setNegativeButton("취소", null)
+                        .create();
+                dialog.show();
             }
         });
     }
@@ -102,6 +117,7 @@ public class TimetableFragment extends Fragment {
         Time startTime;
         Time endTime;
         int index = 0;
+        int cIndex = 0;
         // 타임 테이블 설정
         for (TimetableModel data : timetableModels) {
             schedule = new Schedule();
@@ -110,18 +126,21 @@ public class TimetableFragment extends Fragment {
             String workDay = data.getWorkDay();
             String cyber = data.getCyberCheck();
             String quarter = data.getQuarterCheck();
-            Log.v(TAG, "과목명: " + subjectName);
 
             // 사이버 강의일 경우
-            if (!cyber.isEmpty()) {
-                Log.d(TAG, "cyber ok");
+            if (cyber.equals("Y")) {
+                schedule.setDay(6);
                 schedule.setClassTitle(subjectName);
+                schedule.setStartTime(new Time(cIndex+9, 0));
+                schedule.setEndTime(new Time(cIndex+10, 0));
+                cIndex++;
+                schedules.add(index++, schedule);
+                scheduleID.add(id);
                 continue;
             }
 
             // 75분
-            if (!quarter.isEmpty()) {
-                Log.d(TAG, "quarter ok");
+            if (quarter.equals("Y")) {
                 for (int i = 0; i < workDay.length(); i += 3) {
                     schedule = new Schedule();
                     int day = Character.getNumericValue(workDay.charAt(i)) - 1;
@@ -135,6 +154,8 @@ public class TimetableFragment extends Fragment {
                     schedule.setEndTime(new Time(hour + 1, endMinute));
 
                     schedules.add(index++, schedule);
+                    scheduleID.add(id);
+
                 }
                 continue;
             }
@@ -171,8 +192,6 @@ public class TimetableFragment extends Fragment {
                     schedule.setEndTime(endTime);
 
                     schedules.add(index++, schedule);
-                    Log.i(TAG, "스케줄 값: " + schedule.getStartTime().getHour() + schedule.getStartTime().getMinute() +
-                            "," + schedule.getEndTime().getHour() + schedule.getEndTime().getMinute());
                     continue;
                 }
                 endTime.setHour(hour + 1);
@@ -181,13 +200,18 @@ public class TimetableFragment extends Fragment {
                 schedule.setClassTitle(subjectName);
                 schedule.setStartTime(startTime);
                 schedule.setEndTime(endTime);
-
             }
             schedules.add(index++, schedule);
-            Log.i(TAG, "스케줄 값: " + schedule.getStartTime().getHour() + schedule.getStartTime().getMinute() +
-                    "," + schedule.getEndTime().getHour() + schedule.getEndTime().getMinute());
+            scheduleID.add(id);
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
+
+
+
+    }
 }

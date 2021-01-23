@@ -12,8 +12,6 @@ import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 
 import com.example.dhu_timetable.R;
-import com.example.dhu_timetable.ui.main.MainActivityViewModel;
-import com.example.dhu_timetable.ui.timetable.TimetableModel;
 
 import java.util.List;
 
@@ -85,6 +83,8 @@ public class SubjectRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewH
                     isTime[position] = onSubjectListener.onTimeCheck(models.getWorkDay());
                     if (!isTime[position]){
                         ((SubjectAdapter)holder).btn_ok.setEnabled(false);
+                    } else {
+                        ((SubjectAdapter)holder).btn_ok.setEnabled(true);
                     }
                 } else {
                     ((SubjectAdapter)holder).imageBtn.setImageResource(R.drawable.ic_baseline_expand_more_24);
@@ -115,12 +115,12 @@ public class SubjectRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewH
                     );
                     onSubjectListener.onNextAddSubject(user);
                     ((SubjectAdapter)holder).btn_ok.setEnabled(false);
-                    Log.d(TAG, "담기 후: "+isTime[position]);
                 } else {
                     // 불가능
                     Toast.makeText(holder.itemView.getContext(), "원하는 시간에 강의가 있습니다.", Toast.LENGTH_SHORT).show();
                 }
                 isTime[position] = onSubjectListener.onTimeCheck(models.workDay);
+                Log.d(TAG, "담기 후: "+isTime[position]);
             }
         });
     }
