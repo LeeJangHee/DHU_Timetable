@@ -205,13 +205,4 @@ public class TimetableFragment extends Fragment {
             scheduleID.add(id);
         }
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
-
-
-    }
 }

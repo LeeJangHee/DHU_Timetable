@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
         // 라이브데이터 초기화
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         searchTimetableApi(email);
-        searchSubjectApi("2020", "20", "%", "%", "%", "%");
+        searchSubjectApi(currentYear, semester, "%", "%", "%", "%");
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, tabTitle.size(), currentYear, currentMonth, email, this);
         toolbar = (MaterialToolbar) findViewById(R.id.toolbar);
@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
                     public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                         // 탭 제목 설정
                         tab.setText(getResources().getString(tabTitle.get(position)));
+
                     }
                 }).attach();
 
@@ -224,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
             Log.v("Search_Confirm :", "인텐트 데이터 : " + subjectname + major + level + cyber);
 
             // 뷰모델과 연결 - 검색된 데이터로 라이브데이터 업데이트 - TEST 객체 (year, semester)
-            mainActivityViewModel.setSubjectData("2020", "20", subjectname, level, major, cyber);
+            mainActivityViewModel.setSubjectData(currentYear, semester, subjectname, level, major, cyber);
         }
     }
 
