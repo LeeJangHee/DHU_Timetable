@@ -64,9 +64,11 @@ public class SubjectRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewH
         ((SubjectAdapter)holder).expandable_finish_check.setText("이수구분: " + models.getFinishCheck());
         if (models.getCyberCheck().equals("Y")) {
             ((SubjectAdapter)holder).expandable_cyber.setText("사이버 강의: YES");
+            ((SubjectAdapter)holder).expandable_cyber.setVisibility(View.VISIBLE);
             ((SubjectAdapter)holder).expandable_classroom.setVisibility(View.GONE);
         } else {
             ((SubjectAdapter)holder).expandable_cyber.setVisibility(View.GONE);
+            ((SubjectAdapter)holder).expandable_classroom.setVisibility(View.VISIBLE);
         }
 
         // 카드뷰 클릭시 이벤트 발생
@@ -98,6 +100,10 @@ public class SubjectRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewH
         ((SubjectAdapter)holder).btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (models.getWorkDay().isEmpty() && models.getCyberCheck().equals("")) {
+                    Toast.makeText(holder.itemView.getContext(), "시간을 확인중입니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 // TODO: 과목 데이터 -> 시간표로 저장
                 // 시간 데이터 예외가 많음
                 // 여러가지 요일, 시간 존재
