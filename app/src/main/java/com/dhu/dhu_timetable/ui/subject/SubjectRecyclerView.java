@@ -47,7 +47,7 @@ public class SubjectRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewH
         ((SubjectAdapter)holder).subject_name.setText(models.getSubjectName() + "");
         ((SubjectAdapter)holder).subject_major.setText(models.getMajorName() + "");
         ((SubjectAdapter)holder).subject_score.setText(models.getScore() + "학점");
-        ((SubjectAdapter)holder).subject_day_time.setText(models.getPublishDay() + "");
+        ((SubjectAdapter)holder).subject_day_time.setText(models.getPublishDay().replace(" ", "") + "");
         if (models.getProfessor().isEmpty()) {
             ((SubjectAdapter)holder).subject_professor.setText("미정");
         } else {

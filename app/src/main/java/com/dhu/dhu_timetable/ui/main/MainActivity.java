@@ -23,8 +23,8 @@ import com.dhu.dhu_timetable.R;
 import com.dhu.dhu_timetable.ui.login.LoginModel;
 import com.dhu.dhu_timetable.ui.navitem.BugreportActivity;
 import com.dhu.dhu_timetable.ui.navitem.LicenseActivity;
-import com.dhu.dhu_timetable.ui.navitem.notice.NoticeActivity;
 import com.dhu.dhu_timetable.ui.navitem.NavigationViewModel;
+import com.dhu.dhu_timetable.ui.navitem.notice.NoticeActivity;
 import com.dhu.dhu_timetable.ui.search.SearchActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
                     Intent it = new Intent(getApplicationContext(), SearchActivity.class);
                     it.putExtra("email", email);
                     startActivityForResult(it, REQUEST_CODE);
-
                 }
 
                 return false;

@@ -79,7 +79,7 @@ public class SubjectFragment extends Fragment implements OnSubjectListener {
         // 리사이클러뷰
         recyclerView = view.findViewById(R.id.subject_recyclerview);
         // 리사이클러뷰 초기화 + 뷰모델
-        ConfigureRecyclerView();
+        configureRecyclerView();
 
         return view;
     }
@@ -99,7 +99,7 @@ public class SubjectFragment extends Fragment implements OnSubjectListener {
 
     }
 
-    private void ConfigureRecyclerView() {
+    private void configureRecyclerView() {
         subjectRecyclerView = new SubjectRecyclerView(user, this);
 
         recyclerView.setAdapter(subjectRecyclerView);
