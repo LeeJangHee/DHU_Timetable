@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class TimetableFragment extends Fragment {
     int[] defaultHour = {0, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
     // [75분용시간표현] A교시:09:00~10:15, B교시:10:30~11:45, C교시:14:00~15:15  D교시: 15:30~16:45
     // (index * 2 - 1, index * 2)
-    int[] quarterMinute = {0, 0, 15, 30, 45, 0, 15, 30, 45};
+    int[] quarterMinute = {0, 0, 15, 30, 45, 0, 0, 0, 15, 30, 45};
     private Schedule schedule;
     private MainActivityViewModel mainActivityViewModel;
 
@@ -81,14 +82,18 @@ public class TimetableFragment extends Fragment {
                         scheduleID.clear();
                         mGetID.clear();
                         setTimetable(timetableModels);
+
                         // 업데이트
                         if (!schedules.isEmpty()) {
+                            Log.d("janghee", "schedules size: "+schedules.size()
+                                    +"\n ID size: "+ scheduleID.size());
                             for (int i = 0; i < schedules.size(); i++) {
                                 ArrayList<Schedule> aSchedule = new ArrayList<>();
                                 aSchedule.add(schedules.get(i));
                                 timetable.add(aSchedule);
                                 mGetID.put(schedules.get(i), scheduleID.get(i));
                             }
+                            Log.d("janghee", "mGetID: "+mGetID.keySet());
                         }
                     }
                 });
@@ -103,7 +108,9 @@ public class TimetableFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 mainActivityViewModel.deleteTimetable(user, Integer.parseInt(mGetID.get(schedules.get(0))));
-                                timetable.remove(idx);
+                                // 삭제 후 프레그먼트 리로드
+
+
                             }
                         })
                         .setNegativeButton("취소", null)
@@ -123,9 +130,10 @@ public class TimetableFragment extends Fragment {
             schedule = new Schedule();
             String id = data.getId();
             String subjectName = data.getSubjectName();
-            String workDay = data.getWorkDay();
+            String workDay = data.getWorkDay().replace(" ", "");
             String cyber = data.getCyberCheck();
             String quarter = data.getQuarterCheck();
+
 
             // 사이버 강의일 경우
             if (cyber.equals("Y")) {
@@ -155,7 +163,6 @@ public class TimetableFragment extends Fragment {
 
                     schedules.add(index++, schedule);
                     scheduleID.add(id);
-
                 }
                 continue;
             }
@@ -169,9 +176,23 @@ public class TimetableFragment extends Fragment {
             startTime = new Time(preHour, minute);
             endTime = new Time(preHour + 1, minute);
 
+            boolean nextDay = false;
+
             // workDay --> 요일, 시간 분리하기
             // 시간 부분 --> time[0] + time[1]
             for (int i = 3; i < workDay.length(); i += 3) {
+                if (nextDay) {
+                    nextDay = false;
+                    schedule = new Schedule();
+                    preTime = workDay.substring(i-3, i);
+                    preDay = Character.getNumericValue(preTime.charAt(0)) - 1;
+                    preHour = defaultHour[Character.getNumericValue(preTime.charAt(1)) +
+                            Character.getNumericValue(preTime.charAt(2))];
+                    startTime = new Time(preHour, minute);
+                    endTime = new Time(preHour + 1, minute);
+                    continue;
+                }
+
                 int day = Character.getNumericValue(workDay.charAt(i)) - 1;
                 int[] time = {Character.getNumericValue(workDay.charAt(i + 1)),
                         Character.getNumericValue(workDay.charAt(i + 2))};
@@ -192,6 +213,8 @@ public class TimetableFragment extends Fragment {
                     schedule.setEndTime(endTime);
 
                     schedules.add(index++, schedule);
+                    scheduleID.add(id);
+                    nextDay = true;
                     continue;
                 }
                 endTime.setHour(hour + 1);

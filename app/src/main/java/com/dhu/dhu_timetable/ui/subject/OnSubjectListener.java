@@ -9,7 +9,4 @@ public interface OnSubjectListener {
     void onAddSubject(String email, String subjectName, String workDay, String cyber, String quarter);
 
     boolean onTimeCheck(String workDay);
-
-    void onNextAddSubject(String email);
-
 }

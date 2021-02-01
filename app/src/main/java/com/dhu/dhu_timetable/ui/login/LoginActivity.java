@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;                      // 파이어베이스 인증 객체
 
     private GoogleSignInClient googleSignInClient;
+    private BackPressedForFinish backPressedForFinish;
 
     @Override
     protected void onStart() {
@@ -60,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        backPressedForFinish = new BackPressedForFinish(this);
 
         // 로그인 버튼이 눌릴 때 --> 기본 옵션 정의
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -205,7 +207,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        new BackPressedForFinish(this).onBackPressed();
+        backPressedForFinish.onBackPressed();
     }
 }

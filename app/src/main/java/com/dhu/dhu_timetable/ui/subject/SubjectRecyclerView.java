@@ -47,7 +47,7 @@ public class SubjectRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewH
         ((SubjectAdapter)holder).subject_name.setText(models.getSubjectName() + "");
         ((SubjectAdapter)holder).subject_major.setText(models.getMajorName() + "");
         ((SubjectAdapter)holder).subject_score.setText(models.getScore() + "학점");
-        ((SubjectAdapter)holder).subject_day_time.setText(models.getPublishDay() + "");
+        ((SubjectAdapter)holder).subject_day_time.setText(models.getPublishDay().replace(" ", "") + "");
         if (models.getProfessor().isEmpty()) {
             ((SubjectAdapter)holder).subject_professor.setText("미정");
         } else {
@@ -75,7 +75,6 @@ public class SubjectRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewH
         ((SubjectAdapter)holder).imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSubjectListener.onNextAddSubject(user);
                 AutoTransition transition = new AutoTransition();
                 if (((SubjectAdapter)holder).constraintLayout.getVisibility() == View.GONE) {
                     TransitionManager.beginDelayedTransition(((SubjectAdapter)holder).materialCardView, transition);
@@ -119,7 +118,6 @@ public class SubjectRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewH
                             models.cyberCheck,
                             models.quarterCheck
                     );
-                    onSubjectListener.onNextAddSubject(user);
                     ((SubjectAdapter)holder).btn_ok.setEnabled(false);
                 } else {
                     // 불가능

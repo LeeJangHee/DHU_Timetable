@@ -28,7 +28,7 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("insert_timetable.php")
-    Call<TimetableModel> setTimetable(@Field("email") String email,
+    Call<List<TimetableModel>> setTimetable(@Field("email") String email,
                                       @Field("subjectName") String subjectName,
                                       @Field("workDay") String workDay,
                                       @Field("cyberCheck") String cyberCheck,
@@ -48,8 +48,8 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("delete_timetable.php")
-    Call<TimetableModel> deleteTimetable(@Field("email") String email,
-                                         @Field("id") int id);
+    Call<List<TimetableModel>> deleteTimetable(@Field("email") String email,
+                                               @Field("id") int id);
 
     @GET("notice.php")
     Call<List<NoticeModel>> getNotice();

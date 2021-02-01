@@ -20,7 +20,7 @@ import retrofit2.Response;
 
 public class TimetableApiClient {
     private MutableLiveData<List<TimetableModel>> mTimetableModels;
-    private MutableLiveData<TimetableModel> setTimetable;
+    private MutableLiveData<List<TimetableModel>> setTimetable;
     private RetrieveTimetableRunnable retrieveTimetableRunnable;
     private SetTimetableRunnable setTimetableRunnable;
     private DeleteTimetableRunnable deleteTimetableRunnable;
@@ -159,7 +159,7 @@ public class TimetableApiClient {
         @Override
         public void run() {
             try {
-                Response<TimetableModel> response = setMyTimetable(
+                Response<List<TimetableModel>> response = setMyTimetable(
                         email, subjectName, workDay, cyber, quarter).execute();
 
                 if (cancelRequest) {
@@ -168,6 +168,8 @@ public class TimetableApiClient {
 
                 if (response.code() == 200) {
                     Log.v("janghee", "setTimetable ok");
+                    List<TimetableModel> timetableModels = new ArrayList<>(response.body());
+                    mTimetableModels.postValue(timetableModels);
 
                 } else {
                     String error = response.errorBody().string();
@@ -181,7 +183,7 @@ public class TimetableApiClient {
         }
 
         // 레트로핏 검색
-        private Call<TimetableModel> setMyTimetable(String email, String subjectName, String workDay, String cyber, String quarter) {
+        private Call<List<TimetableModel>> setMyTimetable(String email, String subjectName, String workDay, String cyber, String quarter) {
             return RetrofitConnect.getRetrofitClient()
                     .create(APIService.class)
                     .setTimetable(email, subjectName, workDay, cyber, quarter);
@@ -229,7 +231,7 @@ public class TimetableApiClient {
         @Override
         public void run() {
             try {
-                Response<TimetableModel> response = deleteTimetable(email, id).execute();
+                Response<List<TimetableModel>> response = deleteTimetable(email, id).execute();
 
                 if (cancelRequest) {
                     return;
@@ -237,20 +239,24 @@ public class TimetableApiClient {
 
                 if (response.code() == 200) {
                     Log.v("janghee", "deleteTimetable background OK");
+                    List<TimetableModel> timetableModels = new ArrayList<>(response.body());
+                    mTimetableModels.postValue(timetableModels);
                 } else {
                     String error = response.errorBody().string();
                     Log.v("janghee", "deleteTimetable background error: " + error);
+                    mTimetableModels.postValue(null);
                 }
 
             } catch (IOException e) {
                 e.printStackTrace();
+                mTimetableModels.postValue(null);
             }
 
 
         }
 
         // 레트로핏 검색
-        private Call<TimetableModel> deleteTimetable(String email, int id) {
+        private Call<List<TimetableModel>> deleteTimetable(String email, int id) {
             return RetrofitConnect.getRetrofitClient()
                     .create(APIService.class)
                     .deleteTimetable(email, id);
