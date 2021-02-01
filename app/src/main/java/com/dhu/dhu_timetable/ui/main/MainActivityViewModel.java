@@ -49,7 +49,7 @@ public class MainActivityViewModel extends ViewModel {
     }
 
     public void deleteTimetable(String email, int id) {
-        TimetableRepo.getInstance().deleteTimetableApi(email, id);
+        timetableRepo.deleteTimetableApi(email, id);
     }
     // }
 

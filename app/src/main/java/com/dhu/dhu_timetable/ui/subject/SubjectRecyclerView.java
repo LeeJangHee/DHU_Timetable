@@ -75,7 +75,6 @@ public class SubjectRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewH
         ((SubjectAdapter)holder).imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSubjectListener.onNextAddSubject(user);
                 AutoTransition transition = new AutoTransition();
                 if (((SubjectAdapter)holder).constraintLayout.getVisibility() == View.GONE) {
                     TransitionManager.beginDelayedTransition(((SubjectAdapter)holder).materialCardView, transition);
@@ -119,7 +118,6 @@ public class SubjectRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewH
                             models.cyberCheck,
                             models.quarterCheck
                     );
-                    onSubjectListener.onNextAddSubject(user);
                     ((SubjectAdapter)holder).btn_ok.setEnabled(false);
                 } else {
                     // 불가능

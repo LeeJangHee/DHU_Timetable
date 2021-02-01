@@ -137,9 +137,4 @@ public class SubjectFragment extends Fragment implements OnSubjectListener {
         Log.d(TAG, "timeCheck: true");
         return true;
     }
-
-    @Override
-    public void onNextAddSubject(String email) {
-        mainActivityViewModel.nextInsertTimetable(email);
-    }
 }
