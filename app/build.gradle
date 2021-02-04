@@ -66,9 +66,9 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
     // navigation
-    implementation 'androidx.navigation:navigation-runtime:2.3.2'
-    implementation 'androidx.navigation:navigation-ui:2.3.2'
-    implementation 'androidx.navigation:navigation-fragment:2.3.2'
+    implementation 'androidx.navigation:navigation-runtime:2.3.3'
+    implementation 'androidx.navigation:navigation-ui:2.3.3'
+    implementation 'androidx.navigation:navigation-fragment:2.3.3'
 
     // glide
     implementation 'com.github.bumptech.glide:glide:4.10.0'
@@ -76,7 +76,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // google admob
-    implementation 'com.google.android.gms:play-services-ads:19.6.0'
+    implementation 'com.google.android.gms:play-services-ads:19.7.0'
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

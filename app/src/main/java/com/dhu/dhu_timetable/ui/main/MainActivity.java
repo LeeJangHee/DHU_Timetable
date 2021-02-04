@@ -6,12 +6,14 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,6 +22,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dhu.dhu_timetable.R;
+import com.dhu.dhu_timetable.ui.loading.LoadingActivity;
+import com.dhu.dhu_timetable.ui.login.LoginActivity;
 import com.dhu.dhu_timetable.ui.login.LoginModel;
 import com.dhu.dhu_timetable.ui.navitem.BugreportActivity;
 import com.dhu.dhu_timetable.ui.navitem.LicenseActivity;
@@ -30,6 +34,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
     private TextView tv_email;
     private TextView tv_name;
     private CircleImageView ig_profile;
+    private ConstraintLayout btn_logout;
+    private FirebaseAuth firebaseAuth;
 
     // onBackPressed
     private BackPressedForFinish backPressedForFinish;
@@ -180,6 +187,21 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
                         break;
                 }
                 return false;
+            }
+        });
+
+        // 네비게이션 로그아웃 버튼 클릭 이벤트
+        firebaseAuth = FirebaseAuth.getInstance();
+        btn_logout = (ConstraintLayout) header.findViewById(R.id.layout_logout);
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(firebaseAuth.getCurrentUser() != null){
+                    firebaseAuth.signOut();
+                    Toast.makeText(MainActivity.this, "성공적으로 로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                }
             }
         });
 
