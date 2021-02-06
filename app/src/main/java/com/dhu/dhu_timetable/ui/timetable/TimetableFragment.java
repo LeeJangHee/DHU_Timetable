@@ -37,10 +37,10 @@ public class TimetableFragment extends Fragment {
 
     private String user;
 
-    int[] defaultHour = {0, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
+    int[] defaultHour = {-1, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
     // [75분용시간표현] A교시:09:00~10:15, B교시:10:30~11:45, C교시:14:00~15:15  D교시: 15:30~16:45
     // (index * 2 - 1, index * 2)
-    int[] quarterMinute = {0, 0, 15, 30, 45, 0, 0, 0, 15, 30, 45};
+    int[] quarterMinute = {-1, 0, 15, 30, 45, -1, -1, 0, 15, 30, 45};
     private Schedule schedule;
     private MainActivityViewModel mainActivityViewModel;
 
@@ -85,15 +85,15 @@ public class TimetableFragment extends Fragment {
 
                         // 업데이트
                         if (!schedules.isEmpty()) {
-                            Log.d("janghee", "schedules size: "+schedules.size()
-                                    +"\n ID size: "+ scheduleID.size());
+                            Log.d("janghee", "schedules size: " + schedules.size()
+                                    + "\n ID size: " + scheduleID.size());
                             for (int i = 0; i < schedules.size(); i++) {
                                 ArrayList<Schedule> aSchedule = new ArrayList<>();
                                 aSchedule.add(schedules.get(i));
                                 timetable.add(aSchedule);
                                 mGetID.put(schedules.get(i), scheduleID.get(i));
                             }
-                            Log.d("janghee", "mGetID: "+mGetID.keySet());
+                            Log.d("janghee", "mGetID: " + mGetID.keySet());
                         }
                     }
                 });
@@ -108,8 +108,6 @@ public class TimetableFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 mainActivityViewModel.deleteTimetable(user, Integer.parseInt(mGetID.get(schedules.get(0))));
-                                // 삭제 후 프레그먼트 리로드
-
 
                             }
                         })
@@ -139,8 +137,8 @@ public class TimetableFragment extends Fragment {
             if (cyber.equals("Y")) {
                 schedule.setDay(6);
                 schedule.setClassTitle(subjectName);
-                schedule.setStartTime(new Time(cIndex+9, 0));
-                schedule.setEndTime(new Time(cIndex+10, 0));
+                schedule.setStartTime(new Time(cIndex + 9, 0));
+                schedule.setEndTime(new Time(cIndex + 10, 0));
                 cIndex++;
                 schedules.add(index++, schedule);
                 scheduleID.add(id);
@@ -168,46 +166,51 @@ public class TimetableFragment extends Fragment {
             }
 
             // 초기값 저장
-            String preTime = workDay.substring(1, 3);
-            int preDay = Character.getNumericValue(workDay.charAt(0)) - 1;
-            int preHour = defaultHour[Character.getNumericValue(preTime.charAt(0)) +
-                    Character.getNumericValue(preTime.charAt(1))];
+            String firstTime = workDay.substring(1, 3);
+            int firstDay = Character.getNumericValue(workDay.charAt(0)) - 1;
+            int firstHour = defaultHour[Character.getNumericValue(firstTime.charAt(0)) +
+                    Character.getNumericValue(firstTime.charAt(1))];
             int minute = 0;
-            startTime = new Time(preHour, minute);
-            endTime = new Time(preHour + 1, minute);
+            startTime = new Time(firstHour, minute);
+            endTime = new Time(firstHour + 1, minute);
 
+            // 공강 확인 데이터
+            int preEndTime = firstHour + 1;
             boolean nextDay = false;
 
             // workDay --> 요일, 시간 분리하기
             // 시간 부분 --> time[0] + time[1]
             for (int i = 3; i < workDay.length(); i += 3) {
+                // 날짜가 바뀐 후 시작시간 재설정
                 if (nextDay) {
                     nextDay = false;
                     schedule = new Schedule();
-                    preTime = workDay.substring(i-3, i);
-                    preDay = Character.getNumericValue(preTime.charAt(0)) - 1;
-                    preHour = defaultHour[Character.getNumericValue(preTime.charAt(1)) +
-                            Character.getNumericValue(preTime.charAt(2))];
-                    startTime = new Time(preHour, minute);
-                    endTime = new Time(preHour + 1, minute);
+                    firstTime = workDay.substring(i - 3, i);
+                    firstDay = Character.getNumericValue(firstTime.charAt(0)) - 1;
+                    firstHour = defaultHour[Character.getNumericValue(firstTime.charAt(1)) +
+                            Character.getNumericValue(firstTime.charAt(2))];
+                    startTime = new Time(firstHour, minute);
+                    endTime = new Time(firstHour + 1, minute);
+
+                    preEndTime = firstHour + 1;
                     continue;
                 }
 
                 int day = Character.getNumericValue(workDay.charAt(i)) - 1;
                 int[] time = {Character.getNumericValue(workDay.charAt(i + 1)),
                         Character.getNumericValue(workDay.charAt(i + 2))};
-                String preWorkDay = workDay.substring(i - 3, i);
-                int[] workDayTime = {Character.getNumericValue(preWorkDay.charAt(1)),
-                        Character.getNumericValue(preWorkDay.charAt(2))};
+
+                // 현 인덱스 시간 확인
                 int hour = defaultHour[time[0] + time[1]];
+                // 공강 확인
+                boolean emptyHour = preEndTime != hour;
 
                 // 날짜가 바뀌는 시점
-                if (preDay != day) {
-                    hour = defaultHour[workDayTime[0] + workDayTime[1]];
-                    endTime.setHour(hour + 1);
+                if (firstDay != day) {
+                    endTime.setHour(preEndTime + 1);
                     endTime.setMinute(minute);
 
-                    schedule.setDay(preDay);
+                    schedule.setDay(firstDay);
                     schedule.setClassTitle(subjectName);
                     schedule.setStartTime(startTime);
                     schedule.setEndTime(endTime);
@@ -217,12 +220,35 @@ public class TimetableFragment extends Fragment {
                     nextDay = true;
                     continue;
                 }
+
+                // 공강이 있는 시간
+                // currentStartHour != previousEndHour 끊기
+                if (emptyHour) {
+                    // 중간 공강 있는 시간
+                    endTime.setHour(preEndTime);
+                    endTime.setMinute(minute);
+
+                    schedule.setDay(firstDay);
+                    schedule.setClassTitle(subjectName);
+                    schedule.setStartTime(startTime);
+                    schedule.setEndTime(endTime);
+
+                    schedules.add(index++, schedule);
+                    scheduleID.add(id);
+                    nextDay = true;
+                    continue;
+                }
+
+                // 기본적인 시간표
                 endTime.setHour(hour + 1);
 
                 schedule.setDay(day);
                 schedule.setClassTitle(subjectName);
                 schedule.setStartTime(startTime);
                 schedule.setEndTime(endTime);
+
+                // 다음 시간과 비교하기 위해 저장
+                preEndTime = hour + 1;
             }
             schedules.add(index++, schedule);
             scheduleID.add(id);

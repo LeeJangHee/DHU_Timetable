@@ -127,7 +127,15 @@ public class LoginActivity extends AppCompatActivity {
                 // 구글 로그인 성공 --> 파이어베이스로 인증
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getEmail());
-                firebaseAuthWithGoogle(account.getIdToken());
+                // 이메일 분리
+                if (account.getEmail().contains(DHU_EMAIL)) {
+                    // 한의대 이메일 = true
+                    firebaseAuthWithGoogle(account.getIdToken());
+
+                } else {
+                    // 한의대 이메일 = false
+                    googleSignOut();
+                }
 
             } catch (ApiException e) {
                 // 구글 로그인 실패 --> 실패 UI 적용
@@ -152,16 +160,9 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = auth.getCurrentUser();
-                            // 이메일 분리
-                            if (user.getEmail().contains(DHU_EMAIL)) {
-                                // 한의대 이메일 = true
-                                Toast.makeText(LoginActivity.this, "로그인 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                                nextActivity(user.getEmail(), user.getDisplayName(), String.valueOf(user.getPhotoUrl()));
 
-                            } else {
-                                // 한의대 이메일 = false
-                                googleSignOut();
-                            }
+                            Toast.makeText(LoginActivity.this, "로그인 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                            nextActivity(user.getEmail(), user.getDisplayName(), String.valueOf(user.getPhotoUrl()));
 
                         } else {
                             // Sign in fails

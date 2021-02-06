@@ -30,15 +30,15 @@
 
     <Spinner
         android:id="@+id/spinner_major"
-        android:entries="@array/major_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:entries="@array/major_name"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_major"
         app:layout_constraintEnd_toEndOf="@+id/edit_subject"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView_major"
-        app:layout_constraintTop_toBottomOf="@+id/edit_subject" />
+        app:layout_constraintTop_toTopOf="@+id/textView_major" />
 
     <TextView
         android:id="@+id/textView_day"
@@ -47,19 +47,20 @@
         android:layout_marginTop="16dp"
         android:text="@string/search_text_3"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView_major"
         app:layout_constraintStart_toStartOf="@+id/textView_major"
         app:layout_constraintTop_toBottomOf="@+id/textView_major" />
 
     <Spinner
         android:id="@+id/spinner_level"
-        android:entries="@array/level"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:entries="@array/level"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_day"
         app:layout_constraintEnd_toEndOf="@+id/spinner_major"
         app:layout_constraintStart_toEndOf="@+id/textView_day"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_major" />
+        app:layout_constraintTop_toTopOf="@+id/textView_day" />
 
     <CheckBox
         android:id="@+id/checkBox_cyber"
@@ -79,8 +80,8 @@
         android:layout_marginTop="32dp"
         android:text="@string/search_text_4"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox_cyber" />
 
@@ -91,8 +92,8 @@
         android:layout_marginTop="32dp"
         android:text="@string/search_text_5"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/search_adView"
         app:layout_constraintEnd_toStartOf="@+id/button_confirm"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/textView_day"
         app:layout_constraintTop_toBottomOf="@+id/button_reset" />
 
@@ -103,7 +104,6 @@
         android:layout_marginTop="32dp"
         android:text="@string/search_text_6"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/search_adView"
         app:layout_constraintEnd_toEndOf="@+id/spinner_level"
         app:layout_constraintStart_toEndOf="@+id/button_cancel"
         app:layout_constraintTop_toBottomOf="@+id/button_reset" />
@@ -116,7 +116,8 @@
         android:layout_centerHorizontal="true"
         app:adSize="SMART_BANNER"
         app:adUnitId="ca-app-pub-9700414008733720/2526220676"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
