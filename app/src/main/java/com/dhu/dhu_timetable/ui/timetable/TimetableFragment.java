@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,15 +84,12 @@ public class TimetableFragment extends Fragment {
 
                         // 업데이트
                         if (!schedules.isEmpty()) {
-                            Log.d("janghee", "schedules size: " + schedules.size()
-                                    + "\n ID size: " + scheduleID.size());
                             for (int i = 0; i < schedules.size(); i++) {
                                 ArrayList<Schedule> aSchedule = new ArrayList<>();
                                 aSchedule.add(schedules.get(i));
                                 timetable.add(aSchedule);
                                 mGetID.put(schedules.get(i), scheduleID.get(i));
                             }
-                            Log.d("janghee", "mGetID: " + mGetID.keySet());
                         }
                     }
                 });
@@ -121,7 +117,6 @@ public class TimetableFragment extends Fragment {
     public void setTimetable(List<TimetableModel> timetableModels) {
         Time startTime;
         Time endTime;
-        int index = 0;
         int cIndex = 0;
         // 타임 테이블 설정
         for (TimetableModel data : timetableModels) {
@@ -140,7 +135,7 @@ public class TimetableFragment extends Fragment {
                 schedule.setStartTime(new Time(cIndex + 9, 0));
                 schedule.setEndTime(new Time(cIndex + 10, 0));
                 cIndex++;
-                schedules.add(index++, schedule);
+                schedules.add(schedule);
                 scheduleID.add(id);
                 continue;
             }
@@ -159,7 +154,7 @@ public class TimetableFragment extends Fragment {
                     schedule.setStartTime(new Time(hour, startMinute));
                     schedule.setEndTime(new Time(hour + 1, endMinute));
 
-                    schedules.add(index++, schedule);
+                    schedules.add(schedule);
                     scheduleID.add(id);
                 }
                 continue;
@@ -193,7 +188,6 @@ public class TimetableFragment extends Fragment {
                     endTime = new Time(firstHour + 1, minute);
 
                     preEndTime = firstHour + 1;
-                    continue;
                 }
 
                 int day = Character.getNumericValue(workDay.charAt(i)) - 1;
@@ -207,7 +201,7 @@ public class TimetableFragment extends Fragment {
 
                 // 날짜가 바뀌는 시점
                 if (firstDay != day) {
-                    endTime.setHour(preEndTime + 1);
+                    endTime.setHour(preEndTime);
                     endTime.setMinute(minute);
 
                     schedule.setDay(firstDay);
@@ -215,7 +209,7 @@ public class TimetableFragment extends Fragment {
                     schedule.setStartTime(startTime);
                     schedule.setEndTime(endTime);
 
-                    schedules.add(index++, schedule);
+                    schedules.add(schedule);
                     scheduleID.add(id);
                     nextDay = true;
                     continue;
@@ -233,7 +227,7 @@ public class TimetableFragment extends Fragment {
                     schedule.setStartTime(startTime);
                     schedule.setEndTime(endTime);
 
-                    schedules.add(index++, schedule);
+                    schedules.add(schedule);
                     scheduleID.add(id);
                     nextDay = true;
                     continue;
@@ -250,7 +244,7 @@ public class TimetableFragment extends Fragment {
                 // 다음 시간과 비교하기 위해 저장
                 preEndTime = hour + 1;
             }
-            schedules.add(index++, schedule);
+            schedules.add(schedule);
             scheduleID.add(id);
         }
     }
