@@ -173,6 +173,14 @@ public class TimetableFragment extends Fragment {
             int preEndTime = firstHour + 1;
             boolean nextDay = false;
 
+            // 1교시 과목
+            if (workDay.length() == 3) {
+                schedule.setDay(firstDay);
+                schedule.setClassTitle(subjectName);
+                schedule.setStartTime(startTime);
+                schedule.setEndTime(endTime);
+            }
+
             // workDay --> 요일, 시간 분리하기
             // 시간 부분 --> time[0] + time[1]
             for (int i = 3; i < workDay.length(); i += 3) {
