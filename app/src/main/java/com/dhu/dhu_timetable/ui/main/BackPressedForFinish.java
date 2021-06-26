@@ -3,6 +3,8 @@ package com.dhu.dhu_timetable.ui.main;
 import android.app.Activity;
 import android.widget.Toast;
 
+import com.dhu.dhu_timetable.R;
+
 public class BackPressedForFinish {
         private long backKeyPressedTime = 0;    // '뒤로' 버튼을 클릭했을 때의 시간
         private long TIME_INTERVAL = 2000;      // 첫번째 버튼 클릭과 두번째 버튼 클릭 사이의 종료를 위한 시간차를 정의
@@ -36,7 +38,7 @@ public class BackPressedForFinish {
         }
 
         public void showMessage() {
-            toast = Toast.makeText(activity, "'뒤로' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
+            toast = Toast.makeText(activity, activity.getString(R.string.back_button_message), Toast.LENGTH_SHORT);
             toast.show();
         }
     }

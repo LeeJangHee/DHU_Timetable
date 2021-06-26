@@ -1,8 +1,8 @@
 package com.dhu.dhu_timetable.service;
 
 import com.dhu.dhu_timetable.model.LoginModel;
+import com.dhu.dhu_timetable.model.NoticeModel;
 import com.dhu.dhu_timetable.model.SubjectModel;
-import com.dhu.dhu_timetable.ui.navitem.notice.NoticeModel;
 import com.dhu.dhu_timetable.model.TimetableModel;
 
 import java.util.List;
@@ -29,10 +29,10 @@ public interface APIService {
     @FormUrlEncoded
     @POST("insert_timetable.php")
     Call<List<TimetableModel>> setTimetable(@Field("email") String email,
-                                      @Field("subjectName") String subjectName,
-                                      @Field("workDay") String workDay,
-                                      @Field("cyberCheck") String cyberCheck,
-                                      @Field("quarterCheck") String quarterCheck);
+                                            @Field("subjectName") String subjectName,
+                                            @Field("workDay") String workDay,
+                                            @Field("cyberCheck") String cyberCheck,
+                                            @Field("quarterCheck") String quarterCheck);
 
     @FormUrlEncoded
     @POST("timetable.php")

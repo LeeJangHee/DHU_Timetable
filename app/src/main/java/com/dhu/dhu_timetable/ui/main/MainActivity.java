@@ -42,6 +42,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
 import java.util.List;
+import static com.dhu.dhu_timetable.util.Conts.*;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -81,16 +82,16 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
 
         // 현재 시간 정보 받아오기
         Intent it = getIntent();
-        currentYear = it.getStringExtra("YEAR");
-        currentMonth = it.getStringExtra("MONTH");
-        email = it.getStringExtra("email");
+        currentYear = it.getStringExtra(YEAR);
+        currentMonth = it.getStringExtra(MONTH);
+        email = it.getStringExtra(EMAIL);
         Log.d("janghee", "onCreate: "+email);
 
         // 1~6 = 1학기 / 6~12 = 2학기
         if (0 < Integer.parseInt(currentMonth) && Integer.parseInt(currentMonth) <= 6) {
-            semester = "10";
+            semester = SEMESTER_FIRST;
         } else {
-            semester = "20";
+            semester = SEMESTER_LAST;
         }
 
         // 라이브데이터 초기화
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.item_search) {
                     Intent it = new Intent(getApplicationContext(), SearchActivity.class);
-                    it.putExtra("email", email);
+                    it.putExtra(EMAIL, email);
                     startActivityForResult(it, REQUEST_CODE);
                 }
 
@@ -212,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
                     googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(MainActivity.this, "성공적으로 로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.logout_message), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                             finish();
                         }
@@ -255,11 +256,11 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
             if (resultCode != RESULT_OK)
                 return;
 
-            email = data.getExtras().getString("email");
-            subjectname = data.getExtras().getString("subjectname");
-            major = data.getExtras().getString("major");
-            level = data.getExtras().getString("level");
-            cyber = data.getExtras().getString("cyber");
+            email = data.getExtras().getString(EMAIL);
+            subjectname = data.getExtras().getString(SUBJECT_NAME);
+            major = data.getExtras().getString(MAJOR);
+            level = data.getExtras().getString(LEVEL);
+            cyber = data.getExtras().getString(CYBER);
             Log.v("Search_Confirm :", "인텐트 데이터 : " + subjectname + major + level + cyber);
 
             // 뷰모델과 연결 - 검색된 데이터로 라이브데이터 업데이트 - TEST 객체 (year, semester)

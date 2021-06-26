@@ -14,7 +14,6 @@
         <!-- Customize your theme here. -->
 
         <item name="android:fontFamily">@font/bm_jua_ttf</item>
-        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="Theme.DHU_Timetable.NoActionBar">

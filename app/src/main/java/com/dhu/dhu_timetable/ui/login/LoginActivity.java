@@ -30,11 +30,11 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Calendar;
 
+import static com.dhu.dhu_timetable.util.Conts.*;
+
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "janghee";
-    private static final int RC_SIGN_IN = 9001;             // 구글 로그인 결과 코드
-    private static final String DHU_EMAIL = "dhu.ac.kr";    // 한의대 이메일
 
     private SignInButton signInButton;              // 구글 로그인 버튼
     private FirebaseAuth auth;                      // 파이어베이스 인증 객체
@@ -186,9 +186,9 @@ public class LoginActivity extends AppCompatActivity {
         UsersRepo usersRepo = UsersRepo.getInstance();
         usersRepo.setUser(email, name, profile);
         Intent it = new Intent(LoginActivity.this, MainActivity.class);
-        it.putExtra("YEAR", date[0]);
-        it.putExtra("MONTH", date[1]);
-        it.putExtra("email", email);
+        it.putExtra(YEAR, date[0]);
+        it.putExtra(MONTH, date[1]);
+        it.putExtra(EMAIL, email);
         startActivity(it);
         finish();
     }

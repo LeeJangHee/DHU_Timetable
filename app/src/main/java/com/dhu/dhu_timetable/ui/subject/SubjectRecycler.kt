@@ -64,12 +64,12 @@ class SubjectRecycler(
 
         holder.binding.subjectItemBtnOk.setOnClickListener {
             if (subjectModel.workDay.isNullOrEmpty() && subjectModel.cyberCheck == "") {
-                showToast("사간을 확인 중 입니다.")
+                showToast(requireActivity.getString(R.string.subject_check_timetable))
                 return@setOnClickListener
             }
             if (isTime[position]) {
                 // 시간표 넣기 가능
-                    showToast("시간표 성공")
+                    showToast(requireActivity.getString(R.string.subject_success_timetable))
 
                 // insert into timetable
                 onSubjectListener.onAddSubject(
@@ -82,7 +82,7 @@ class SubjectRecycler(
                 holder.binding.subjectItemBtnOk.isEnabled = false
             } else {
                 // 불가능
-                    showToast("원하는 시간에 강의가 있습니다.")
+                    showToast(requireActivity.getString(R.string.subject_overlap_timetable))
             }
             isTime[position] = onSubjectListener.onTimeCheck(subjectModel.workDay)
         }

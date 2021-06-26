@@ -4,10 +4,10 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.dhu.dhu_timetable.model.TimetableModel;
 import com.dhu.dhu_timetable.service.APIService;
 import com.dhu.dhu_timetable.service.RetrofitConnect;
 import com.dhu.dhu_timetable.network.TimetableApiClient;
-import com.dhu.dhu_timetable.model.TimetableModel;
 
 import java.util.List;
 

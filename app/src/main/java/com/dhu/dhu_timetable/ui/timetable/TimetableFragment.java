@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.dhu.dhu_timetable.util.Conts.USER;
+
 /**
  * 시간표 오픈소스
  */
@@ -47,7 +49,7 @@ public class TimetableFragment extends Fragment {
     public static TimetableFragment newInstance(String user) {
         TimetableFragment fragment = new TimetableFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("user", user);
+        bundle.putString(USER, user);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -55,7 +57,7 @@ public class TimetableFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = getArguments().getString("user");
+        user = getArguments().getString(USER);
     }
 
     @Nullable
@@ -100,7 +102,7 @@ public class TimetableFragment extends Fragment {
             public void OnStickerSelected(int idx, ArrayList<Schedule> schedules) {
                 // 삭제서버 연결
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                Dialog dialog = builder.setMessage("삭제하시겠습니까?")
+                Dialog dialog = builder.setMessage(getString(R.string.timetable_dialog_title))
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

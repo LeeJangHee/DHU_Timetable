@@ -27,9 +27,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
+import static com.dhu.dhu_timetable.util.Conts.LOADING_TIME;
+import static com.dhu.dhu_timetable.util.Conts.NEW_APP_VERSION;
+
 public class LoadingActivity extends AppCompatActivity {
     // 로딩 시간 2.5초
-    private final int LOADING_TIME = 2500;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private long newAppVersion = 0;
 
@@ -59,7 +61,7 @@ public class LoadingActivity extends AppCompatActivity {
     private void checkVersion(boolean successful) {
         // 서버 연결 확인
         if (successful) {
-            newAppVersion = mFirebaseRemoteConfig.getLong("new_app_version");
+            newAppVersion = mFirebaseRemoteConfig.getLong(NEW_APP_VERSION);
             Log.d("test", "checkVersion: "+newAppVersion);
 
             try {
@@ -75,8 +77,8 @@ public class LoadingActivity extends AppCompatActivity {
                 // 새로운 버전과 현재 버전 비교 하여 업데이트
                 if (newAppVersion > appVersion) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setTitle("업데이트 알림");
-                    builder.setMessage("최신버전이 등록되었습니다. \n업데이트 하세요.")
+                    builder.setTitle(getString(R.string.loading_update_title));
+                    builder.setMessage(getString(R.string.loading_update_content))
                             .setPositiveButton("업데이트", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {

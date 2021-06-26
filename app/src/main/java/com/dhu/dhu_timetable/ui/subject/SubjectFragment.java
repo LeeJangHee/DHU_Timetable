@@ -12,16 +12,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.dhu.dhu_timetable.R;
 import com.dhu.dhu_timetable.databinding.FragmentSubjectListBinding;
 import com.dhu.dhu_timetable.model.SubjectModel;
-import com.dhu.dhu_timetable.ui.main.MainActivityViewModel;
 import com.dhu.dhu_timetable.model.TimetableModel;
+import com.dhu.dhu_timetable.ui.main.MainActivityViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.dhu.dhu_timetable.util.Conts.*;
 
 
 /**
@@ -58,12 +58,12 @@ public class SubjectFragment extends Fragment implements OnSubjectListener {
     public static SubjectFragment searchInstance(String year, String semester, String subjectName, String level, String major, String cyber) {
         SubjectFragment fragment = new SubjectFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("year", year);
-        bundle.putString("semester", semester);
-        bundle.putString("subjectName", subjectName);
-        bundle.putString("level", level);
-        bundle.putString("major", major);
-        bundle.putString("cyber", cyber);
+        bundle.putString(YEAR, year);
+        bundle.putString(SEMESTER, semester);
+        bundle.putString(SUBJECT_NAME, subjectName);
+        bundle.putString(LEVEL, level);
+        bundle.putString(MAJOR, major);
+        bundle.putString(CYBER, cyber);
 
         fragment.setArguments(bundle);
         return fragment;

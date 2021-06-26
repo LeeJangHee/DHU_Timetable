@@ -43,7 +43,7 @@ public class BugreportActivity extends AppCompatActivity {
         // 상단 바 뒤로가기 버튼 생성
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("기린바구니 버그리포트");
+        actionBar.setTitle(getString(R.string.nav_bug_title));
 
         // 버그리포트 문의하기 버튼 이벤트
         layout_mail.setOnClickListener(new View.OnClickListener(){
@@ -51,7 +51,7 @@ public class BugreportActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent email_send = new Intent(Intent.ACTION_SEND);
                 email_send.setType("plain/text");
-                String[] address = {"wkdgml96@dhu.ac.kr"};
+                String[] address = {getString(R.string.nav_bug_email)};
                 email_send.putExtra(Intent.EXTRA_EMAIL, address);
                 email_send.putExtra(Intent.EXTRA_SUBJECT, "기린바구니 버그리포트 문의");
                 email_send.putExtra(Intent.EXTRA_TEXT, "문의 사항 : ");

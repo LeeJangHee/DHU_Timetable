@@ -9,23 +9,23 @@ import com.dhu.dhu_timetable.model.LoginModel;
 import com.dhu.dhu_timetable.repo.UsersRepo;
 
 public class NavigationViewModel extends ViewModel {
-    MutableLiveData<LoginModel> test;
+    MutableLiveData<LoginModel> loginModel;
     UsersRepo usersRepo;
     String TAG = "janghee";
 
     public NavigationViewModel() {
-        if (test != null) {
+        if (loginModel != null) {
             return;
         }
         usersRepo = UsersRepo.getInstance();
     }
 
     public void init(String email) {
-        test = usersRepo.getUser(email);
+        loginModel = usersRepo.getUser(email);
         Log.d(TAG, "init: ");
     }
 
     public MutableLiveData<LoginModel> getTest() {
-        return test;
+        return loginModel;
     }
 }

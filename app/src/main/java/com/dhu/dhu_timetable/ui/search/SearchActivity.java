@@ -23,6 +23,12 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
+import static com.dhu.dhu_timetable.util.Conts.CYBER;
+import static com.dhu.dhu_timetable.util.Conts.EMAIL;
+import static com.dhu.dhu_timetable.util.Conts.LEVEL;
+import static com.dhu.dhu_timetable.util.Conts.MAJOR;
+import static com.dhu.dhu_timetable.util.Conts.SUBJECT_NAME;
+
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener{
 
     private String email;
@@ -60,7 +66,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         // 로그인 정보 유지를 위한 Intent
         Intent it = getIntent();
-        email = it.getStringExtra("email");
+        email = it.getStringExtra(EMAIL);
 
         btn_confirm = findViewById(R.id.button_confirm);
         btn_reset = findViewById(R.id.button_reset);
@@ -126,10 +132,10 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 SubjectFragment.searchInstance("","",subjectname, level, major, cyber);
 
                 it = new Intent();
-                it.putExtra("subjectname", subjectname);
-                it.putExtra("major", major);
-                it.putExtra("level", level);
-                it.putExtra("cyber", cyber);
+                it.putExtra(SUBJECT_NAME, subjectname);
+                it.putExtra(MAJOR, major);
+                it.putExtra(LEVEL, level);
+                it.putExtra(CYBER, cyber);
                 setResult(RESULT_OK, it);
                 finish();
                 break;

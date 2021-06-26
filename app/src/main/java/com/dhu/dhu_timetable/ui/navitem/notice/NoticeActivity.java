@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.dhu.dhu_timetable.R;
+import com.dhu.dhu_timetable.model.NoticeModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class NoticeActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("기린바구니 공지사항");
+        actionBar.setTitle(getString(R.string.nav_notice_title));
 
         noticeViewModel = new ViewModelProvider(this).get(NoticeViewModel.class);
         noticeApi();

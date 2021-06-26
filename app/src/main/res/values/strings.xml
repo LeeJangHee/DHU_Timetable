@@ -490,7 +490,22 @@
         shall supersede the Terms. Accordingly, the User must read and accept such specific conditions before the provision of the relevant Service.</string>
 
 
+    <string name="back_button_message">"'뒤로' 버튼을 한번 더 누르시면 종료됩니다."</string>
+    <string name="logout_message">성공적으로 로그아웃 되었습니다.</string>
 
+    <string name="loading_update_title">업데이트 알림</string>
+    <string name="loading_update_content">최신버전이 등록되었습니다. \n업데이트 하세요.</string>
+
+    <string name="subject_check_timetable">"사간을 확인 중 입니다."</string>
+    <string name="subject_success_timetable">시간표 성공</string>
+    <string name="subject_overlap_timetable">원하는 시간에 강의가 있습니다.</string>
+
+    <string name="timetable_dialog_title">삭제하시겠습니까?</string>
+
+    <string name="nav_notice_title">기린바구니 공지사항</string>
+
+    <string name="nav_bug_title">기린바구니 버그리포트</string>
+    <string name="nav_bug_email">wkdgml96@dhu.ac.kr</string>
 
 
 </resources>

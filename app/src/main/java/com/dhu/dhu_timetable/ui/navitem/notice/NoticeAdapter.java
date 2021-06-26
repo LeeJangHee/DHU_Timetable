@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dhu.dhu_timetable.R;
+import com.dhu.dhu_timetable.model.NoticeModel;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;

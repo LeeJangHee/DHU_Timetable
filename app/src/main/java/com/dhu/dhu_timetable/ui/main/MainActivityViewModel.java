@@ -1,15 +1,13 @@
 package com.dhu.dhu_timetable.ui.main;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.dhu.dhu_timetable.model.SubjectModel;
+import com.dhu.dhu_timetable.model.TimetableModel;
 import com.dhu.dhu_timetable.repo.SubjectRepo;
 import com.dhu.dhu_timetable.repo.TimetableRepo;
-import com.dhu.dhu_timetable.model.TimetableModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivityViewModel extends ViewModel {

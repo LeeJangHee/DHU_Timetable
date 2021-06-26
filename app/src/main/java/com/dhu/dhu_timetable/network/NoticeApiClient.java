@@ -4,7 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.dhu.dhu_timetable.ui.navitem.notice.NoticeModel;
+import com.dhu.dhu_timetable.model.NoticeModel;
 import com.dhu.dhu_timetable.service.APIService;
 import com.dhu.dhu_timetable.service.RetrofitConnect;
 
