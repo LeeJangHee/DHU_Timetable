@@ -5,8 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.dhu.dhu_timetable.model.LoginModel;
 import com.dhu.dhu_timetable.repo.UsersRepo;
-import com.dhu.dhu_timetable.ui.login.LoginModel;
 
 public class NavigationViewModel extends ViewModel {
     MutableLiveData<LoginModel> test;

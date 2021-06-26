@@ -1,4 +1,4 @@
-package com.dhu.dhu_timetable.ui.timetable;
+package com.dhu.dhu_timetable.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

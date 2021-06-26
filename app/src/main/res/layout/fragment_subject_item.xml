@@ -1,182 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cardView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginVertical="8dp"
-    app:cardElevation="4dp"
-    app:strokeWidth="0.3dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout3"
+    <data>
+        <variable
+            name="subject"
+            type="com.dhu.dhu_timetable.model.SubjectModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
-
-        <TextView
-            android:id="@+id/subject_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/subject_major"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="2020" />
-
-        <TextView
-            android:id="@+id/subject_semester"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/subject_year"
-            app:layout_constraintEnd_toStartOf="@+id/subject_name"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/subject_year"
-            app:layout_constraintTop_toTopOf="@+id/subject_year"
-            tools:text="x학기" />
-
-        <TextView
-            android:id="@+id/subject_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/subject_year"
-            app:layout_constraintEnd_toStartOf="@+id/image_btn"
-            app:layout_constraintStart_toEndOf="@+id/subject_semester"
-            app:layout_constraintTop_toTopOf="@+id/subject_year"
-            tools:text="과목명" />
-
-        <TextView
-            android:id="@+id/subject_major"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/expandable_view"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/subject_year"
-            tools:text="학과" />
-
-        <TextView
-            android:id="@+id/subject_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/subject_major"
-            app:layout_constraintStart_toEndOf="@+id/subject_major"
-            app:layout_constraintTop_toTopOf="@+id/subject_major"
-            tools:text="x학점" />
-
-        <TextView
-            android:id="@+id/subject_day_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/subject_major"
-            app:layout_constraintStart_toEndOf="@+id/subject_score"
-            app:layout_constraintTop_toTopOf="@+id/subject_major"
-            tools:text="요일123" />
-
-        <TextView
-            android:id="@+id/subject_professor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/subject_major"
-            app:layout_constraintStart_toEndOf="@+id/subject_day_time"
-            app:layout_constraintTop_toTopOf="@+id/subject_major"
-            tools:text="교수님" />
-
-        <ImageButton
-            android:id="@+id/image_btn"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_baseline_expand_more_24"
-            app:layout_constraintBottom_toBottomOf="@+id/subject_major"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/subject_year" />
-
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
+        app:cardElevation="4dp"
+        app:strokeWidth="0.3dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/expandable_view"
+            android:id="@+id/constraintLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="8dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/subject_major">
+            android:padding="8dp">
 
             <TextView
-                android:id="@+id/expandable_classroom"
+                android:id="@+id/subject_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:text="강의실"
-                app:layout_constraintBottom_toTopOf="@+id/expandable_level"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/subject_name"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{subject.year.toString()}"
+                tools:text="2020" />
 
             <TextView
-                android:id="@+id/expandable_level"
+                android:id="@+id/subject_semester"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:text="학년"
-                app:layout_constraintBottom_toTopOf="@+id/expandable_finish_check"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expandable_classroom" />
+                android:layout_marginHorizontal="8dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:text="@{subject.getStringSemester}"
+                app:layout_constraintBottom_toBottomOf="@+id/subject_year"
+                app:layout_constraintStart_toEndOf="@+id/subject_year"
+                app:layout_constraintTop_toTopOf="@+id/subject_year"
+                tools:text="x학기" />
 
             <TextView
-                android:id="@+id/expandable_finish_check"
-                android:layout_width="wrap_content"
+                android:id="@+id/subject_name"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:text="이수구분"
-                app:layout_constraintBottom_toTopOf="@+id/expandable_cyber"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:text="@{subject.subjectName}"
+                app:layout_constraintBottom_toTopOf="@+id/subject_major"
+                app:layout_constraintEnd_toStartOf="@+id/image_btn"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expandable_level" />
+                app:layout_constraintTop_toBottomOf="@+id/subject_year"
+                tools:text="과목명" />
 
             <TextView
-                android:id="@+id/expandable_cyber"
+                android:id="@+id/subject_major"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:text="사이버"
-                app:layout_constraintBottom_toTopOf="@+id/subject_item_btn_ok"
+                android:layout_marginBottom="4dp"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/expandable_view"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expandable_finish_check" />
+                app:layout_constraintTop_toBottomOf="@+id/subject_name"
+                android:text="@{subject.majorName}"
+                tools:text="학과" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/subject_item_btn_ok"
+            <TextView
+                android:id="@+id/subject_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_subject_item_text"
-                app:cornerRadius="8dp"
+                android:layout_marginHorizontal="4dp"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/subject_major"
+                app:layout_constraintStart_toEndOf="@+id/subject_major"
+                app:layout_constraintTop_toTopOf="@+id/subject_major"
+                android:text="@{subject.getStringScore}"
+                tools:text="x학점" />
+
+            <TextView
+                android:id="@+id/subject_day_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/subject_major"
+                app:layout_constraintStart_toEndOf="@+id/subject_score"
+                app:layout_constraintTop_toTopOf="@+id/subject_major"
+                android:text="@{subject.getReplacePublishDay}"
+                tools:text="요일123" />
+
+            <TextView
+                android:id="@+id/subject_professor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:textColor="@color/black"
+                android:text="@{subject.getReplaceProfessor}"
+                app:layout_constraintBottom_toBottomOf="@+id/subject_major"
+                app:layout_constraintStart_toEndOf="@+id/subject_day_time"
+                app:layout_constraintTop_toTopOf="@+id/subject_major"
+                tools:text="교수님" />
+
+            <ImageButton
+                android:id="@+id/image_btn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_expand_more_24"
+                app:layout_constraintBottom_toBottomOf="@+id/subject_major"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/subject_year" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/expandable_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="8dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expandable_cyber" />
+                app:layout_constraintTop_toBottomOf="@+id/subject_major">
+
+                <TextView
+                    android:id="@+id/expandable_classroom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:text="@{subject.getStringClassroom}"
+                    app:layout_constraintBottom_toTopOf="@+id/expandable_level"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/expandable_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:text="@{subject.getStringLevel}"
+                    app:layout_constraintBottom_toTopOf="@+id/expandable_finish_check"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/expandable_classroom" />
+
+                <TextView
+                    android:id="@+id/expandable_finish_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:text="@{subject.getStringFinishCheck}"
+                    app:layout_constraintBottom_toTopOf="@+id/expandable_cyber"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/expandable_level" />
+
+                <TextView
+                    android:id="@+id/expandable_cyber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    isCyberCheck="@{subject.cyberCheck}"
+                    app:layout_constraintBottom_toTopOf="@+id/subject_item_btn_ok"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/expandable_finish_check" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/subject_item_btn_ok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_subject_item_text"
+                    app:cornerRadius="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/expandable_cyber" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

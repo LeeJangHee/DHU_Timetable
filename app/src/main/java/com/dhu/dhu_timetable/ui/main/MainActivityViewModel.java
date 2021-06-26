@@ -4,18 +4,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.dhu.dhu_timetable.model.SubjectModel;
 import com.dhu.dhu_timetable.repo.SubjectRepo;
 import com.dhu.dhu_timetable.repo.TimetableRepo;
-import com.dhu.dhu_timetable.ui.subject.SubjectModel;
-import com.dhu.dhu_timetable.ui.timetable.TimetableModel;
+import com.dhu.dhu_timetable.model.TimetableModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivityViewModel extends ViewModel {
-    private MutableLiveData<List<TimetableModel>> timetaleModels = new MutableLiveData<>();
-    private MutableLiveData<List<SubjectModel>> subjectModels = new MutableLiveData<>();
-    private List<TimetableModel> timetableList = new ArrayList<>();
     private TimetableRepo timetableRepo;
     private SubjectRepo subjectRepo;
 

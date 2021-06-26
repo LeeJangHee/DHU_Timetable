@@ -1,9 +1,9 @@
 package com.dhu.dhu_timetable.service;
 
-import com.dhu.dhu_timetable.ui.login.LoginModel;
+import com.dhu.dhu_timetable.model.LoginModel;
+import com.dhu.dhu_timetable.model.SubjectModel;
 import com.dhu.dhu_timetable.ui.navitem.notice.NoticeModel;
-import com.dhu.dhu_timetable.ui.subject.SubjectModel;
-import com.dhu.dhu_timetable.ui.timetable.TimetableModel;
+import com.dhu.dhu_timetable.model.TimetableModel;
 
 import java.util.List;
 

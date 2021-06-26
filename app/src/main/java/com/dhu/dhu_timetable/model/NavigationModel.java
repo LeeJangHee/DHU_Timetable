@@ -1,29 +1,18 @@
-package com.dhu.dhu_timetable.ui.login;
+package com.dhu.dhu_timetable.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LoginModel {
-    @SerializedName("success")
-    @Expose
-    public String success;
+public class NavigationModel {
     @SerializedName("email")
     @Expose
-    public String email;
+    private String email;
     @SerializedName("name")
     @Expose
-    public String name;
+    private String name;
     @SerializedName("profile")
     @Expose
-    public String profile;
-
-    public String getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(String success) {
-        this.success = success;
-    }
+    private String profile;
 
     public String getEmail() {
         return email;

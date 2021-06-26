@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dhu.dhu_timetable.R;
+import com.dhu.dhu_timetable.databinding.FragmentSubjectListBinding;
+import com.dhu.dhu_timetable.model.SubjectModel;
 import com.dhu.dhu_timetable.ui.main.MainActivityViewModel;
-import com.dhu.dhu_timetable.ui.timetable.TimetableModel;
+import com.dhu.dhu_timetable.model.TimetableModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +34,13 @@ public class SubjectFragment extends Fragment implements OnSubjectListener {
     private static final String NOW_MONTH = "MONTH";
     private static final String NOW_USER = "USER";
 
+    private FragmentSubjectListBinding binding;
+
     private List<TimetableModel> timetableList = new ArrayList<>();
     private String user;
-    private RecyclerView recyclerView;
 
     private MainActivityViewModel mainActivityViewModel;
-    private SubjectRecyclerView subjectRecyclerView;
+    private SubjectRecycler subjectRecyclerView;
 
     // 필요하면 사용하기 위한 newInstance
     public static SubjectFragment newInstance(String year, String month, String user) {
@@ -75,20 +78,19 @@ public class SubjectFragment extends Fragment implements OnSubjectListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_subject_list, container, false);
-        // 리사이클러뷰
-        recyclerView = view.findViewById(R.id.subject_recyclerview);
+        binding = FragmentSubjectListBinding.inflate(inflater, container, false);
+        binding.setLifecycleOwner(requireActivity());
         // 리사이클러뷰 초기화 + 뷰모델
         configureRecyclerView();
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
-
+        binding.setMainViewModel(mainActivityViewModel);
         // 뷰모델 + 라이브데이터
         mainActivityViewModel.getSubjectData().observe(requireActivity(), new Observer<List<SubjectModel>>() {
             @Override
@@ -100,10 +102,10 @@ public class SubjectFragment extends Fragment implements OnSubjectListener {
     }
 
     private void configureRecyclerView() {
-        subjectRecyclerView = new SubjectRecyclerView(user, this);
+        subjectRecyclerView = new SubjectRecycler(requireActivity(), user, this);
 
-        recyclerView.setAdapter(subjectRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.subjectRecyclerview.setAdapter(subjectRecyclerView);
+        binding.subjectRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override

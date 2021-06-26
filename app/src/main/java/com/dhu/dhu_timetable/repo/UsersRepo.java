@@ -4,9 +4,9 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.dhu.dhu_timetable.model.LoginModel;
 import com.dhu.dhu_timetable.service.APIService;
 import com.dhu.dhu_timetable.service.RetrofitConnect;
-import com.dhu.dhu_timetable.ui.login.LoginModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;

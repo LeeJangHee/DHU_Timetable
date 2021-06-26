@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.dhu.dhu_timetable.service.APIService;
 import com.dhu.dhu_timetable.service.RetrofitConnect;
-import com.dhu.dhu_timetable.ui.timetable.TimetableModel;
+import com.dhu.dhu_timetable.model.TimetableModel;
 
 import java.io.IOException;
 import java.util.ArrayList;

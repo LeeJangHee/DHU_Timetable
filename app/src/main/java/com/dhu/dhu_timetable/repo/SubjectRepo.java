@@ -4,8 +4,8 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.dhu.dhu_timetable.model.SubjectModel;
 import com.dhu.dhu_timetable.network.SubjectApiClient;
-import com.dhu.dhu_timetable.ui.subject.SubjectModel;
 
 import java.util.List;
 

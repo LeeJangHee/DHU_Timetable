@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.dhu.dhu_timetable.R;
+import com.dhu.dhu_timetable.model.TimetableModel;
 import com.dhu.dhu_timetable.ui.main.MainActivityViewModel;
 import com.github.tlaabs.timetableview.Schedule;
 import com.github.tlaabs.timetableview.Time;
