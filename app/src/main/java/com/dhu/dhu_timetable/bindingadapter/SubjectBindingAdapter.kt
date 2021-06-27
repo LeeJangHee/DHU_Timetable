@@ -1,6 +1,7 @@
 package com.dhu.dhu_timetable.bindingadapter
 
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -42,4 +43,9 @@ fun bindIsCyberCheck(view: TextView, cyberCheck: String?) {
         else
             view.visibility = View.GONE
     }
+}
+
+@BindingAdapter("isOkButton")
+fun bindIsOkButton(view: Button, isTime: Boolean) {
+    view.isEnabled = isTime
 }

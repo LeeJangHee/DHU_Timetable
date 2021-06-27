@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.dhu.dhu_timetable.model.NoticeModel;
 import com.dhu.dhu_timetable.repo.NoticeRepo;
+
 import java.util.List;
 
 public class NoticeViewModel extends ViewModel {

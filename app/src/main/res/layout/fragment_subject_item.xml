@@ -7,6 +7,10 @@
         <variable
             name="subject"
             type="com.dhu.dhu_timetable.model.SubjectModel" />
+
+        <variable
+            name="isTime"
+            type="Boolean" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
