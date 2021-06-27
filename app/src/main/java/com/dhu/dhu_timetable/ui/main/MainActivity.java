@@ -273,8 +273,8 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
         mainActivityViewModel.setTimetable(email);
     }
 
-    private void searchSubjectApi(String year, String semester, String subjectname, String major, String level, String cyber) {
-        mainActivityViewModel.setSubjectData(year, semester, subjectname, major, level, cyber);
+    private void searchSubjectApi(String year, String semester, String subjectName, String major, String level, String cyber) {
+        mainActivityViewModel.setSubjectData(year, semester, subjectName, major, level, cyber);
     }
 
 }

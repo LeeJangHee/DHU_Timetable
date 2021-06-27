@@ -27,7 +27,7 @@ public class UsersRepo {
     String TAG = "janghee";
 
     public UsersRepo() {
-        service = RetrofitConnect.getRetrofitClient().create(APIService.class);
+        service = RetrofitConnect.INSTANCE.getRetrofitClient().create(APIService.class);
         Log.d(TAG, "UserRepo: 성공");
     }
 
@@ -38,6 +38,7 @@ public class UsersRepo {
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                 if (response.isSuccessful()) {
                     user.setValue(response.body());
+                    Log.e(TAG, "onResponse: "+response.body().getName() + response.body().getEmail());
                 }
             }
 

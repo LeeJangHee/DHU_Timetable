@@ -109,7 +109,7 @@ public class SubjectApiClient {
 
         // 레트로핏
         private Call<List<SubjectModel>> getSearchSubject(String year, String semester, String name, String level, String major, String cyber) {
-            return RetrofitConnect.getRetrofitClient()
+            return RetrofitConnect.INSTANCE.getRetrofitClient()
                     .create(APIService.class)
                     .getSearch(year, semester, name, level, major, cyber);
         }

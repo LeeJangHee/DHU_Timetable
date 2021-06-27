@@ -85,7 +85,7 @@ public class NoticeApiClient {
         }
 
         private Call<List<NoticeModel>> getNotice(){
-            return RetrofitConnect.getRetrofitClient()
+            return RetrofitConnect.INSTANCE.getRetrofit()
                     .create(APIService.class)
                     .getNotice();
         }

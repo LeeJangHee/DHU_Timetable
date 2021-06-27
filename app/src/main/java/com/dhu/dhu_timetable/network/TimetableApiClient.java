@@ -105,7 +105,7 @@ public class TimetableApiClient {
 
         // 레트로핏 검색
         private Call<List<TimetableModel>> getMyTimetable(String email) {
-            return RetrofitConnect.getRetrofitClient()
+            return RetrofitConnect.INSTANCE.getRetrofitClient()
                     .create(APIService.class)
                     .checkTimetable(email);
         }
@@ -184,7 +184,7 @@ public class TimetableApiClient {
 
         // 레트로핏 검색
         private Call<List<TimetableModel>> setMyTimetable(String email, String subjectName, String workDay, String cyber, String quarter) {
-            return RetrofitConnect.getRetrofitClient()
+            return RetrofitConnect.INSTANCE.getRetrofitClient()
                     .create(APIService.class)
                     .setTimetable(email, subjectName, workDay, cyber, quarter);
         }
@@ -257,7 +257,7 @@ public class TimetableApiClient {
 
         // 레트로핏 검색
         private Call<List<TimetableModel>> deleteTimetable(String email, int id) {
-            return RetrofitConnect.getRetrofitClient()
+            return RetrofitConnect.INSTANCE.getRetrofit()
                     .create(APIService.class)
                     .deleteTimetable(email, id);
         }

@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData;
 
 import com.dhu.dhu_timetable.model.TimetableModel;
 import com.dhu.dhu_timetable.service.APIService;
-import com.dhu.dhu_timetable.service.RetrofitConnect;
 import com.dhu.dhu_timetable.network.TimetableApiClient;
+import com.dhu.dhu_timetable.service.RetrofitConnect;
 
 import java.util.List;
 
@@ -22,12 +22,11 @@ public class TimetableRepo {
             instance = new TimetableRepo();
         return instance;
     }
-    private APIService service;
+
     String TAG = "janghee";
 
     public TimetableRepo() {
         mTimetableApiClient = TimetableApiClient.getInstance();
-        service = RetrofitConnect.getRetrofitClient().create(APIService.class);
         Log.d(TAG, "TimetableRepo: 성공");
     }
 
