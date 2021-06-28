@@ -28,13 +28,9 @@ class SubjectRecycler(
 
         init {
             binding.imageBtn.setOnClickListener {
-                val transition = AutoTransition()
                 if (isExpand.contains(absoluteAdapterPosition)) {
-                    binding.imageBtn.setImageResource(R.drawable.ic_baseline_expand_more_24)
                     isExpand.remove(absoluteAdapterPosition)
                 } else {
-                    TransitionManager.beginDelayedTransition(binding.cardView, transition)
-                    binding.imageBtn.setImageResource(R.drawable.ic_baseline_expand_less_24)
                     isTime[absoluteAdapterPosition] = onSubjectListener.onTimeCheck(subjectModels[absoluteAdapterPosition].workDay)
                     isExpand.add(absoluteAdapterPosition)
                 }
@@ -42,30 +38,29 @@ class SubjectRecycler(
             }
 
             binding.subjectItemBtnOk.setOnClickListener {
-                if (subjectModels[absoluteAdapterPosition].workDay.isNullOrEmpty() &&
-                        subjectModels[absoluteAdapterPosition].cyberCheck == "") {
+                if (subjectModels[adapterPosition].workDay.isNullOrEmpty() &&
+                        subjectModels[adapterPosition].cyberCheck == "") {
                     showToast(requireActivity.getString(R.string.subject_check_timetable))
                     return@setOnClickListener
                 }
-                if (isTime[absoluteAdapterPosition]) {
+                if (isTime[adapterPosition]) {
                     // 시간표 넣기 가능
                     showToast(requireActivity.getString(R.string.subject_success_timetable))
 
                     // insert into timetable
                     onSubjectListener.onAddSubject(
                             user,
-                            subjectModels[absoluteAdapterPosition].subjectName,
-                            subjectModels[absoluteAdapterPosition].workDay,
-                            subjectModels[absoluteAdapterPosition].cyberCheck,
-                            subjectModels[absoluteAdapterPosition].quarterCheck
+                            subjectModels[adapterPosition].subjectName,
+                            subjectModels[adapterPosition].workDay,
+                            subjectModels[adapterPosition].cyberCheck,
+                            subjectModels[adapterPosition].quarterCheck
                     )
                     binding.subjectItemBtnOk.isEnabled = false
-                    binding.expandableView.visibility = View.GONE
                 } else {
                     // 불가능
                     showToast(requireActivity.getString(R.string.subject_overlap_timetable))
                 }
-                isTime[absoluteAdapterPosition] = onSubjectListener.onTimeCheck(subjectModels[absoluteAdapterPosition].workDay)
+                isTime[adapterPosition] = onSubjectListener.onTimeCheck(subjectModels[adapterPosition].workDay)
             }
 
         }
@@ -87,7 +82,7 @@ class SubjectRecycler(
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
         holder.bind(subjectModels[position], isTime[position])
 
-        holder.binding.expandableView.visibility = if (isExpand.contains(position)) View.VISIBLE else View.GONE
+        applyExpand(holder, isExpand.contains(position))
 
         holder.binding.subjectItemBtnOk.isEnabled = isTime[position]
     }
@@ -105,6 +100,18 @@ class SubjectRecycler(
 
     private fun showToast(message: String) {
         Toast.makeText(requireActivity, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun applyExpand(holder: SubjectViewHolder, isExpand: Boolean) {
+        val transition = AutoTransition()
+        if (isExpand) {
+            holder.binding.expandableView.visibility = View.VISIBLE
+            holder.binding.imageBtn.setImageResource(R.drawable.ic_baseline_expand_less_24)
+        } else {
+            TransitionManager.beginDelayedTransition(holder.binding.cardView, transition)
+            holder.binding.expandableView.visibility = View.GONE
+            holder.binding.imageBtn.setImageResource(R.drawable.ic_baseline_expand_more_24)
+        }
     }
 
 }
