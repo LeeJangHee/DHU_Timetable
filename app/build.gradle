@@ -24,10 +24,10 @@ android {
     signingConfigs {
 
         release {
-            storeFile file('../file/DHUTimetable1.jks')
-            storePassword "dhu1212!@"
-            keyAlias "dhu_timetable"
-            keyPassword "dhu1212!@"
+            storeFile file(SIGNED_STORE_FILE)
+            storePassword SIGNED_STORE_PASSWORD
+            keyAlias SIGNED_KEY_ALIAS
+            keyPassword SIGNED_KEY_PASSWORD
         }
     }
 

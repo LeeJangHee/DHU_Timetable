@@ -29,6 +29,9 @@ import com.dhu.dhu_timetable.ui.navitem.LicenseActivity;
 import com.dhu.dhu_timetable.ui.navitem.NavigationViewModel;
 import com.dhu.dhu_timetable.ui.navitem.notice.NoticeActivity;
 import com.dhu.dhu_timetable.ui.search.SearchActivity;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -79,6 +82,12 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 구글 광고
+        MobileAds.initialize(this);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        AdView mAdView = findViewById(R.id.main_adView);
+        mAdView.loadAd(adRequest);
 
         // 현재 시간 정보 받아오기
         Intent it = getIntent();

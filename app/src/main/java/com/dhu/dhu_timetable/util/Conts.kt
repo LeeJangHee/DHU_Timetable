@@ -3,6 +3,7 @@ package com.dhu.dhu_timetable.util
 object Conts {
     const val LOADING_TIME = 2500
     const val NEW_APP_VERSION = "new_app_version"
+    const val APP_MARKET_URL = "market://details?id=com.dhu.dhu_timetable"
 
     // 구글 로그인 결과 코드
     const val RC_SIGN_IN = 9001

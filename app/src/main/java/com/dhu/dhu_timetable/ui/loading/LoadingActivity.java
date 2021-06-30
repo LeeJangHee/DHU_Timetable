@@ -9,9 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,8 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
-import static com.dhu.dhu_timetable.util.Conts.LOADING_TIME;
-import static com.dhu.dhu_timetable.util.Conts.NEW_APP_VERSION;
+import static com.dhu.dhu_timetable.util.Conts.*;
 
 public class LoadingActivity extends AppCompatActivity {
     // 로딩 시간 2.5초
@@ -83,7 +79,7 @@ public class LoadingActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent it = new Intent(Intent.ACTION_VIEW);
-                                    it.setData(Uri.parse("market://details?id=com.dhu.dhu_timetable"));
+                                    it.setData(Uri.parse(APP_MARKET_URL));
                                     startActivity(it);
                                     dialog.cancel();
                                     finish();

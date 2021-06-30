@@ -25,6 +25,9 @@
         <item>사이버</item>
     </string-array>
 
+    <string name="admob_app_id">ca-app-pub-9700414008733720~8736405806</string>
+    <string name="admob_app_unit_id">ca-app-pub-9700414008733720/2526220676</string>
+
 
     <string name="btn_subject_item_text">담기</string>
 
