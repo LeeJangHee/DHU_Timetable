@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dhu.dhu_timetable.R;
+import com.dhu.dhu_timetable.databinding.ActivityLoginBinding;
 import com.dhu.dhu_timetable.repo.UsersRepo;
 import com.dhu.dhu_timetable.ui.main.BackPressedForFinish;
 import com.dhu.dhu_timetable.ui.main.MainActivity;
@@ -30,17 +32,22 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Calendar;
 
-import static com.dhu.dhu_timetable.util.Conts.*;
+import static com.dhu.dhu_timetable.util.Conts.DHU_EMAIL;
+import static com.dhu.dhu_timetable.util.Conts.EMAIL;
+import static com.dhu.dhu_timetable.util.Conts.MONTH;
+import static com.dhu.dhu_timetable.util.Conts.RC_SIGN_IN;
+import static com.dhu.dhu_timetable.util.Conts.YEAR;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "janghee";
 
-    private SignInButton signInButton;              // 구글 로그인 버튼
     private FirebaseAuth auth;                      // 파이어베이스 인증 객체
 
     private GoogleSignInClient googleSignInClient;
     private BackPressedForFinish backPressedForFinish;
+
+    private ActivityLoginBinding binding;
 
     @Override
     protected void onStart() {
@@ -61,7 +68,10 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        closeProgressBar();
+
         backPressedForFinish = new BackPressedForFinish(this);
 
         // 로그인 버튼이 눌릴 때 --> 기본 옵션 정의
@@ -75,8 +85,8 @@ public class LoginActivity extends AppCompatActivity {
         // 파이어베이스 인증 객체 초기화 ( 싱글톤 패턴 )
         auth = FirebaseAuth.getInstance();
 
-        signInButton = (SignInButton) findViewById(R.id.login);
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        // google login button
+        binding.login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 googleSignIn();
@@ -90,12 +100,14 @@ public class LoginActivity extends AppCompatActivity {
     private void googleSignIn() {
         Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+        binding.setIsLogin(true);
     }
 
     /**
      * 구글 로그아웃 & 인증 제거
      */
     private void googleSignOut() {
+        closeProgressBar();
         // Firebase sign out
         auth.signOut();
 
@@ -141,6 +153,7 @@ public class LoginActivity extends AppCompatActivity {
             } catch (ApiException e) {
                 // 구글 로그인 실패 --> 실패 UI 적용
                 Log.w(TAG, "Google sign in failed" + e.getMessage(), e);
+                closeProgressBar();
                 // ...
             }
         }
@@ -168,6 +181,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // Sign in fails
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            closeProgressBar();
                         }
                     }
                 });
@@ -205,6 +219,10 @@ public class LoginActivity extends AppCompatActivity {
         String month = String.valueOf(date.get(date.MONTH) + 1);
         String[] dateArray = {year, month};
         return dateArray;
+    }
+
+    private void closeProgressBar() {
+        binding.setIsLogin(false);
     }
 
     @Override

@@ -38,29 +38,29 @@ class SubjectRecycler(
             }
 
             binding.subjectItemBtnOk.setOnClickListener {
-                if (subjectModels[adapterPosition].workDay.isNullOrEmpty() &&
-                        subjectModels[adapterPosition].cyberCheck == "") {
+                if (subjectModels[absoluteAdapterPosition].workDay.isNullOrEmpty() &&
+                        subjectModels[absoluteAdapterPosition].cyberCheck == "") {
                     showToast(requireActivity.getString(R.string.subject_check_timetable))
                     return@setOnClickListener
                 }
-                if (isTime[adapterPosition]) {
+                if (isTime[absoluteAdapterPosition]) {
                     // 시간표 넣기 가능
                     showToast(requireActivity.getString(R.string.subject_success_timetable))
 
                     // insert into timetable
                     onSubjectListener.onAddSubject(
                             user,
-                            subjectModels[adapterPosition].subjectName,
-                            subjectModels[adapterPosition].workDay,
-                            subjectModels[adapterPosition].cyberCheck,
-                            subjectModels[adapterPosition].quarterCheck
+                            subjectModels[absoluteAdapterPosition].subjectName,
+                            subjectModels[absoluteAdapterPosition].workDay,
+                            subjectModels[absoluteAdapterPosition].cyberCheck,
+                            subjectModels[absoluteAdapterPosition].quarterCheck
                     )
                     binding.subjectItemBtnOk.isEnabled = false
                 } else {
                     // 불가능
                     showToast(requireActivity.getString(R.string.subject_overlap_timetable))
                 }
-                isTime[adapterPosition] = onSubjectListener.onTimeCheck(subjectModels[adapterPosition].workDay)
+                isTime[absoluteAdapterPosition] = onSubjectListener.onTimeCheck(subjectModels[absoluteAdapterPosition].workDay)
             }
 
         }
