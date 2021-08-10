@@ -27,16 +27,6 @@ class SubjectRecycler(
     inner class SubjectViewHolder(val binding: FragmentSubjectItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.imageBtn.setOnClickListener {
-                if (isExpand.contains(absoluteAdapterPosition)) {
-                    isExpand.remove(absoluteAdapterPosition)
-                } else {
-                    isTime[absoluteAdapterPosition] = onSubjectListener.onTimeCheck(subjectModels[absoluteAdapterPosition].workDay)
-                    isExpand.add(absoluteAdapterPosition)
-                }
-                notifyDataSetChanged()
-            }
-
             binding.subjectItemBtnOk.setOnClickListener {
                 if (subjectModels[absoluteAdapterPosition].workDay.isNullOrEmpty() &&
                         subjectModels[absoluteAdapterPosition].cyberCheck == "") {
@@ -65,10 +55,21 @@ class SubjectRecycler(
 
         }
 
-        fun bind(subject: SubjectModel, isTime: Boolean) {
-            binding.subject = subject
-            binding.isTime = isTime
-            binding.executePendingBindings()
+        fun bind(subject: SubjectModel, isTimeItem: Boolean) {
+            binding.apply {
+                this.subject = subject
+                this.isTimeItem = isTimeItem
+                clickListener = View.OnClickListener{
+                    if (isExpand.contains(absoluteAdapterPosition)) {
+                        isExpand.remove(absoluteAdapterPosition)
+                    } else {
+                        isTime[absoluteAdapterPosition] = onSubjectListener.onTimeCheck(subjectModels[absoluteAdapterPosition].workDay)
+                        isExpand.add(absoluteAdapterPosition)
+                    }
+                    notifyDataSetChanged()
+                }
+                executePendingBindings()
+            }
         }
 
     }

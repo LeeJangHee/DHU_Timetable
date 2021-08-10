@@ -9,8 +9,12 @@
             type="com.dhu.dhu_timetable.model.SubjectModel" />
 
         <variable
-            name="isTime"
+            name="isTimeItem"
             type="Boolean" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -19,6 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="8dp"
+        android:onClick="@{clickListener}"
+        app:rippleColor="@android:color/transparent"
         app:cardElevation="4dp"
         app:strokeWidth="0.3dp">
 
@@ -126,6 +132,7 @@
                 android:layout_height="32dp"
                 android:layout_marginHorizontal="8dp"
                 android:background="@android:color/transparent"
+                android:onClick="@{clickListener}"
                 android:src="@drawable/ic_baseline_expand_more_24"
                 app:layout_constraintBottom_toBottomOf="@+id/subject_major"
                 app:layout_constraintEnd_toEndOf="parent"
