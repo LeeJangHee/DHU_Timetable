@@ -1,5 +1,6 @@
 package com.dhu.dhu_timetable.ui.loading
 
+import android.accounts.NetworkErrorException
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
@@ -20,6 +21,7 @@ import com.dhu.dhu_timetable.util.Conts.LOADING_TIME
 import com.dhu.dhu_timetable.util.Conts.NEW_APP_VERSION
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import java.lang.Exception
 
 
 class LoadingActivity: AppCompatActivity() {
@@ -43,12 +45,12 @@ class LoadingActivity: AppCompatActivity() {
             setConfigSettingsAsync(configSettings)
             setDefaultsAsync(R.xml.remote_config_defaults)
             fetchAndActivate().addOnCompleteListener { task ->
-                checkVersion(task.isSuccessful)
+                checkVersion(task.isSuccessful, task.exception)
             }
         }
     }
 
-    private fun checkVersion(successful: Boolean) {
+    private fun checkVersion(successful: Boolean, e: Exception?) {
         // 서버 연결
         if (successful) {
             newAppVersion = mFirebaseRemoteConfig.getLong(NEW_APP_VERSION)
@@ -68,9 +70,9 @@ class LoadingActivity: AppCompatActivity() {
                     builder.apply {
                         setTitle(getString(R.string.loading_update_title))
                         setMessage(getString(R.string.loading_update_content))
-                        setPositiveButton("업데이트") { dialog, which ->
+                        setPositiveButton("업데이트") { dialog, _ ->
                             val intent: Intent = Intent(Intent.ACTION_VIEW)
-                            intent.setData(Uri.parse(APP_MARKET_URL))
+                            intent.data = Uri.parse(APP_MARKET_URL)
                             startActivity(intent)
                             dialog.cancel()
                             finish()
@@ -91,8 +93,15 @@ class LoadingActivity: AppCompatActivity() {
                 e.printStackTrace()
             }
         } else {
-            Toast.makeText(this, "다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            when(e) {
+                is NetworkErrorException -> showToast("네트워크가 불안정 합니다.")
+                else -> showToast("잠시 후 다시 시도해주세요.")
+            }
             finish()
         }
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 }
