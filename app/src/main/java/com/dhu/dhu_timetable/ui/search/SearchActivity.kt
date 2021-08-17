@@ -64,7 +64,7 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
     // 상단바 뒤로가기 버튼
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.home -> {
+            android.R.id.home -> {
                 finish()
                 return true
             }

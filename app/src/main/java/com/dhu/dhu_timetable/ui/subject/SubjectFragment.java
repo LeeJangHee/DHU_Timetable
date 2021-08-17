@@ -123,6 +123,7 @@ public class SubjectFragment extends Fragment implements OnSubjectListener {
         // TODO: 뷰모델을 가져올 수 없음 NullPointerException = 수정 필요
         try {
             timetableList = mainActivityViewModel.getTimetable().getValue();
+            if (timetableList == null) return false;
             for (TimetableModel t : timetableList) {
                 for (int i = 0; i < t.getWorkDay().length(); i += 3) {
                     if (workDay.contains(t.getWorkDay().substring(i, i + 3))) {
