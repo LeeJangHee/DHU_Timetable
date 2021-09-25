@@ -13,12 +13,14 @@ import com.dhu.dhu_timetable.R
 import com.dhu.dhu_timetable.databinding.FragmentSubjectItemBinding
 import com.dhu.dhu_timetable.model.SubjectModel
 import com.dhu.dhu_timetable.util.SubjectDiffUtils
+import com.dhu.dhu_timetable.util.gone
+import com.dhu.dhu_timetable.util.visible
 
-class SubjectRecycler(
+class SubjectRecyclerAdapter(
         private val requireActivity: FragmentActivity,
         private val user: String,
         private val onSubjectListener: OnSubjectListener
-) : RecyclerView.Adapter<SubjectRecycler.SubjectViewHolder>() {
+) : RecyclerView.Adapter<SubjectRecyclerAdapter.SubjectViewHolder>() {
 
     private var subjectModels: List<SubjectModel> = listOf()
     private val isTime = BooleanArray(2000)
@@ -85,7 +87,7 @@ class SubjectRecycler(
 
         applyExpand(holder, isExpand.contains(position))
 
-        holder.binding.subjectItemBtnOk.isEnabled = isTime[position]
+//        holder.binding.subjectItemBtnOk.isEnabled = isTime[position]
     }
 
     override fun getItemCount(): Int {
@@ -106,11 +108,11 @@ class SubjectRecycler(
     private fun applyExpand(holder: SubjectViewHolder, isExpand: Boolean) {
         val transition = AutoTransition()
         if (isExpand) {
-            holder.binding.expandableView.visibility = View.VISIBLE
+            holder.binding.expandableView.visible()
             holder.binding.imageBtn.setImageResource(R.drawable.ic_baseline_expand_less_24)
         } else {
             TransitionManager.beginDelayedTransition(holder.binding.cardView, transition)
-            holder.binding.expandableView.visibility = View.GONE
+            holder.binding.expandableView.gone()
             holder.binding.imageBtn.setImageResource(R.drawable.ic_baseline_expand_more_24)
         }
     }

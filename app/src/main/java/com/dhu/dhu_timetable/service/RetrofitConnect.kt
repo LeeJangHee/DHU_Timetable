@@ -1,5 +1,6 @@
 package com.dhu.dhu_timetable.service
 
+import com.dhu.dhu_timetable.util.Conts.BASE_URL
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -7,7 +8,6 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitConnect {
 
-    val baseURL = "http://wkdgml96.iptime.org:8080/timetable/"
     var retrofit: Retrofit? = null
 
     fun getRetrofitClient(): Retrofit? {
@@ -18,7 +18,7 @@ object RetrofitConnect {
                 .build()
         if (retrofit == null) {
             retrofit = Retrofit.Builder()
-                    .baseUrl(baseURL)
+                    .baseUrl(BASE_URL)
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()

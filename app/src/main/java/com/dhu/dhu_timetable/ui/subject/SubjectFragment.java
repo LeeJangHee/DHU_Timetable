@@ -40,7 +40,7 @@ public class SubjectFragment extends Fragment implements OnSubjectListener {
     private String user;
 
     private MainActivityViewModel mainActivityViewModel;
-    private SubjectRecycler subjectRecyclerView;
+    private SubjectRecyclerAdapter subjectRecyclerAdapterView;
 
     // 필요하면 사용하기 위한 newInstance
     public static SubjectFragment newInstance(String year, String month, String user) {
@@ -72,13 +72,14 @@ public class SubjectFragment extends Fragment implements OnSubjectListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = getArguments().getString(NOW_USER);
+        user = requireArguments().getString(NOW_USER);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentSubjectListBinding.inflate(inflater, container, false);
+        mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         binding.setLifecycleOwner(requireActivity());
         // 리사이클러뷰 초기화 + 뷰모델
         configureRecyclerView();
@@ -89,23 +90,16 @@ public class SubjectFragment extends Fragment implements OnSubjectListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         binding.setMainViewModel(mainActivityViewModel);
         // 뷰모델 + 라이브데이터
-        mainActivityViewModel.getSubjectData().observe(requireActivity(), new Observer<List<SubjectModel>>() {
-            @Override
-            public void onChanged(List<SubjectModel> subjectModels) {
-                subjectRecyclerView.setSubjectList(subjectModels);
-            }
-        });
+        mainActivityViewModel.getSubjectData().observe(requireActivity(), subjectModels -> subjectRecyclerAdapterView.setSubjectList(subjectModels));
 
     }
 
     private void configureRecyclerView() {
-        subjectRecyclerView = new SubjectRecycler(requireActivity(), user, this);
+        subjectRecyclerAdapterView = new SubjectRecyclerAdapter(requireActivity(), user, this);
 
-        binding.subjectRecyclerview.setAdapter(subjectRecyclerView);
-        binding.subjectRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.subjectRecyclerview.setAdapter(subjectRecyclerAdapterView);
     }
 
     @Override

@@ -5,6 +5,8 @@ object Conts {
     const val NEW_APP_VERSION = "new_app_version"
     const val APP_MARKET_URL = "market://details?id=com.dhu.dhu_timetable"
 
+    const val BASE_URL = "http://wkdgml96.iptime.org:8080/timetable/"
+
     // 구글 로그인 결과 코드
     const val RC_SIGN_IN = 9001
     // 한의대 이메일
