@@ -1,5 +1,7 @@
 package com.dhu.dhu_timetable.ui.main;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -57,4 +59,21 @@ public class MainActivityViewModel extends ViewModel {
         subjectRepo.setSubjectData(year, semester, name, level, major, cyber);
     }
     // }
+
+    public boolean  isTimeCheck(String workDay) {
+        for (TimetableModel t : getTimetableList()) {
+            for (int i = 0; i < t.getWorkDay().length(); i += 3) {
+                if (workDay.contains(t.getWorkDay().substring(i, i + 3))) {
+                    Log.d("janghee", "timeCheck: false");
+                    return false;
+                }
+            }
+        }
+        Log.d("janghee", "timeCheck: true");
+        return true;
+    }
+
+    public void onAddSubject(String email, String subjectName, String workDay, String cyber, String quarter) {
+        insertTimetable(email, subjectName, workDay, cyber, quarter);
+    }
 }

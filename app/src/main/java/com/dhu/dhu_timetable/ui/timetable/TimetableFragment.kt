@@ -86,7 +86,11 @@ class TimetableFragment : Fragment() {
             val dialog: Dialog = builder.setMessage(getString(R.string.timetable_dialog_title))
                 .setPositiveButton(
                     "확인"
-                ) { _, _ -> mainActivityViewModel.deleteTimetable(user, mGetID[schedules[0]]!!.toInt()) }
+                ) { _, _ ->
+                    mGetID[schedules[0]]?.let {
+                        mainActivityViewModel.deleteTimetable(user, it.toInt())
+                    } ?: return@setPositiveButton
+                }
                 .setNegativeButton("취소", null)
                 .create()
             dialog.show()

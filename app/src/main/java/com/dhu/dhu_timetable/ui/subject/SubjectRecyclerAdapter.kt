@@ -12,6 +12,7 @@ import androidx.transition.TransitionManager
 import com.dhu.dhu_timetable.R
 import com.dhu.dhu_timetable.databinding.FragmentSubjectItemBinding
 import com.dhu.dhu_timetable.model.SubjectModel
+import com.dhu.dhu_timetable.ui.main.MainActivityViewModel
 import com.dhu.dhu_timetable.util.SubjectDiffUtils
 import com.dhu.dhu_timetable.util.gone
 import com.dhu.dhu_timetable.util.visible
@@ -19,12 +20,14 @@ import com.dhu.dhu_timetable.util.visible
 class SubjectRecyclerAdapter(
         private val requireActivity: FragmentActivity,
         private val user: String,
-        private val onSubjectListener: OnSubjectListener
+        private val mainActivityViewModel: MainActivityViewModel
 ) : RecyclerView.Adapter<SubjectRecyclerAdapter.SubjectViewHolder>() {
 
     private var subjectModels: List<SubjectModel> = listOf()
     private val isTime = BooleanArray(2000)
     private val isExpand = arrayListOf<Int>()
+
+    private var onTime = arrayListOf<Boolean>()
 
     inner class SubjectViewHolder(val binding: FragmentSubjectItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -40,7 +43,7 @@ class SubjectRecyclerAdapter(
                     showToast(requireActivity.getString(R.string.subject_success_timetable))
 
                     // insert into timetable
-                    onSubjectListener.onAddSubject(
+                    mainActivityViewModel.onAddSubject(
                             user,
                             subjectModels[absoluteAdapterPosition].subjectName,
                             subjectModels[absoluteAdapterPosition].workDay,
@@ -52,20 +55,19 @@ class SubjectRecyclerAdapter(
                     // 불가능
                     showToast(requireActivity.getString(R.string.subject_overlap_timetable))
                 }
-                isTime[absoluteAdapterPosition] = onSubjectListener.onTimeCheck(subjectModels[absoluteAdapterPosition].workDay)
+                applyOnTime(absoluteAdapterPosition)
             }
 
         }
 
-        fun bind(subject: SubjectModel, isTimeItem: Boolean) {
+        fun bind(subject: SubjectModel) {
             binding.apply {
                 this.subject = subject
-                this.isTimeItem = isTimeItem
                 clickListener = View.OnClickListener{
                     if (isExpand.contains(absoluteAdapterPosition)) {
                         isExpand.remove(absoluteAdapterPosition)
                     } else {
-                        isTime[absoluteAdapterPosition] = onSubjectListener.onTimeCheck(subjectModels[absoluteAdapterPosition].workDay)
+                        applyOnTime(absoluteAdapterPosition)
                         isExpand.add(absoluteAdapterPosition)
                     }
                     notifyDataSetChanged()
@@ -83,11 +85,11 @@ class SubjectRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
-        holder.bind(subjectModels[position], isTime[position])
+        holder.bind(subjectModels[position])
 
         applyExpand(holder, isExpand.contains(position))
 
-//        holder.binding.subjectItemBtnOk.isEnabled = isTime[position]
+        holder.binding.subjectItemBtnOk.isEnabled = isTime[position]
     }
 
     override fun getItemCount(): Int {
@@ -99,6 +101,10 @@ class SubjectRecyclerAdapter(
         val diffUtilResult = DiffUtil.calculateDiff(subjectDiffUtils)
         this.subjectModels = subjectModels
         diffUtilResult.dispatchUpdatesTo(this)
+    }
+
+    private fun applyOnTime(index: Int) {
+        isTime[index] = mainActivityViewModel.isTimeCheck(subjectModels[index].workDay)
     }
 
     private fun showToast(message: String) {
