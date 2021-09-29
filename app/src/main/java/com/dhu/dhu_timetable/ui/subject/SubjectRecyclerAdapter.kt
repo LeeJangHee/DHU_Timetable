@@ -3,15 +3,20 @@ package com.dhu.dhu_timetable.ui.subject
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
+import androidx.transition.ChangeBounds
+import androidx.transition.Fade
 import androidx.transition.TransitionManager
 import com.dhu.dhu_timetable.R
 import com.dhu.dhu_timetable.databinding.FragmentSubjectItemBinding
 import com.dhu.dhu_timetable.model.SubjectModel
+import com.dhu.dhu_timetable.model.TimetableModel
 import com.dhu.dhu_timetable.ui.main.MainActivityViewModel
 import com.dhu.dhu_timetable.util.SubjectDiffUtils
 import com.dhu.dhu_timetable.util.gone
@@ -24,21 +29,19 @@ class SubjectRecyclerAdapter(
 ) : RecyclerView.Adapter<SubjectRecyclerAdapter.SubjectViewHolder>() {
 
     private var subjectModels: List<SubjectModel> = listOf()
-    private val isTime = BooleanArray(2000)
-    private val isExpand = arrayListOf<Int>()
-
-    private var onTime = arrayListOf<Boolean>()
+    private var onTime = arrayListOf<TimetableModel>()
+    private val isExpand = arrayListOf<SubjectModel>()
 
     inner class SubjectViewHolder(val binding: FragmentSubjectItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.subjectItemBtnOk.setOnClickListener {
-                if (subjectModels[absoluteAdapterPosition].workDay.isNullOrEmpty() &&
-                        subjectModels[absoluteAdapterPosition].cyberCheck == "") {
+                val subjectData = subjectModels[absoluteAdapterPosition]
+                if (subjectData.workDay.isNullOrEmpty() && subjectData.cyberCheck == "") {
                     showToast(requireActivity.getString(R.string.subject_check_timetable))
                     return@setOnClickListener
                 }
-                if (isTime[absoluteAdapterPosition]) {
+                if (mainActivityViewModel.isTimeCheck(subjectData.workDay)) {
                     // 시간표 넣기 가능
                     showToast(requireActivity.getString(R.string.subject_success_timetable))
 
@@ -50,12 +53,11 @@ class SubjectRecyclerAdapter(
                             subjectModels[absoluteAdapterPosition].cyberCheck,
                             subjectModels[absoluteAdapterPosition].quarterCheck
                     )
-                    binding.subjectItemBtnOk.isEnabled = false
                 } else {
                     // 불가능
                     showToast(requireActivity.getString(R.string.subject_overlap_timetable))
                 }
-                applyOnTime(absoluteAdapterPosition)
+//                applyOnTime(subjectModels[absoluteAdapterPosition])
             }
 
         }
@@ -64,13 +66,16 @@ class SubjectRecyclerAdapter(
             binding.apply {
                 this.subject = subject
                 clickListener = View.OnClickListener{
-                    if (isExpand.contains(absoluteAdapterPosition)) {
-                        isExpand.remove(absoluteAdapterPosition)
+                    if (isExpand.contains(subject)) {
+                        // 열려있음
+                        isExpand.remove(subject)
                     } else {
-                        applyOnTime(absoluteAdapterPosition)
-                        isExpand.add(absoluteAdapterPosition)
+                        // 닫혀있음
+                        isExpand.add(subject)
                     }
-                    notifyDataSetChanged()
+                    notifyItemChanged(absoluteAdapterPosition)
+//                    notifyItemChanged(absoluteAdapterPosition)
+//                    expand = !expandableView.isVisible
                 }
                 executePendingBindings()
             }
@@ -86,10 +91,11 @@ class SubjectRecyclerAdapter(
 
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
         holder.bind(subjectModels[position])
+        applyExpand(holder, isExpand.contains(subjectModels[position]))
+    }
 
-        applyExpand(holder, isExpand.contains(position))
-
-        holder.binding.subjectItemBtnOk.isEnabled = isTime[position]
+    override fun getItemId(position: Int): Long {
+        return subjectModels[position].hashCode().toLong()
     }
 
     override fun getItemCount(): Int {
@@ -103,8 +109,8 @@ class SubjectRecyclerAdapter(
         diffUtilResult.dispatchUpdatesTo(this)
     }
 
-    private fun applyOnTime(index: Int) {
-        isTime[index] = mainActivityViewModel.isTimeCheck(subjectModels[index].workDay)
+    fun setOnTime(timetableModels: List<TimetableModel>) {
+        onTime = timetableModels as ArrayList
     }
 
     private fun showToast(message: String) {
@@ -112,12 +118,15 @@ class SubjectRecyclerAdapter(
     }
 
     private fun applyExpand(holder: SubjectViewHolder, isExpand: Boolean) {
-        val transition = AutoTransition()
+        val transition = ChangeBounds().apply {
+            interpolator = AccelerateInterpolator()
+            duration = 200L
+        }
         if (isExpand) {
+            TransitionManager.beginDelayedTransition(holder.binding.cardView, transition)
             holder.binding.expandableView.visible()
             holder.binding.imageBtn.setImageResource(R.drawable.ic_baseline_expand_less_24)
         } else {
-            TransitionManager.beginDelayedTransition(holder.binding.cardView, transition)
             holder.binding.expandableView.gone()
             holder.binding.imageBtn.setImageResource(R.drawable.ic_baseline_expand_more_24)
         }

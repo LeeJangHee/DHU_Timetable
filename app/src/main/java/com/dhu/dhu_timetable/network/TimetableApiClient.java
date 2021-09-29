@@ -20,7 +20,6 @@ import retrofit2.Response;
 
 public class TimetableApiClient {
     private MutableLiveData<List<TimetableModel>> mTimetableModels;
-    private MutableLiveData<List<TimetableModel>> setTimetable;
     private RetrieveTimetableRunnable retrieveTimetableRunnable;
     private SetTimetableRunnable setTimetableRunnable;
     private DeleteTimetableRunnable deleteTimetableRunnable;
@@ -37,7 +36,6 @@ public class TimetableApiClient {
 
     public TimetableApiClient() {
         mTimetableModels = new MutableLiveData<>();
-        setTimetable = new MutableLiveData<>();
     }
 
     public LiveData<List<TimetableModel>> getTimetable() {

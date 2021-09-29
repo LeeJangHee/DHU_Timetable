@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.dhu.dhu_timetable.databinding.FragmentSubjectListBinding
 import com.dhu.dhu_timetable.ui.main.MainActivityViewModel
 import com.dhu.dhu_timetable.util.Conts
@@ -40,6 +41,10 @@ class SubjectFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mainActivityViewModel.timetable.observe(viewLifecycleOwner) {
+            subjectRecyclerAdapter.setOnTime(it)
+        }
+
         mainActivityViewModel.subjectData.observe(requireActivity()) {
             subjectRecyclerAdapter.setSubjectList(it)
         }
@@ -47,7 +52,16 @@ class SubjectFragment : Fragment() {
     }
 
     private fun setRecyclerView() {
-        binding.subjectRecyclerview.adapter = subjectRecyclerAdapter
+        binding.subjectRecyclerview.apply {
+            itemAnimator.also { animator ->
+                when(animator) {
+                    is SimpleItemAnimator -> animator.supportsChangeAnimations = false
+                }
+            }
+            adapter = subjectRecyclerAdapter.also { adapter ->
+                adapter.setHasStableIds(true)
+            }
+        }
     }
 
     companion object {

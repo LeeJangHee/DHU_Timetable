@@ -120,6 +120,15 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
                 spnMajor?.setSelection(0)
                 spnLevel?.setSelection(0)
                 cbCyber?.isChecked = false
+
+                Intent().apply {
+                    putExtra(SUBJECT_NAME, "%")
+                    putExtra(MAJOR, "%")
+                    putExtra(LEVEL, "%")
+                    putExtra(CYBER, "%")
+                    setResult(Activity.RESULT_OK, this)
+                }
+                finish()
             }
         }
     }

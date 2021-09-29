@@ -40,12 +40,11 @@ class TimetableFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(user: String?): TimetableFragment {
-            val fragment = TimetableFragment()
-            val bundle = Bundle()
-            bundle.putString(USER, user)
-            fragment.arguments = bundle
-            return fragment
+        fun newInstance(user: String?): TimetableFragment = with(TimetableFragment()) {
+            arguments = Bundle().apply {
+                putString(USER, user)
+            }
+            this
         }
 
     }
@@ -82,8 +81,8 @@ class TimetableFragment : Fragment() {
                 }
             })
         timetable.setOnStickerSelectEventListener { idx, schedules -> // 삭제서버 연결
-            val builder = AlertDialog.Builder(context)
-            val dialog: Dialog = builder.setMessage(getString(R.string.timetable_dialog_title))
+            AlertDialog.Builder(context)
+                .setMessage(getString(R.string.timetable_dialog_title))
                 .setPositiveButton(
                     "확인"
                 ) { _, _ ->
@@ -93,7 +92,7 @@ class TimetableFragment : Fragment() {
                 }
                 .setNegativeButton("취소", null)
                 .create()
-            dialog.show()
+            .show()
         }
     }
 

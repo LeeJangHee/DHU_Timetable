@@ -60,7 +60,7 @@ public class MainActivityViewModel extends ViewModel {
     }
     // }
 
-    public boolean  isTimeCheck(String workDay) {
+    public boolean isTimeCheck(String workDay) {
         for (TimetableModel t : getTimetableList()) {
             for (int i = 0; i < t.getWorkDay().length(); i += 3) {
                 if (workDay.contains(t.getWorkDay().substring(i, i + 3))) {
