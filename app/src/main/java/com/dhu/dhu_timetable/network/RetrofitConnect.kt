@@ -1,4 +1,4 @@
-package com.dhu.dhu_timetable.service
+package com.dhu.dhu_timetable.network
 
 import com.dhu.dhu_timetable.util.Conts.BASE_URL
 import okhttp3.OkHttpClient

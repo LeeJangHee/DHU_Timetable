@@ -2,7 +2,7 @@ package com.dhu.dhu_timetable.repo
 
 import androidx.lifecycle.LiveData
 import com.dhu.dhu_timetable.model.TimetableModel
-import com.dhu.dhu_timetable.network.TimetableApiClient
+import com.dhu.dhu_timetable.network.thread.TimetableApiClient
 
 class TimetableRepo {
 

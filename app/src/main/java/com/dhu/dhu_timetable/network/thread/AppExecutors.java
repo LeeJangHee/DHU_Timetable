@@ -1,4 +1,4 @@
-package com.dhu.dhu_timetable.network;
+package com.dhu.dhu_timetable.network.thread;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

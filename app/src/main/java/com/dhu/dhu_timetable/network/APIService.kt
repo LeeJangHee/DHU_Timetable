@@ -1,4 +1,4 @@
-package com.dhu.dhu_timetable.service
+package com.dhu.dhu_timetable.network
 
 import com.dhu.dhu_timetable.model.LoginModel
 import com.dhu.dhu_timetable.model.NoticeModel

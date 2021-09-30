@@ -1,12 +1,12 @@
-package com.dhu.dhu_timetable.network;
+package com.dhu.dhu_timetable.network.thread;
 
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.dhu.dhu_timetable.model.NoticeModel;
-import com.dhu.dhu_timetable.service.APIService;
-import com.dhu.dhu_timetable.service.RetrofitConnect;
+import com.dhu.dhu_timetable.network.APIService;
+import com.dhu.dhu_timetable.network.RetrofitConnect;
 
 import java.io.IOException;
 import java.util.ArrayList;

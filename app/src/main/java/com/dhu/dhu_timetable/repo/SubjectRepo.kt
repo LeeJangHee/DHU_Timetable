@@ -2,7 +2,7 @@ package com.dhu.dhu_timetable.repo
 
 import androidx.lifecycle.LiveData
 import com.dhu.dhu_timetable.model.SubjectModel
-import com.dhu.dhu_timetable.network.SubjectApiClient
+import com.dhu.dhu_timetable.network.thread.SubjectApiClient
 
 class SubjectRepo {
 

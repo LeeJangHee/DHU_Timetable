@@ -2,7 +2,7 @@ package com.dhu.dhu_timetable.repo
 
 import androidx.lifecycle.LiveData
 import com.dhu.dhu_timetable.model.NoticeModel
-import com.dhu.dhu_timetable.network.NoticeApiClient
+import com.dhu.dhu_timetable.network.thread.NoticeApiClient
 
 class NoticeRepo {
     private val mNoticeApiClient: NoticeApiClient by lazy { NoticeApiClient.getInstance() }

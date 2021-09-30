@@ -2,8 +2,8 @@ package com.dhu.dhu_timetable.repo
 
 import androidx.lifecycle.MutableLiveData
 import com.dhu.dhu_timetable.model.LoginModel
-import com.dhu.dhu_timetable.service.APIService
-import com.dhu.dhu_timetable.service.RetrofitConnect
+import com.dhu.dhu_timetable.network.APIService
+import com.dhu.dhu_timetable.network.RetrofitConnect
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
