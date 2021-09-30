@@ -24,4 +24,6 @@ object Conts {
 
     const val SEMESTER_FIRST = "10"
     const val SEMESTER_LAST = "20"
+
+    const val KAKAO_OPENCHAT = "https://open.kakao.com/o/sNAUDYSc"
 }

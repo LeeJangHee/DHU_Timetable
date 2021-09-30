@@ -164,9 +164,9 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
 
         // 네비게이션 뷰 모델
         navigationViewModel = new ViewModelProvider(this).get(NavigationViewModel.class);
-        navigationViewModel.init(email);
+        navigationViewModel.initLoginData(email);
 
-        navigationViewModel.getTest().observe(this, new Observer<LoginModel>() {
+        navigationViewModel.getLoginModel().observe(this, new Observer<LoginModel>() {
             @Override
             public void onChanged(LoginModel loginModel) {
                 tv_name.setText(loginModel.getName());
