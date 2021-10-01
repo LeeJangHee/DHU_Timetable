@@ -41,11 +41,11 @@ class SubjectFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainActivityViewModel.timetable.observe(viewLifecycleOwner) {
+        mainActivityViewModel.getTimetable()?.observe(viewLifecycleOwner) {
             subjectRecyclerAdapter.setOnTime(it)
         }
 
-        mainActivityViewModel.subjectData.observe(requireActivity()) {
+        mainActivityViewModel.getSubjectData()?.observe(requireActivity()) {
             subjectRecyclerAdapter.setSubjectList(it)
         }
 

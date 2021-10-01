@@ -34,12 +34,11 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
     private var cbCyber: CheckBox? = null
     private var mAdView: AdView? = null
 
-    private var _binding: ActivitySearchBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: ActivitySearchBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivitySearchBinding.inflate(layoutInflater)
+        binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         MobileAds.initialize(this) { }
@@ -77,28 +76,28 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
         when (v.id) {
             R.id.button_confirm -> {
                 subjectname = etSubjectName?.text.toString()
-                subjectname = subjectname?.let {
+                subjectname = subjectname.run {
                     when {
-                        it.isEmpty() -> "%"
-                        else -> "%$it%"
+                        this.isNullOrEmpty() -> "%"
+                        else -> "%$this%"
                     }
-                } ?: "%"
+                }
 
                 major = spnMajor?.selectedItem.toString()
-                major = major?.let {
+                major = major.run {
                     when {
-                        it.isEmpty() -> "%"
-                        else -> "%$it%"
+                        this.isNullOrEmpty() -> "%"
+                        else -> "%$this%"
                     }
-                } ?: "%"
-
+                }
                 level = spnLevel?.selectedItem.toString()
-                level = level?.let {
+                level = level.run {
                     when {
-                        it.length > 1 -> "%${it.substring(0, 1)}%"
+                        this.isNullOrEmpty() -> "%"
+                        this.length > 1 -> "%${this.substring(0, 1)}%"
                         else -> "%"
                     }
-                } ?: "%"
+                }
 
                 cyber = if (cbCyber!!.isChecked) "Y" else "%"
                 Log.d("button_confirm : ", subjectname + major + level + cyber)

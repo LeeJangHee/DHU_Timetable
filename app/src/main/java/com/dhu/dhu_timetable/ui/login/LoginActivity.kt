@@ -15,6 +15,7 @@ import com.dhu.dhu_timetable.util.Conts.EMAIL
 import com.dhu.dhu_timetable.util.Conts.MONTH
 import com.dhu.dhu_timetable.util.Conts.RC_SIGN_IN
 import com.dhu.dhu_timetable.util.Conts.YEAR
+import com.dhu.dhu_timetable.util.SharedPreferences
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -167,6 +168,7 @@ class LoginActivity : AppCompatActivity() {
         val date: Array<String> = currentDate()
         val usersRepo = getInstance()
         usersRepo.setUser(email, name, profile)
+        SharedPreferences.setPrefEmail(this, email)
         val it = Intent(this, MainActivity::class.java)
         it.putExtra(YEAR, date[0])
         it.putExtra(MONTH, date[1])

@@ -62,7 +62,7 @@ class TimetableFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // 레트로핏 --> 라이브데이터 가져오기
-        mainActivityViewModel.timetable.observe(viewLifecycleOwner,
+        mainActivityViewModel.getTimetable()?.observe(viewLifecycleOwner,
             { timetableModels -> // 새로 초기화 후
                 timetable.removeAll()
                 schedules.clear()
@@ -87,7 +87,7 @@ class TimetableFragment : Fragment() {
                     "확인"
                 ) { _, _ ->
                     mGetID[schedules[0]]?.let {
-                        mainActivityViewModel.deleteTimetable(user, it.toInt())
+                        mainActivityViewModel.deleteTimetable(user!!, it.toInt())
                     } ?: return@setPositiveButton
                 }
                 .setNegativeButton("취소", null)

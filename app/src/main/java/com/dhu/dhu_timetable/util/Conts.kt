@@ -26,4 +26,9 @@ object Conts {
     const val SEMESTER_LAST = "20"
 
     const val KAKAO_OPENCHAT = "https://open.kakao.com/o/sNAUDYSc"
+
+    // 첫번째 버튼 클릭과 두번째 버튼 클릭 사이의 종료를 위한 시간차를 정의
+    const val TIME_INTERVAL = 2000L
+
+    const val REQUEST_CODE = 100
 }
